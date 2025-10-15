@@ -1,0 +1,8 @@
+﻿body {
+    background: #e8d5e0;
+    background: radial-gradient(circle, rgba(232, 213, 224, 1) 0%, rgba(148, 187, 233, 1) 100%);
+}
+
+.card {
+    background-color: #f9fcfd;
+}

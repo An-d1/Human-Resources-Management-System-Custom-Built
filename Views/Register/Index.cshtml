@@ -1,0 +1,124 @@
+﻿@model HRManagementSystem.ViewModels.RegisterViewModel
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+<!-- Link to the custom login styles -->
+<link rel="stylesheet" href="~/css/Account.css" asp-append-version="true" />
+
+@{
+    ViewData["Title"] = "Register New Employee";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mt-2">
+
+            <div class="card login-card shadow-lg border-0">
+                <div class="card-body p-5">
+
+                    <div class="text-center mb-2">
+                        <i class="bi bi-person-plus-fill text-primary" style="font-size: 3.5rem;"></i>
+                    </div>
+
+                    <div class="text-center mb-4">
+                        <h1 class="h3 header-title mb-1">New Employee Registration</h1>
+                        <p class="text-secondary fs-6 mb-0">Admin use only. Create a new account for the employee.</p>
+                    </div>
+
+                    <form asp-action="RegisterUser" method="post" novalidate>
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3" role="alert"></div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label asp-for="FirstName" class="form-label text-dark">First Name</label>
+                                <div class="input-group input-group-lg">
+                                    <input asp-for="FirstName" class="form-control form-control-dark" placeholder="John" />
+                                </div>
+                                <span asp-validation-for="FirstName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label text-dark">Last Name</label>
+                                <div class="input-group input-group-lg">
+                                    <input asp-for="LastName" class="form-control form-control-dark" placeholder="Doe" />
+                                </div>
+                                <span asp-validation-for="LastName" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label text-dark">Email Address</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input asp-for="Email" type="email"
+                                       class="form-control form-control-dark"
+                                       placeholder="john.doe@company.com" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label text-dark">Temporary Password</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                <input asp-for="Password" type="password" id="passwordInput"
+                                       class="form-control form-control-dark"
+                                       placeholder="Temporary Password" autocomplete="new-password" />
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="ConfirmPassword" class="form-label text-dark">Confirm Password</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                                <input asp-for="ConfirmPassword" type="password"
+                                       class="form-control form-control-dark"
+                                       placeholder="Confirm Temporary Password" />
+                            </div>
+                            <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-5">
+                            <label asp-for="Role" class="form-label text-dark">User Role</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
+                                <select asp-for="Role" class="form-select form-control-dark">
+                                    <option value="">-- Select Role --</option>
+                                    <option value="Employee">Employee (Default)</option>
+                                    <option value="Manager">Manager</option>
+                                    <option value="Admin">Administrator</option>
+                                </select>
+                            </div>
+                            <span asp-validation-for="Role" class="text-danger small"></span>
+                        </div>
+
+
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-person-check-fill me-2"></i> Register Employee
+                            </button>
+
+                            <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-grid-fill me-2"></i> Back to Dashboard
+                            </a>
+                        </div>
+                    </form>
+
+                    <hr class="my-5 border-gray-200" />
+
+                    <div class="text-center">
+                        <p class="text-sm text-secondary mb-0">
+                            <i class="bi bi-info-circle me-1"></i> Ensure all fields are correct before submission.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

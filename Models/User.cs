@@ -1,0 +1,18 @@
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
+namespace HRManagementSystem.Models
+{
+    public class User : IdentityUser<Guid>
+    {
+        public string FirstName { get; set; } = default!;
+        public string LastName { get; set; } = default!;
+        public Guid DepartmentId { get; set; }
+        public Department Department { get; set; } = default!;
+        public Guid CompanyId { get; set; }          
+        public Company Company { get; set; } = default!;
+        public ICollection<EmployeeDepartment> EmployeeDepartments { get; set; } = new List<EmployeeDepartment>();
+
+    }
+}
