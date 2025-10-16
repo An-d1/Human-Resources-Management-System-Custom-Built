@@ -1,0 +1,46 @@
+﻿<link rel="stylesheet" href="~/css/Email.css" asp-append-version="true" />
+
+@{
+    ViewData["Title"] = "Account Confirmed!";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-7 col-lg-5 mt-5">
+
+            <div class="card login-card shadow-lg border-0">
+                <div class="card-body p-5 text-center">
+
+                    <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem; opacity: 1;"></i>
+
+                    <div class="mt-4 mb-3">
+                        <h1 class="h3 header-title fw-bold text-dark mb-2">
+                            Email Confirmed!
+                        </h1>
+                        <p class="text-secondary fs-6 mb-0">
+                            Your SmartStaff account is now fully active.
+                        </p>
+                    </div>
+
+                    <p class="text-dark mb-4 fs-5">
+                        Thank you for confirming your email address. You can now use your assigned credentials to log in and access your employee resources.
+                    </p>
+
+                    <hr class="my-4 border-light-subtle" />
+
+                    <div class="d-grid mt-4">
+
+                        <a asp-controller="LogIn" asp-action="LoginUser" class="btn btn-success btn-lg fw-bold">
+                            <i class="bi bi-box-arrow-in-right me-2"></i> Proceed to Login
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+}

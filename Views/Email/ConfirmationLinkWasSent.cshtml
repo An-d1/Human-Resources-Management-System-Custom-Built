@@ -1,0 +1,52 @@
+﻿<link rel="stylesheet" href="~/css/Email.css" asp-append-version="true" />
+
+@{
+    ViewData["Title"] = "Confirmation Email Sent";
+    // Ensure the layout is used to get the gradient background and shared CSS
+    // Layout = "_Layout";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-7 col-lg-5 mt-5">
+
+            <div class="card login-card shadow-lg border-0">
+                <div class="card-body p-5 text-center">
+
+                    <i class="bi bi-check-circle-fill text-primary" style="font-size: 4rem; opacity: 1;"></i>
+
+                    <div class="mt-4 mb-3">
+                        <h1 class="h3 header-title fw-bold text-dark mb-2">
+                            Success! Activation Email Sent
+                        </h1>
+                        <p class="text-secondary fs-6 mb-0">
+                            The new employee account has been created.
+                        </p>
+                    </div>
+
+                    <hr class="my-4 border-light-subtle" />
+
+                    <p class="text-dark mb-4 fs-5">
+                        The account confirmation link and initial login instructions have been successfully dispatched to the employee's registered email address.
+                    </p>
+
+                    <p class="text-secondary small fst-italic">
+                        The employee must click the link in the email to activate their account before they can log in.
+                    </p>
+
+                    <div class="d-grid mt-5">
+
+                        <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-primary btn-lg fw-bold">
+                            <i class="bi bi-arrow-left-circle me-2"></i> Return to Admin Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+}

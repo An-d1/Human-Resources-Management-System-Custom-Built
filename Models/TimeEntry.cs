@@ -1,5 +1,5 @@
-﻿namespace HRManagementSystem.Models
-{
+﻿namespace HRManagementSystem.Models;
+
     public class TimeEntry
     {
         public Guid Id { get; set; }
@@ -9,4 +9,3 @@
         public DateTime? ClockOutUtc { get; set; }
     }
 
-}

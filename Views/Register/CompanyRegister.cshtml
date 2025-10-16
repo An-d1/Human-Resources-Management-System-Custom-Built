@@ -1,0 +1,98 @@
+﻿@model HRManagementSystem.ViewModels.RegisterCompanyViewModel
+
+<!-- Link to the custom login styles -->
+<link rel="stylesheet" href="~/css/Account.css" asp-append-version="true" />
+
+@{
+    ViewData["Title"] = "Register As A New Company";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mt-2">
+
+            <div class="card login-card shadow-lg border-0">
+                <div class="card-body p-5">
+
+                    <div class="text-center mb-2">
+                        <i class="bi bi-building text-primary" style="font-size: 3.5rem;"></i>
+                    </div>
+
+                    <div class="text-center mb-4">
+                        <h1 class="h3 header-title mb-1">
+                            Sign Up Your Business
+                        </h1>
+                        <p class="text-secondary fs-6 mb-0">This request will be handled by a member of our staff</p>
+                    </div>
+
+                    <form asp-action="InquiryForCompany" method="post" novalidate>
+
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3" role="alert"></div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label asp-for="CompanyName" class="form-label text-dark">Company Name</label>
+                                <div class="input-group input-group-lg">
+                                    <input asp-for="CompanyName" class="form-control form-control-dark" placeholder="XYZ Company" />
+                                </div>
+                                <span asp-validation-for="CompanyName" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="TaxId" class="form-label text-dark">Tax identification code (Optional)</label>
+                                <div class="input-group input-group-lg">
+                                    <input asp-for="TaxId" class="form-control form-control-dark" placeholder="H43814576S" />
+                                </div>
+                                <span asp-validation-for="TaxId" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label text-dark">Email Address</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                <input asp-for="Email" type="email"
+                                       class="form-control form-control-dark"
+                                       placeholder="your.email@example.com" />
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PhoneNumber" class="form-label text-dark">Phone Number</label>
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                                <input asp-for="PhoneNumber" type="number"
+                                       class="form-control form-control-dark"/>
+                            </div>
+                            <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="bi bi-send-check"></i> Send Inquiry
+                            </button>
+
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg">
+                                <i class="bi bi-arrow-left"></i> Go Back
+                            </a>
+                        </div>
+                    </form>
+
+                    <hr class="my-5 border-gray-200" />
+
+                    <div class="text-center">
+                        <p class="text-sm text-secondary mb-0">
+                            <i class="bi bi-info-circle me-1"></i> You can also contact directly at this email address: managementsystem@info.com
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}
