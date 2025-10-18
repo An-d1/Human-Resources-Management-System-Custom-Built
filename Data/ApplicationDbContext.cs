@@ -18,13 +18,7 @@ namespace HRManagementSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Department)
-                .WithMany()                    
-                .HasForeignKey(u => u.DepartmentId)
-                .OnDelete(DeleteBehavior.Restrict);    
+            base.OnModelCreating(modelBuilder);  
 
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Company)

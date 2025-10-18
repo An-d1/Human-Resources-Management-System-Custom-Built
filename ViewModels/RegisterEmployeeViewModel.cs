@@ -2,7 +2,7 @@
 
 namespace HRManagementSystem.ViewModels
 {
-    public class RegisterViewModel
+    public class RegisterEmployeeViewModel
     {
         [Required]
         [Display(Name = "First Name")]
@@ -16,6 +16,10 @@ namespace HRManagementSystem.ViewModels
         [EmailAddress]
         [Display(Name = "Email Address")]
         public string Email { get; set; }
+
+        [Phone]
+        [Required]
+        public string PhoneNumber { get; set; } 
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
