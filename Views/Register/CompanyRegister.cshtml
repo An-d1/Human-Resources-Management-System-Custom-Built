@@ -25,7 +25,7 @@
                         <p class="text-secondary fs-6 mb-0">This request will be handled by a member of our staff</p>
                     </div>
 
-                    <form asp-action="InquiryForCompany" method="post" novalidate>
+                    <form asp-action="SendCompanyApplication" method="post" novalidate>
 
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3" role="alert"></div>
 
@@ -38,7 +38,7 @@
                                 <span asp-validation-for="CompanyName" class="text-danger small"></span>
                             </div>
                             <div class="col-md-6">
-                                <label asp-for="TaxId" class="form-label text-dark">Tax identification code (Optional)</label>
+                                <label asp-for="TaxId" class="form-label text-dark">Tax Id (Optional)</label>
                                 <div class="input-group input-group-lg">
                                     <input asp-for="TaxId" class="form-control form-control-dark" placeholder="H43814576S" />
                                 </div>
@@ -78,11 +78,12 @@
                         </div>
                     </form>
 
-                    <hr class="my-5 border-gray-200" />
+                    <hr class="my-3 border-gray-200" />
 
                     <div class="text-center">
+                        <i class="bi bi-info-circle me-1"></i>
                         <p class="text-sm text-secondary mb-0">
-                            <i class="bi bi-info-circle me-1"></i> You can also contact directly at this email address: managementsystem@info.com
+                             You can also contact directly at this email address: managementsystem@info.com
                         </p>
                     </div>
                 </div>

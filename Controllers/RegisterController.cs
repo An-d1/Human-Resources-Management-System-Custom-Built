@@ -32,6 +32,7 @@ namespace HRManagementSystem.Controllers
             _emailSender = emailSender;
         }
 
+        // New employee registration
         [HttpGet]
         public IActionResult Index()
         {
@@ -215,11 +216,50 @@ namespace HRManagementSystem.Controllers
 
         }
 
+        //
+
         #region Here goes the code for the company Inquiry/Creation that will be handled by the general Admin of the system
+        [AllowAnonymous]
+        public IActionResult InquirySuccessfulView()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpGet]
         public IActionResult CompanyRegister()
         {
             return View();
         }
-        #endregion
-    }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> SendCompanyApplication(RegisterCompanyViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var Company = new Company()
+                {
+                    Name = model.CompanyName,
+                    IsActive = false,
+                    CompanyEmail = model.Email,
+                    CompanyPhoneNumber = model.PhoneNumber,
+                };
+
+                if (model.TaxId != null)
+                {
+                    Company.TaxId = model.TaxId;
+                }
+
+                await _companyRepository.AddCompanyAsync(Company);
+
+                return RedirectToAction("InquirySuccessfulView", "Register");
+            }
+
+            return View(model);
+
+        }
+            #endregion
+
+        }
 }

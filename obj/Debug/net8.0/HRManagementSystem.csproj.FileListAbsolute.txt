@@ -300,7 +300,6 @@ C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\refint\HRManagementS
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\HRManagementSystem.pdb
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\HRManagementSystem.genruntimeconfig.cache
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\ref\HRManagementSystem.dll
-C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Andis\Desktop\HR-ManagementSystem\bin\Debug\net8.0\FluentEmail.Core.dll
 C:\Users\Andis\Desktop\HR-ManagementSystem\bin\Debug\net8.0\FluentEmail.Razor.dll
 C:\Users\Andis\Desktop\HR-ManagementSystem\bin\Debug\net8.0\FluentEmail.Smtp.dll
@@ -308,3 +307,4 @@ C:\Users\Andis\Desktop\HR-ManagementSystem\bin\Debug\net8.0\Microsoft.AspNetCore
 C:\Users\Andis\Desktop\HR-ManagementSystem\bin\Debug\net8.0\Microsoft.AspNetCore.Razor.Language.dll
 C:\Users\Andis\Desktop\HR-ManagementSystem\bin\Debug\net8.0\Microsoft.CodeAnalysis.Razor.dll
 C:\Users\Andis\Desktop\HR-ManagementSystem\bin\Debug\net8.0\RazorLight.dll
+C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

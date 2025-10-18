@@ -21,4 +21,10 @@ public class CompanyRepository : ICompanyRepository
 
         return companyName;
     }
+    public async Task<Company> AddCompanyAsync(Company company)
+    {
+        _context.Companies.Add(company);
+        await _context.SaveChangesAsync();
+        return company;
+    }
 }

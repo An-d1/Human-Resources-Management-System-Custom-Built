@@ -15,6 +15,5 @@ namespace HRManagementSystem.ViewModels
         [Required]
         public string PhoneNumber { get; set; } // This is needed only on the inquiry phase so the company can be contaced
 
-
     }
 }
