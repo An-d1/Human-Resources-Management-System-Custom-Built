@@ -1,5 +1,5 @@
 ﻿using HRManagementSystem.Models;
-using HRManagementSystem.ViewModels.Account;
+using HRManagementSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +39,10 @@ namespace HRManagementSystem.Controllers
                     else if (result.Succeeded && User.IsInRole("Admin"))
                     {
                         return RedirectToAction("Index", "Admin");
+                    }
+                    else if (result.Succeeded && User.IsInRole("MegaAdmin"))
+                    {
+                        return RedirectToAction("Index", "MegaAdmin");
                     }
                 }
                 ModelState.AddModelError(string.Empty, "Invalid login attempt.");

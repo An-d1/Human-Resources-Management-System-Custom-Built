@@ -1,7 +1,13 @@
 using HRManagementSystem.Data;
 using HRManagementSystem.Models;
+using HRManagementSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Mail;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HRManagementSystem
 {
@@ -11,9 +17,28 @@ namespace HRManagementSystem
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            #region configurations for the custom FluentEmail sender
+            // Reading smtp configuration for mailsending from appsettings.json
+            var smtp = builder.Configuration.GetSection("SmtpSettings");
+
+            builder.Services
+                .AddFluentEmail(smtp["User"]) // default sender
+                .AddRazorRenderer()
+                .AddSmtpSender(() => new SmtpClient(smtp["Host"], int.Parse(smtp["Port"]))
+                {
+                    Credentials = new NetworkCredential(smtp["User"], smtp["Password"]),
+                    EnableSsl = true
+                });
+            builder.Services.AddScoped<EmailServiceSender>();
+            #endregion
+
             // Add DbContext
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Model Services
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -33,7 +58,6 @@ namespace HRManagementSystem
                 options.LoginPath = "/Login/Index";          // Redirect to this when not logged in
                 options.AccessDeniedPath = "/Login/AccessDenied";
             });
-
 
             var app = builder.Build();
 
@@ -56,79 +80,166 @@ namespace HRManagementSystem
                 name: "default",
                 pattern: "{controller=Login}/{action=Index}/{id?}"); // So the user is always prompted with the log in page
 
+            using var scope = app.Services.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-            await SeedDataAsync(app); // to set the initial seed for the db
+            var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
+            var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
+
+            // Applies migrations
+            context.Database.Migrate();
+
+            // Avoids reseeding if company already exists
+            if (!context.Companies.Any())
+            {
+                // - Company 
+
+                var hrCompany = new Company
+                {
+                    Id = Guid.Parse("552809FC-7190-42B7-B666-B168851385C5"),
+                    Name = "HRManagementSystem",
+                    CompanyEmail = "hrmanagementsystem@gmail.com",
+                    CompanyPhoneNumber = "06811111111"
+                };
+
+                var company = new Company
+                {
+                    Id = Guid.Parse("a1111111-1111-1111-1111-111111111111"),
+                    Name = "***Company***",
+                    CompanyEmail = "prg@gmail.com",
+                    CompanyPhoneNumber = "0671111111"
+                };
+                context.Companies.AddRange(hrCompany, company);
+
+                // - Departments 
+                var hrDept = new Department { Id = Guid.Parse("b1111111-1111-1111-1111-111111111111"), Name = "HR", CompanyId = company.Id };
+                var itDept = new Department { Id = Guid.Parse("b2222222-2222-2222-2222-222222222222"), Name = "IT", CompanyId = company.Id };
+                var financeDept = new Department { Id = Guid.Parse("b3333333-3333-3333-3333-333333333333"), Name = "Finance", CompanyId = company.Id };
+
+                context.Departments.AddRange(hrDept, itDept, financeDept);
+
+                // ROLES via RoleManager 
+                var roles = new[] {"MegaAdmin", "Admin", "Manager", "Finance", "Employee" };
+                foreach (var roleName in roles)
+                {
+                    if (!await roleManager.RoleExistsAsync(roleName))
+                        await roleManager.CreateAsync(new IdentityRole<Guid>(roleName));
+                }
+
+
+                // - Users 
+                var hasher = new PasswordHasher<User>();
+
+                var megaAdmin = new User
+                {
+                    Id = Guid.Parse("c5555555-5555-5555-5555-555555555555"),
+                    UserName = "megaadmin@company.com",
+                    NormalizedUserName = "MEGAADMIN@COMPANY.COM",
+                    Email = "megaadmin@company.com",
+                    NormalizedEmail = "MEGAADMIN@COMPANY.COM",
+                    EmailConfirmed = true,
+                    FirstName = "SystemMega",
+                    LastName = "Admin",
+                    CompanyId = Guid.Parse("552809FC-7190-42B7-B666-B168851385C5"),
+                    PasswordHash = hasher.HashPassword(null!, "MegaAdmin123!"),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                };
+
+                var admin = new User
+                {
+                    Id = Guid.Parse("c1111111-1111-1111-1111-111111111111"),
+                    UserName = "admin@company.com",
+                    NormalizedUserName = "ADMIN@COMPANY.COM",
+                    Email = "admin@company.com",
+                    NormalizedEmail = "ADMIN@COMPANY.COM",
+                    EmailConfirmed = true,
+                    FirstName = "System",
+                    LastName = "Admin",
+                    CompanyId = company.Id,
+                    PasswordHash = hasher.HashPassword(null!, "Admin123!"),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                };
+
+                var manager = new User
+                {
+                    Id = Guid.Parse("c2222222-2222-2222-2222-222222222222"),
+                    UserName = "manager@company.com",
+                    NormalizedUserName = "MANAGER@COMPANY.COM",
+                    Email = "manager@company.com",
+                    NormalizedEmail = "MANAGER@COMPANY.COM",
+                    EmailConfirmed = true,
+                    FirstName = "John",
+                    LastName = "Manager",
+                    CompanyId = company.Id,
+                    PasswordHash = hasher.HashPassword(null!, "Manager123!"),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                };
+
+                var employee = new User
+                {
+                    Id = Guid.Parse("c3333333-3333-3333-3333-333333333333"),
+                    UserName = "employee@company.com",
+                    NormalizedUserName = "EMPLOYEE@COMPANY.COM",
+                    Email = "employee@company.com",
+                    NormalizedEmail = "EMPLOYEE@COMPANY.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Jane",
+                    LastName = "Employee",
+                    CompanyId = company.Id,
+                    PasswordHash = hasher.HashPassword(null!, "Employee123!"),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                };
+
+                var finance = new User
+                {
+                    Id = Guid.Parse("c4444444-4444-4444-4444-444444444444"),
+                    UserName = "finance@company.com",
+                    NormalizedUserName = "FINANCE@COMPANY.COM",
+                    Email = "finance@company.com",
+                    NormalizedEmail = "FINANCE@COMPANY.COM",
+                    EmailConfirmed = true,
+                    FirstName = "Fiona",
+                    LastName = "Finance",
+                    CompanyId = company.Id,
+                    PasswordHash = hasher.HashPassword(null!, "Finance123!"),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                };
+
+                context.Users.AddRange(megaAdmin, admin, manager, employee, finance);
+
+                // - EmployeeDepartment relationships 
+                context.EmployeeDepartments.AddRange(
+                    new EmployeeDepartment { UserId = admin.Id, DepartmentId = itDept.Id },
+                    new EmployeeDepartment { UserId = manager.Id, DepartmentId = hrDept.Id },
+                    new EmployeeDepartment { UserId = employee.Id, DepartmentId = itDept.Id },
+                    new EmployeeDepartment { UserId = finance.Id, DepartmentId = financeDept.Id }
+                );
+
+                // Save users & deps first so UserManager can attach them
+                await context.SaveChangesAsync();
+
+                // ASSIGN USERS TO ROLES via UserManager 
+                await userManager.AddToRoleAsync(megaAdmin, "MegaAdmin");
+                await userManager.AddToRoleAsync(admin, "Admin");
+                await userManager.AddToRoleAsync(manager, "Manager");
+                await userManager.AddToRoleAsync(finance, "Finance");
+                await userManager.AddToRoleAsync(employee, "Employee");
+
+                Console.WriteLine("Seeded: Company, Departments, Roles, Users, Role assignments, and EmployeeDepartment links.");
+            }
+            else
+            {
+                Console.WriteLine("Seed skipped — data already exists.");
+            }
+
             app.Run();
 
         }
-
-        public static async Task SeedDataAsync(WebApplication app)
-        {
-            using var scope = app.Services.CreateScope();
-            var sp = scope.ServiceProvider;
-
-            var context = sp.GetRequiredService<ApplicationDbContext>();
-            var userManager = sp.GetRequiredService<UserManager<User>>();
-            var roleManager = sp.GetRequiredService<RoleManager<IdentityRole<Guid>>>();
-
-            await context.Database.MigrateAsync();
-
-            // Company
-            var company = new Company { Id = Guid.NewGuid(), Name = "***Company*** Ltd" };
-            context.Companies.Add(company);
-            await context.SaveChangesAsync();
-
-            // Departments
-            var hr = new Department { Id = Guid.NewGuid(), Name = "Human Resources", CompanyId = company.Id };
-            var it = new Department { Id = Guid.NewGuid(), Name = "IT", CompanyId = company.Id };
-            var fin = new Department { Id = Guid.NewGuid(), Name = "Finance", CompanyId = company.Id };
-
-            context.Departments.AddRange(hr, it, fin);
-            await context.SaveChangesAsync();
-
-            // Roles
-            var adminRole = "Admin";
-            var employeeRole = "Employee";
-            if (!await roleManager.RoleExistsAsync(adminRole))
-                await roleManager.CreateAsync(new IdentityRole<Guid>(adminRole));
-            if (!await roleManager.RoleExistsAsync(employeeRole))
-                await roleManager.CreateAsync(new IdentityRole<Guid>(employeeRole));
-
-            // Admin
-            var adminEmail = "admin@hrportal.com";
-            var admin = new User
-            {
-                UserName = adminEmail,
-                Email = adminEmail,
-                FirstName = "System",
-                LastName = "Administrator",
-                EmailConfirmed = true,
-                CompanyId = company.Id,
-                DepartmentId = hr.Id
-            };
-            await userManager.CreateAsync(admin, "Admin@1234");
-            await userManager.AddToRoleAsync(admin, adminRole);
-
-            // Employee
-            var empEmail = "john.doe@hrportal.com";
-            var employee = new User
-            {
-                UserName = empEmail,
-                Email = empEmail,
-                FirstName = "John",
-                LastName = "Doe",
-                EmailConfirmed = true,
-                CompanyId = company.Id,
-                DepartmentId = it.Id
-            };
-            await userManager.CreateAsync(employee, "Employee@123");
-            await userManager.AddToRoleAsync(employee, employeeRole);
-
-            // Many-to-many link 
-            context.EmployeeDepartments.Add(new EmployeeDepartment { UserId = employee.Id, DepartmentId = it.Id });
-            await context.SaveChangesAsync();
-        }
-
 
     }
 }

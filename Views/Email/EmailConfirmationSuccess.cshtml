@@ -1,0 +1,142 @@
+﻿@{
+    ViewData["Title"] = "Account Confirmed!";
+}
+
+<link rel="stylesheet" href="~/css/Email.css" asp-append-version="true" />
+
+<div class="login-wrapper">
+    <div class="login-container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-12 col-sm-10 col-md-7 col-lg-5 col-xl-4">
+
+                <div class="login-card success-card">
+                    <div class="login-card-body">
+
+                        <!-- Success Icon -->
+                        <div class="success-icon-wrapper">
+                            <div class="success-icon">
+                                <i class="bi bi-check-circle-fill"></i>
+                            </div>
+                            <div class="success-pulse"></div>
+                        </div>
+
+                        <!-- Header Section -->
+                        <div class="login-header">
+                            <h1 class="login-title success-title">Account Activated!</h1>
+                            <p class="login-subtitle">Your SmartStaff account is now fully active and ready to use.</p>
+                        </div>
+
+                        <!-- Success Message Card -->
+                        <div class="success-message-box">
+                            <div class="success-message-icon">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <div class="success-message-content">
+                                <h3>Email Verified Successfully</h3>
+                                <p>
+                                    Thank you for confirming your email address. Your account has been verified and you now have full access to all employee resources and features.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Features Box -->
+                        <div class="features-access-box">
+                            <h4 class="features-title">You now have access to:</h4>
+                            <ul class="features-list">
+                                <li>
+                                    <i class="bi bi-clock-history fs-5"></i>
+                                    <span>Time tracking and attendance</span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-file-earmark-text fs-5"></i>
+                                    <span>Payslips and tax documents</span>
+                                </li>
+                                <li>
+                                    <i class="bi bi-calendar-check fs-5"></i>
+                                    <span>Leave requests and scheduling</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Login Button -->
+                        <div class="action-buttons">
+                            <a asp-controller="LogIn" asp-action="Index" class="btn-login-professional btn-success-professional">
+                                <i class="bi bi-box-arrow-in-right me-2"></i>
+                                Sign In to Your Account
+                            </a>
+                        </div>
+
+                        <!-- Help Section -->
+                        <div class="help-section">
+                            <p class="help-text">
+                                <i class="bi bi-question-circle me-1"></i>
+                                Need help getting started?
+                                <a asp-controller="Support" asp-action="Index" class="link-professional-bold">
+                                    Visit our help center
+                                </a>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="login-extra-info">
+                    <p>
+                        <i class="bi bi-shield-lock me-1"></i>
+                        Your account is secured with industry-standard encryption
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        // Add celebration animation on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const successIcon = document.querySelector('.success-icon');
+
+            // Trigger animations
+            setTimeout(() => {
+                successIcon.style.transform = 'scale(1.15) rotate(360deg)';
+                setTimeout(() => {
+                    successIcon.style.transform = 'scale(1) rotate(360deg)';
+                }, 400);
+            }, 200);
+
+            // Add confetti effect
+            createConfetti();
+
+            // Add shimmer effect to features
+            const features = document.querySelectorAll('.features-list li');
+            features.forEach((feature, index) => {
+                setTimeout(() => {
+                    feature.style.animation = 'shimmer 0.6s ease-out';
+                }, 600 + (index * 100));
+            });
+        });
+
+        function createConfetti() {
+            const colors = ['#059669', '#10b981', '#34d399', '#6ee7b7'];
+            const confettiCount = 40;
+
+            for (let i = 0; i < confettiCount; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + '%';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    document.querySelector('.login-wrapper').appendChild(confetti);
+
+                    setTimeout(() => confetti.remove(), 4000);
+                }, i * 40);
+            }
+        }
+    </script>
+}

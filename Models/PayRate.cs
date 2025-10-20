@@ -1,5 +1,5 @@
-﻿namespace HRManagementSystem.Models
-{
+﻿namespace HRManagementSystem.Models;
+
     public class PayRate
     {
         public Guid Id { get; set; }
@@ -10,4 +10,4 @@
         public DateOnly EffectiveFrom { get; set; }
         public DateTime EffectiveTo { get; set; }
     }
-}
+

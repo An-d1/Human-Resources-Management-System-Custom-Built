@@ -1,5 +1,5 @@
-﻿namespace HRManagementSystem.Models
-{
+﻿namespace HRManagementSystem.Models;
+
     public class Employee
     {
         public Guid Id { get; set; }
@@ -9,4 +9,4 @@
         public DateOnly? TerminationDate { get; set; }
         public bool isEmployed { get; set; } = true; // always true unless contract terminated is not null which sets it to false
     }
-}
+

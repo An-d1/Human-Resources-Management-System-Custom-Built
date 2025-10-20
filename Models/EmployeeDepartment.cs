@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace HRManagementSystem.Models
-{
+namespace HRManagementSystem.Models;
+
     public class EmployeeDepartment
     {
         public Guid UserId { get; set; }
@@ -10,4 +10,4 @@ namespace HRManagementSystem.Models
         public Department Department { get; set; } = default!;
     }
 
-}
+

@@ -1,5 +1,5 @@
-﻿namespace HRManagementSystem.Models
-{
+﻿namespace HRManagementSystem.Models;
+
     public class Department
     {
         public Guid Id { get; set; }
@@ -9,4 +9,4 @@
         public ICollection<EmployeeDepartment> EmployeeDepartments { get; set; } = new List<EmployeeDepartment>();
 
     }
-}
+
