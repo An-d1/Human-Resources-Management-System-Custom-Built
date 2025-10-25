@@ -14,8 +14,6 @@ namespace HRManagementSystem.Controllers
         private readonly UserManager<User> _userManager;
 
         private readonly EmailServiceSender _emailSender;
-
-        // everything is functional need to add authorization and stylidg
         public MegaAdminController(ICompanyRepository companyRepository, UserManager<User> userManager, EmailServiceSender emailServiceSender)
         {
             _companyRepository = companyRepository;
@@ -29,7 +27,7 @@ namespace HRManagementSystem.Controllers
             return View(companiesNotApprovedYet);
         }
         
-        // methods to accept or reject companies in the wait-list
+        // methods to accept or reject companies in the wait list
         [HttpPost]
         public async Task<IActionResult> ApproveCompany(Guid companyId)
         {
@@ -68,7 +66,7 @@ namespace HRManagementSystem.Controllers
                 // Generating token for email confirmation
                 var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
-                // Url builder to be sent to the users email address, along with the userId and the token so the user doesn't have to interact
+                // Url builder to be sent to the users email address
                 var confirmationLink = Url.Action("ConfirmEmail", "Email", new { userId = user.Id, token = token }, Request.Scheme);
 
                 var companyName = await _companyRepository.GetCompanyNameByCompanyIdAsync(company.Id);
