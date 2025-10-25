@@ -19,9 +19,11 @@ namespace HRManagementSystem.Controllers
         private readonly ApplicationDbContext _context;
         private readonly IUserRepository _userRepository;
         private readonly ICompanyRepository _companyRepository;
+        private readonly IEmployeeRepository _employeeRepository;
         private readonly EmailServiceSender _emailSender;
         public RegisterController(UserManager<User> userManager, SignInManager<User> signInManager,
             ApplicationDbContext context, IUserRepository userRepository, ICompanyRepository companyRepository,
+            IEmployeeRepository employeeRepository,
             EmailServiceSender emailSender)
 
         {
@@ -30,6 +32,7 @@ namespace HRManagementSystem.Controllers
             _context = context;
             _userRepository = userRepository;
             _companyRepository = companyRepository;
+            _employeeRepository = employeeRepository;
             _emailSender = emailSender;
         }
 
@@ -66,8 +69,22 @@ namespace HRManagementSystem.Controllers
 
                 if (result.Succeeded)
                 {
-                    var roleResult = await _userManager.AddToRoleAsync(user, model.Role);
+                    var employeeEntityFromNewUser = new Employee
+                    {
+                        UserId = user.Id,
+                        HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                        isEmployed = true,
+                    };
 
+                    var employee = await _employeeRepository.CreateAsync(employeeEntityFromNewUser);
+
+                    if (employee == null) 
+                    {
+                        return NotFound();
+                    }
+
+                    var roleResult = await _userManager.AddToRoleAsync(user, model.Role);
+                    
                     if (!roleResult.Succeeded)
                     {
                         ModelState.AddModelError("", "Could not assign role to user.");

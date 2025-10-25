@@ -1,5 +1,6 @@
 using HRManagementSystem.Data;
 using HRManagementSystem.Models;
+using HRManagementSystem.Models.Employee;
 using HRManagementSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -39,6 +40,7 @@ namespace HRManagementSystem
             // Model Services
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -47,7 +49,7 @@ namespace HRManagementSystem
             builder.Services.AddIdentity<User, IdentityRole<Guid>>(options =>
             {
                 options.Password.RequiredLength = 8;
-                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireNonAlphanumeric = true;
                 options.SignIn.RequireConfirmedAccount = true;
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -89,6 +91,7 @@ namespace HRManagementSystem
             // Applies migrations
             context.Database.Migrate();
 
+            // here goes the seed for the db
             // Avoids reseeding if company already exists
             if (!context.Companies.Any())
             {
@@ -216,6 +219,28 @@ namespace HRManagementSystem
                 };
 
                 context.Users.AddRange(megaAdmin, admin, manager, employee, finance);
+
+                // employee table that contains employee specific data
+                var managerFromUsers = new Employee
+                {
+                    UserId = manager.Id,
+                    HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    isEmployed = true,
+                };
+                var financeFromUsers = new Employee
+                {
+                    UserId = finance.Id,
+                    HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    isEmployed = true,
+                };
+                var employeeFromUsers = new Employee
+                {
+                    UserId = employee.Id,
+                    HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
+                    isEmployed = true,
+                };
+
+                context.Employees.AddRange(managerFromUsers, financeFromUsers, employeeFromUsers);
 
                 // - EmployeeDepartment relationships 
                 context.EmployeeDepartments.AddRange(
