@@ -30,6 +30,9 @@ namespace HRManagementSystem
                     EnableSsl = true
                 });
             builder.Services.AddScoped<EmailServiceSender>();
+
+            // Service to create secure random temporary passwords
+            builder.Services.AddScoped<TemporaryPasswordGenerator>();
             #endregion
 
             // Add DbContext

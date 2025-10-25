@@ -21,10 +21,12 @@ namespace HRManagementSystem.Controllers
         private readonly ICompanyRepository _companyRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly EmailServiceSender _emailSender;
+
+        private readonly TemporaryPasswordGenerator _temporaryPasswordGenerator;
         public RegisterController(UserManager<User> userManager, SignInManager<User> signInManager,
             ApplicationDbContext context, IUserRepository userRepository, ICompanyRepository companyRepository,
             IEmployeeRepository employeeRepository,
-            EmailServiceSender emailSender)
+            EmailServiceSender emailSender, TemporaryPasswordGenerator temporaryPasswordGenerator)
 
         {
             _userManager = userManager;
@@ -34,6 +36,7 @@ namespace HRManagementSystem.Controllers
             _companyRepository = companyRepository;
             _employeeRepository = employeeRepository;
             _emailSender = emailSender;
+            _temporaryPasswordGenerator = temporaryPasswordGenerator;
         }
 
         // New employee registration
@@ -64,8 +67,9 @@ namespace HRManagementSystem.Controllers
                     CompanyId = companyId.Value,
                     CreatedAt = DateTime.UtcNow
                 };
+                var temporaryPassword = _temporaryPasswordGenerator.GenerateRandomPassword();
 
-                var result = await _userManager.CreateAsync(user, model.Password); // Create
+                var result = await _userManager.CreateAsync(user, temporaryPassword); // Create
 
                 if (result.Succeeded)
                 {
@@ -97,7 +101,6 @@ namespace HRManagementSystem.Controllers
                     var confirmationLink = Url.Action("ConfirmEmail", "Email", new { userId = user.Id, token = token }, Request.Scheme);
 
                     var companyName = await _companyRepository.GetCompanyNameByCompanyIdAsync(companyId.Value);
-                    var temporaryPassword = model.Password;
                     #region the html email to be sent to the user
 
                     string subject = "Welcome to SmartStaff — Confirm and Activate Your Employee Account";
