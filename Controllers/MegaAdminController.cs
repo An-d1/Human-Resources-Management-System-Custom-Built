@@ -23,11 +23,11 @@ namespace HRManagementSystem.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var companiesNotApprovedYet = await _companyRepository.GetAllCompaniesWhereIsActiveFalseAsync();
+            var companiesNotApprovedYet = await _companyRepository.GetAllCompaniesWhereApprovalStatusNullAsync();
             return View(companiesNotApprovedYet);
         }
         
-        // Buttons to accept or reject companies in the wait-list
+        // methods to accept or reject companies in the wait-list
         [HttpPost]
         public async Task<IActionResult> ApproveCompany(Guid companyId)
         {
@@ -35,6 +35,7 @@ namespace HRManagementSystem.Controllers
             if (company != null)
             {
                 company.IsActive = true;
+                company.ApprovalStatus = true;
                 await _companyRepository.UpdateCompanyAsync(company);
             }
 
@@ -48,7 +49,7 @@ namespace HRManagementSystem.Controllers
                 CompanyId = company.Id
             };
 
-            var temporaryPassword = $"{company.Name}!@.3";
+            var temporaryPassword = $"{company.Name}A!@.3";
 
             var existing = await _userManager.FindByEmailAsync(user.Email);
             if (existing != null)
@@ -70,7 +71,6 @@ namespace HRManagementSystem.Controllers
 
                 var companyName = await _companyRepository.GetCompanyNameByCompanyIdAsync(company.Id);
 
-            #region the html email to be sent to the user
 
             #region the html email to be sent to the user
 
@@ -212,9 +212,6 @@ namespace HRManagementSystem.Controllers
             #endregion
 
 
-            #endregion
-
-
             await _emailSender.SendEmailAsync(user.Email, subject, htmlBody);
 
             return RedirectToAction("ConfirmationLinkWasSent", "Email");
@@ -227,11 +224,124 @@ namespace HRManagementSystem.Controllers
             var company = await _companyRepository.GetCompanyByIdAsync(companyId);
             if (company != null)
             {
-                await _companyRepository.DeleteCompanyAsync(company);
+                company.ApprovalStatus = false;
+                await _companyRepository.UpdateCompanyAsync(company);
+
+                // Send rejection email explaining the reason
+                var companyName = await _companyRepository.GetCompanyNameByCompanyIdAsync(company.Id);
+
+                #region the html email to be sent to the user
+
+                string subject = "Your SmartStaff Application Has Been Reviewed";
+                string htmlBody = $@"
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        :root {{
+                            --color-primary: #007bff;
+                            --color-primary-hover: #0056b3;
+                            --color-text: #343a40;
+                            --color-bg-light: #f8f9fa;
+                            --color-border: #e9ecef;
+                        }}
+
+                        body {{
+                            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                            background-color: var(--color-bg-light);
+                            color: var(--color-text);
+                            margin: 0;
+                            padding: 0;
+                        }}
+                        .container {{
+                            max-width: 600px;
+                            margin: 40px auto;
+                            padding: 30px;
+                            background-color: #ffffff;
+                            border-radius: 12px;
+                            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+                            text-align: center;
+                        }}
+                        .header {{
+                            border-bottom: 2px solid var(--color-primary);
+                            padding-bottom: 20px;
+                            margin-bottom: 20px;
+                        }}
+                        .header h1 {{
+                            color: var(--color-primary);
+                            font-size: 28px;
+                            margin: 0;
+                        }}
+                        .content {{
+                            padding: 10px 0;
+                            line-height: 1.7;
+                        }}
+                        .credentials-box {{
+                            background-color: var(--color-bg-light);
+                            border: 1px solid var(--color-border);
+                            border-radius: 8px;
+                            padding: 15px;
+                            margin: 20px 0;
+                            text-align: left;
+                            font-family: monospace;
+                            font-size: 15px;
+                        }}
+                        .button {{
+                            display: inline-block;
+                            padding: 14px 35px;
+                            margin: 30px 0;
+                            font-size: 17px;
+                            font-weight: 600;
+                            color: #ffffff;
+                            background-color: var(--color-primary);
+                            text-decoration: none;
+                            border-radius: 8px;
+                            transition: background-color 0.3s ease;
+                        }}
+                        .button:hover {{
+                            background-color: var(--color-primary-hover);
+                        }}
+                        .footer {{
+                            padding-top: 25px;
+                            border-top: 1px solid var(--color-border);
+                            font-size: 12px;
+                            color: #6c757d;
+                            line-height: 1.5;
+                        }}
+                        .disclaimer {{
+                            font-style: italic;
+                            margin-top: 20px;
+                            color: #adb5bd;
+                        }}
+                    </style>
+                </head>
+                    <body>
+                      <div class=""container"">
+                        <h2>Application Review Outcome</h2>
+                        <p>
+                          Hello <strong>{companyName}</strong>,
+                        </p>
+                        <p>
+                          One of our administrators has <strong>reviewed and therefore rejected your company application</strong> on <strong>SmartStaff</strong>.
+                        </p>
+                        <p>
+                          Unfortunately, this means your organization will not be granted access to the SmartStaff platform at this time.
+                          If you believe this decision was made in error or you wish to reapply, please contact our support team or submit a new application after addressing the feedback you received (if any).
+                        </p>
+                        <p>
+                          We appreciate your interest in joining SmartStaff and wish you success in your future endeavors.
+                        </p>
+                        <div class=""footer"">
+                          — The SmartStaff Team  
+                        </div>
+                      </div>
+                    </body>
+                </html>";
+
+                #endregion
+                await _emailSender.SendEmailAsync(company.CompanyEmail, subject, htmlBody);
             }
             return RedirectToAction("Index");
         }
-
-        //
     }
 }

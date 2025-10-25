@@ -25,6 +25,10 @@ public class CompanyRepository : ICompanyRepository
     public async Task DeleteCompanyAsync(Company company)
     {
         _context.Companies.Remove(company);
+    }
+
+    public async Task SaveChangesAsync()
+    {
         await _context.SaveChangesAsync();
     }
 
@@ -44,10 +48,10 @@ public class CompanyRepository : ICompanyRepository
         return company;
     }
 
-    public async Task<List<Company>> GetAllCompaniesWhereIsActiveFalseAsync()
+    public async Task<List<Company>> GetAllCompaniesWhereApprovalStatusNullAsync()
     {
         return await _context.Companies
-            .Where(c => c.IsActive == false)
+            .Where(c => c.ApprovalStatus == null) // gets all the companies with approvalStatus = null, which means pending application
             .ToListAsync();
     }
 

@@ -1,4 +1,4 @@
-﻿@model HRManagementSystem.ViewModels.LogInViewModel
+﻿@model HRManagementSystem.ViewModels.AdminViewModel
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
@@ -112,7 +112,7 @@
                     </div>
                     <div class="stat-content">
                         <span class="stat-label">Total Employees</span>
-                        <h2 class="stat-value"></h2>
+                        <h2 class="stat-value">@Model.EmployeeCount</h2>
                         <span class="stat-description">Registered in the system</span>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                     </div>
                     <div class="stat-content">
                         <span class="stat-label">New Hires (30d)</span>
-                        <h2 class="stat-value">12</h2>
+                        <h2 class="stat-value">@Model.NewHires</h2>
                         <span class="stat-description">Recently onboarded</span>
                     </div>
                 </div>

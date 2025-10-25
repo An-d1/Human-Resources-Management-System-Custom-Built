@@ -10,6 +10,7 @@ namespace HRManagementSystem.Models
         Task DeleteCompanyAsync(Company company);
         Task<string?> GetCompanyNameByCompanyIdAsync(Guid companyId);
         Task<Company> AddCompanyAsync(Company company);
-        Task<List<Company>> GetAllCompaniesWhereIsActiveFalseAsync();
+        Task<List<Company>> GetAllCompaniesWhereApprovalStatusNullAsync();
+        Task SaveChangesAsync();
     }
 }

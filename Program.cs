@@ -143,7 +143,8 @@ namespace HRManagementSystem
                     CompanyId = Guid.Parse("552809FC-7190-42B7-B666-B168851385C5"),
                     PasswordHash = hasher.HashPassword(null!, "MegaAdmin123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
                 var admin = new User
@@ -159,7 +160,8 @@ namespace HRManagementSystem
                     CompanyId = company.Id,
                     PasswordHash = hasher.HashPassword(null!, "Admin123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
                 var manager = new User
@@ -175,7 +177,8 @@ namespace HRManagementSystem
                     CompanyId = company.Id,
                     PasswordHash = hasher.HashPassword(null!, "Manager123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
                 var employee = new User
@@ -191,7 +194,8 @@ namespace HRManagementSystem
                     CompanyId = company.Id,
                     PasswordHash = hasher.HashPassword(null!, "Employee123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
                 var finance = new User
@@ -207,7 +211,8 @@ namespace HRManagementSystem
                     CompanyId = company.Id,
                     PasswordHash = hasher.HashPassword(null!, "Finance123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
                 context.Users.AddRange(megaAdmin, admin, manager, employee, finance);

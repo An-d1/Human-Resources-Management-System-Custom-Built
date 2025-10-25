@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Rewrite;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HRManagementSystem.Controllers
 {
@@ -52,13 +53,13 @@ namespace HRManagementSystem.Controllers
             {
                 var user = new User
                 {
-
                     FirstName = model.FirstName,
                     LastName = model.LastName,
                     Email = model.Email,
                     UserName = model.Email,
                     PhoneNumber = model.PhoneNumber,
-                    CompanyId = companyId.Value
+                    CompanyId = companyId.Value,
+                    CreatedAt = DateTime.UtcNow
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password); // Create
@@ -242,6 +243,7 @@ namespace HRManagementSystem.Controllers
                 {
                     Name = model.CompanyName,
                     IsActive = false,
+                    ApprovalStatus = null, // means pending
                     CompanyEmail = model.Email,
                     CompanyPhoneNumber = model.PhoneNumber,
                 };
@@ -251,6 +253,73 @@ namespace HRManagementSystem.Controllers
                     Company.TaxId = model.TaxId;
                 }
 
+                #region the html email to be sent to the user
+
+                string subject = "Your Company Application Has Been Received – SmartStaff";
+                string htmlBody = $@"
+                <!DOCTYPE html>
+                    <html>
+                    <head>
+                      <meta charset=""UTF-8"">
+                      <style>
+                        body {{
+                          font-family: 'Inter', Arial, sans-serif;
+                          color: #333;
+                          background-color: #f8f9fa;
+                          padding: 30px;
+                        }}
+                        .container {{
+                          max-width: 600px;
+                          margin: auto;
+                          background: #fff;
+                          border-radius: 10px;
+                          padding: 30px;
+                          box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                        }}
+                        h2 {{
+                          color: #222;
+                          font-weight: 600;
+                        }}
+                        p {{
+                          line-height: 1.6;
+                          font-size: 15px;
+                        }}
+                        .footer {{
+                          font-size: 13px;
+                          color: #777;
+                          margin-top: 25px;
+                          text-align: center;
+                        }}
+                      </style>
+                    </head>
+                    <body>
+                      <div class=""container"">
+                        <h2>Application Successfully Submitted</h2>
+                        <p>
+                          Hello <strong>{Company.Name}</strong>,
+                        </p>
+                        <p>
+                          We’ve successfully received your company application on <strong>SmartStaff</strong>.
+                        </p>
+                        <p>
+                          Our administrative team will carefully review your submission. You’ll receive an update via email once a decision has been made.  
+                          Please note that this process may take up to a few business days depending on the verification workload.
+                        </p>
+                        <p>
+                          Thank you for your interest in joining SmartStaff. We appreciate your patience and look forward to reviewing your application.
+                        </p>
+                        <div class=""footer"">
+                          — The SmartStaff Team  
+                          <br><a href=""https://smartstaff.app"" style=""color:#007bff;text-decoration:none;"">smartstaff.app</a>
+                        </div>
+                      </div>
+                    </body>
+                    </html>
+                    ";
+
+                #endregion
+                await _emailSender.SendEmailAsync(Company.CompanyEmail, subject, htmlBody);
+                
                 await _companyRepository.AddCompanyAsync(Company);
 
                 return RedirectToAction("InquirySuccessfulView", "Register");

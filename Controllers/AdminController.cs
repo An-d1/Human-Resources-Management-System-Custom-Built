@@ -10,18 +10,22 @@ namespace HRManagementSystem.Controllers
     public class AdminController : Controller
     {
         private readonly UserManager<User> _userManager;
-        public AdminController(UserManager<User> userManager)
+        private readonly IUserRepository _userRepository;
+        public AdminController(UserManager<User> userManager, IUserRepository userRepository)
         {
             _userManager = userManager;
+            _userRepository = userRepository;
         }
         public async Task<IActionResult> Index()
         {
             string userId = _userManager.GetUserId(User);
             var customUser = await _userManager.FindByIdAsync(userId);
             
-            var model = new LogInViewModel
+            var model = new AdminViewModel
             {
-                FirstName = customUser.FirstName
+                FirstName = customUser.FirstName,
+                EmployeeCount = await _userRepository.GetTheTotalNumberOfEmployeesUnderTheCompanyAsync(customUser.CompanyId),
+                NewHires = await _userRepository.GetRecentHiresInTheLast30DaysAsync(customUser.CompanyId),
             };
 
             return View(model);

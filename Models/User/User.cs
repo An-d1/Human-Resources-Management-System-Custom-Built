@@ -10,5 +10,6 @@ public class User : IdentityUser<Guid>
     public Guid CompanyId { get; set; }          
     public Company Company { get; set; } = default!;
     public ICollection<EmployeeDepartment> EmployeeDepartments { get; set; } = new List<EmployeeDepartment>();
+    public DateTime CreatedAt { get; set; }
 
 }
