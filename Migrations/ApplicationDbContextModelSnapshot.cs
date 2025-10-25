@@ -15,7 +15,6 @@ namespace HRManagementSystem.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
-#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
@@ -28,12 +27,9 @@ namespace HRManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-<<<<<<< HEAD
                     b.Property<bool?>("ApprovalStatus")
                         .HasColumnType("bit");
 
-=======
->>>>>>> origin/main
                     b.Property<string>("CompanyEmail")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -42,11 +38,10 @@ namespace HRManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
-                    b.Property<bool>("IsActive")
-=======
+                    b.Property<bool>("IsActive");
+
                     b.Property<bool?>("IsActive")
->>>>>>> origin/main
+
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -181,12 +176,9 @@ namespace HRManagementSystem.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-<<<<<<< HEAD
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-=======
->>>>>>> origin/main
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -522,7 +514,6 @@ namespace HRManagementSystem.Migrations
                 {
                     b.Navigation("EmployeeDepartments");
                 });
-#pragma warning restore 612, 618
         }
     }
 }

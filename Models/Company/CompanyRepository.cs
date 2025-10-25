@@ -12,7 +12,7 @@ public class CompanyRepository : ICompanyRepository
         _context = context; 
     }
 
-    public async Task<Company?> GetCompanyByIdAsync(Guid companyId)
+    public async Task<Company> GetCompanyByIdAsync(Guid companyId)
     {
         return await _context.Companies
         .FirstOrDefaultAsync(i => i.Id == companyId);

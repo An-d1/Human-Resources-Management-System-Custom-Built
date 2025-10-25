@@ -1,11 +1,13 @@
 ﻿using HRManagementSystem.Models;
 using HRManagementSystem.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HRManagementSystem.Controllers
 {
+    [Authorize(Roles = "MegaAdmin")]
     public class MegaAdminController : Controller
     {
         private readonly ICompanyRepository _companyRepository;

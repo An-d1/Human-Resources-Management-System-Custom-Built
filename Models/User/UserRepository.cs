@@ -12,7 +12,6 @@ namespace HRManagementSystem.Models;
         {
             _context = context;
         }
-<<<<<<< HEAD
 
         public async Task<int> GetTheTotalNumberOfEmployeesUnderTheCompanyAsync(Guid companyId)
         {
@@ -28,10 +27,7 @@ namespace HRManagementSystem.Models;
                 .CountAsync(u => u.CompanyId == companyId && u.CreatedAt >= dateThreshold);
         }
 
-    public async Task<Guid?> GetCompanyIdByUserIdAsync(Guid userId) // The id of the admin that is creating the user
-=======
         public async Task<Guid?> GetCompanyIdByUserIdAsync(Guid userId) // The id of the admin that is creating the user
->>>>>>> origin/main
         {
             var companyId = await _context.Users
                 .Where(u => u.Id == userId)
