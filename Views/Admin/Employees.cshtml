@@ -276,9 +276,16 @@
                                             <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.UserId" class="action-icon-btn action-edit" title="Edit">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            <button class="action-icon-btn action-delete" title="Delete" onclick="confirmDelete('@employee.UserId', '@employee.FirstName @employee.LastName')">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                            <form asp-action="TerminateEmployeeContract"
+                                                  asp-controller="Admin"
+                                                  method="post"
+                                                  class="d-inline">
+                                                <input type="hidden" name="userId" value="@employee.UserId" />
+                                                <button class="action-icon-btn action-view" title="Terminate Contract">
+                                                    <i class="bi bi-file-earmark-excel"></i>
+                                                </button>
+                                            </form>
+
                                         </div>
                                     </td>
                                 </tr>

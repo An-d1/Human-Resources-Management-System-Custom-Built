@@ -11,6 +11,18 @@ namespace HRManagementSystem.Models
         {
             _context = context;
         }
+
+        public async Task<Employee> FindEmployeeByIdAsync(string employeeId)
+        {
+            return await _context.Employees
+                .FirstOrDefaultAsync(e => e.UserId.ToString() == employeeId);
+        }
+        public async Task UpdateEmployeeAsync(Employee employee)
+        {
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<Employee> CreateAsync(Employee employee)
         {
             _context.Employees.Add(employee);

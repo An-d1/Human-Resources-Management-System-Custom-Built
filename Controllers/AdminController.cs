@@ -37,6 +37,7 @@ namespace HRManagementSystem.Controllers
             return View(model);
         }
 
+        // This Action loads and fills the employeeViewModel with the proper data from the database
         public async Task<IActionResult> Employees()
         {
             var currentUser = await _userManager.GetUserAsync(User); // Get the current user
@@ -72,6 +73,25 @@ namespace HRManagementSystem.Controllers
             }
             return View(modelList);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> TerminateEmployeeContract(string userId)
+        {
+            var currentEmployee = await _employeeRepository.FindEmployeeByIdAsync(userId);
+
+            if (currentEmployee == null)
+            {
+                return NotFound();
+            }
+
+            currentEmployee.IsEmployed = false;
+            currentEmployee.TerminationDate = DateOnly.FromDateTime(DateTime.Now);
+
+            await _employeeRepository.UpdateEmployeeAsync(currentEmployee);
+
+            return RedirectToAction("Employees");
+        }
+
 
     }
 }
