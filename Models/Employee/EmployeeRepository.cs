@@ -18,9 +18,11 @@ namespace HRManagementSystem.Models
             return employee;
         }
 
-        public async Task<IEnumerable<Employee>> ReturnAllEmployeesAsync()
+        public async Task<List<Employee>> ReturnAllEmployeesOfTheCompanyAsync(Guid companyId)
         {
-            return await _context.Employees.ToListAsync();
+            return await _context.Employees
+            .Where(e => e.User.CompanyId == companyId)
+            .ToListAsync();
         }
 
         public async Task<List<string>> GetDepartmentNamesByUserIdAsync(Guid userId)

@@ -39,7 +39,11 @@ namespace HRManagementSystem.Controllers
 
         public async Task<IActionResult> Employees()
         {
-            var employeesList = await _employeeRepository.ReturnAllEmployeesAsync();
+            var currentUser = await _userManager.GetUserAsync(User); // Get the current user
+            Guid adminId = currentUser.Id; // Get the current Admin Id
+            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(adminId); // Get his Id so it can be assigned as the employees Id also
+
+            var employeesList = await _employeeRepository.ReturnAllEmployeesOfTheCompanyAsync(companyId.Value);
             var modelList = new List<EmployeeViewModel>();
 
             foreach (var employee in employeesList)
