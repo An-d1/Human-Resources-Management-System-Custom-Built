@@ -15,6 +15,7 @@ namespace HRManagementSystem.Migrations
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
+#pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.20")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
@@ -38,10 +39,7 @@ namespace HRManagementSystem.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive");
-
-                    b.Property<bool?>("IsActive")
-
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
@@ -85,14 +83,14 @@ namespace HRManagementSystem.Migrations
                     b.Property<DateOnly>("HireDate")
                         .HasColumnType("date");
 
+                    b.Property<bool>("IsEmployed")
+                        .HasColumnType("bit");
+
                     b.Property<DateOnly?>("TerminationDate")
                         .HasColumnType("date");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("isEmployed")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -514,6 +512,7 @@ namespace HRManagementSystem.Migrations
                 {
                     b.Navigation("EmployeeDepartments");
                 });
+#pragma warning restore 612, 618
         }
     }
 }

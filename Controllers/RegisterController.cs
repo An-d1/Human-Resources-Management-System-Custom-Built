@@ -73,7 +73,7 @@ namespace HRManagementSystem.Controllers
                     {
                         UserId = user.Id,
                         HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                        isEmployed = true,
+                        IsEmployed = true,
                     };
 
                     var employee = await _employeeRepository.CreateAsync(employeeEntityFromNewUser);

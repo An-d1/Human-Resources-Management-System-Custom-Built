@@ -1,4 +1,6 @@
 ﻿using HRManagementSystem.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace HRManagementSystem.Models
 {
@@ -14,6 +16,20 @@ namespace HRManagementSystem.Models
             _context.Employees.Add(employee);
             await _context.SaveChangesAsync();
             return employee;
+        }
+
+        public async Task<IEnumerable<Employee>> ReturnAllEmployeesAsync()
+        {
+            return await _context.Employees.ToListAsync();
+        }
+
+        public async Task<List<string>> GetDepartmentNamesByUserIdAsync(Guid userId)
+        {
+            return await _context.EmployeeDepartments
+           .Where(ed => ed.UserId == userId)
+           .Include(ed => ed.Department) 
+           .Select(ed => ed.Department.Name)
+           .ToListAsync();
         }
 
     }

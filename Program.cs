@@ -1,6 +1,5 @@
 using HRManagementSystem.Data;
 using HRManagementSystem.Models;
-using HRManagementSystem.Models.Employee;
 using HRManagementSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -76,6 +75,7 @@ namespace HRManagementSystem
 
             app.UseRouting();
 
+            app.UseAuthentication();  
             app.UseAuthorization();
 
             app.MapControllerRoute(
@@ -225,19 +225,19 @@ namespace HRManagementSystem
                 {
                     UserId = manager.Id,
                     HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                    isEmployed = true,
+                    IsEmployed = true,
                 };
                 var financeFromUsers = new Employee
                 {
                     UserId = finance.Id,
                     HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                    isEmployed = true,
+                    IsEmployed = true,
                 };
                 var employeeFromUsers = new Employee
                 {
                     UserId = employee.Id,
                     HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                    isEmployed = true,
+                    IsEmployed = true,
                 };
 
                 context.Employees.AddRange(managerFromUsers, financeFromUsers, employeeFromUsers);
