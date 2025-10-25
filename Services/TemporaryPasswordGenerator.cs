@@ -17,7 +17,7 @@ namespace HRManagementSystem.Services
                 sb.Append(AllowedChars[b % AllowedChars.Length]);
             }
 
-            return sb.Append("!1").ToString();
+            return sb.Append("!1").ToString(); // It was added so the randomly generated password always contains an non-alphanumeric charachter (because that's a Identity req)
         }
     }
 }

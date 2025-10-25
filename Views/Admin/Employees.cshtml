@@ -170,7 +170,7 @@
                         <i class="bi bi-briefcase"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-number">@Model.Select(e => e.Role).Distinct().Count()</span>
+                        <span class="stat-number">@Model.Select(e => e.Departments).Distinct().Count()</span>
                         <span class="stat-text">Departments</span>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
                         <tbody id="employeeTableBody">
                             @foreach (var employee in Model)
                             {
-                                <tr class="employee-row" data-employee-id="@employee">
+                                <tr class="employee-row" data-employee-id="@employee.UserId">
                                     <td>
                                         <input type="checkbox" class="table-checkbox employee-checkbox">
                                     </td>

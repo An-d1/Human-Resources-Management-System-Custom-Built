@@ -16,7 +16,8 @@
                 const employeeEmail = row.querySelector('.employee-email')?.textContent.toLowerCase() || '';
                 const employeeRole = row.querySelector('.role-badge')?.textContent.toLowerCase() || '';
 
-                const matches = employeeId.includes(searchTerm) ||
+                const matches =
+                    employeeId.includes(searchTerm) ||
                     employeeName.includes(searchTerm) ||
                     employeeEmail.includes(searchTerm) ||
                     employeeRole.includes(searchTerm);
@@ -24,7 +25,7 @@
                 row.style.display = matches ? '' : 'none';
             });
 
-            // Show empty state if no results
+            // Show/hide empty state if no rows match
             updateEmptyState();
         });
     }
@@ -36,6 +37,7 @@
     if (selectAllCheckbox) {
         selectAllCheckbox.addEventListener('change', function () {
             employeeCheckboxes.forEach(checkbox => {
+                // only affect visible rows
                 if (checkbox.closest('.employee-row').style.display !== 'none') {
                     checkbox.checked = this.checked;
                 }
@@ -61,12 +63,29 @@
         );
 
         const checkedCount = visibleCheckboxes.filter(cb => cb.checked).length;
-        selectAllCheckbox.checked = checkedCount > 0 && checkedCount === visibleCheckboxes.length;
-        selectAllCheckbox.indeterminate = checkedCount > 0 && checkedCount < visibleCheckboxes.length;
+
+        selectAllCheckbox.checked =
+            checkedCount > 0 && checkedCount === visibleCheckboxes.length;
+
+        selectAllCheckbox.indeterminate =
+            checkedCount > 0 && checkedCount < visibleCheckboxes.length;
     }
 
-    // Update bulk action buttons
+    // Update bulk action buttons (placeholder for your future logic)
     function updateBulkActions() {
         const checkedCount = Array.from(employeeCheckboxes).filter(cb => cb.checked).length;
-        // You can add bulk action buttons here and show/hide based on checkedCount
+        // hook buttons enable/disable here if you add them
     }
+
+    // Update empty state visibility after filtering
+    function updateEmptyState() {
+        const anyVisible = Array.from(document.querySelectorAll('.employee-row'))
+            .some(r => r.style.display !== 'none');
+
+        const emptyStateEl = document.querySelector('.empty-state');
+        if (emptyStateEl) {
+            emptyStateEl.style.display = anyVisible ? 'none' : 'block';
+        }
+    }
+
+})();
