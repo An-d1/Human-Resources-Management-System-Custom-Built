@@ -43,7 +43,7 @@ namespace HRManagementSystem.Controllers
         {
             var currentUser = await _userManager.GetUserAsync(User); // Get the current user
             Guid adminId = currentUser.Id; // Get the current Admin Id
-            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(adminId); // Get his Id so it can be assigned as the employees Id also
+            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(adminId); // Get his Id so all employees related to the user can be found
 
             var employeesList = await _employeeRepository.ReturnAllEmployeesOfTheCompanyAsync(companyId.Value);
             var modelList = new List<EmployeeViewModel>();
@@ -93,6 +93,75 @@ namespace HRManagementSystem.Controllers
             return RedirectToAction("Employees");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> EmployeeDetails(string id)
+        {
+            // Fetch the employee (with User data included)
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound("Associated user not found for this employee.");
+            }
+
+            var employee = await _employeeRepository.FindEmployeeByIdAsync(id); // This is the same instance but just the employee table
+            // Build the ViewModel
+            var model = new EmployeeViewModel
+            {
+                UserId = user.Id.ToString(), // keep it string in the ViewModel
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Role = (await _userManager.GetRolesAsync(user)).FirstOrDefault(),
+                HireDate = employee.HireDate,
+                TerminationDate = employee.TerminationDate,
+                IsEmployed = employee.IsEmployed,
+                Departments = await _employeeRepository.GetDepartmentNamesByUserIdAsync(user.Id)
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteEmployee(string userId)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                return BadRequest("Missing user id.");
+            }
+
+            try
+            {
+                // Check that this employee exists first
+                var employee = await _employeeRepository.FindEmployeeByIdAsync(userId);
+                if (employee == null)
+                {
+                    return NotFound("Employee not found.");
+                }
+
+                // Delete the Identity user (this triggers cascade)
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user != null)
+                {
+                    var result = await _userManager.DeleteAsync(user);
+                    if (!result.Succeeded)
+                    {
+                        return BadRequest("Could not delete user account.");
+                    }
+                }
+
+                TempData["SuccessMessage"] = "Employee has been successfully deleted.";
+
+                return RedirectToAction("Employees", "Admin");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Delete failed: {ex.Message}");
+            }
+        }
+
 
     }
+
 }
+

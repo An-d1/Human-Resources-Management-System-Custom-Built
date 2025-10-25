@@ -1,0 +1,347 @@
+﻿@using HRManagementSystem.ViewModels
+@model EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<link rel="stylesheet" href="~/css/AdminDashboard.css" asp-append-version="true" />
+
+<div class="dashboard-wrapper">
+
+    <!-- Sidebar Navigation -->
+    <nav class="dashboard-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <i class="bi bi-briefcase-fill"></i>
+                <span>SmartStaff</span>
+            </div>
+            <span class="sidebar-badge">Admin</span>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="nav-item">
+                <a asp-controller="Admin" asp-action="Index" class="nav-link">
+                    <i class="bi bi-grid-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a asp-controller="Employee" asp-action="Index" class="nav-link">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Employees</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Payroll" asp-action="Index" class="nav-link">
+                    <i class="bi bi-cash-stack"></i>
+                    <span>Payroll</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Reports" asp-action="Index" class="nav-link">
+                    <i class="bi bi-file-earmark-bar-graph-fill"></i>
+                    <span>Reports</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="TimeTracking" asp-action="Index" class="nav-link">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Time Tracking</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Settings" asp-action="Index" class="nav-link">
+                    <i class="bi bi-gear-fill"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a asp-controller="LogIn" asp-action="Logout" class="btn-logout">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Sign Out</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <div class="dashboard-main">
+
+        <!-- Top Navigation Bar -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="sidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="header-welcome">
+                    <h1 class="header-title">Employee Profile</h1>
+                    <p class="header-subtitle">Full record for this employee</p>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="header-icon-btn">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+
+                <div class="dropdown">
+                    <button class="user-profile-dropdown" id="userDropdown" data-bs-toggle="dropdown">
+                        <div class="user-avatar">
+                            @Model.FirstName.Substring(0, 1)@Model.LastName.Substring(0, 1)
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">Admin User</span>
+                            <span class="user-email">admin@smartstaff.com</span>
+                        </div>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle me-2"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" asp-controller="LogIn" asp-action="Logout"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <main class="dashboard-content">
+
+            <!-- Header row: avatar + basic info + status + actions -->
+            <div class="content-card employees-table-card mb-4">
+                <div class="card-header-custom">
+                    <h3 class="card-title-custom">
+                        @Model.FirstName @Model.LastName
+                    </h3>
+                    <span class="employee-count-badge">
+                        ID: @Model.UserId
+                    </span>
+                </div>
+
+                <div class="employee-profile-head d-flex flex-wrap align-items-start gap-4 p-3">
+                    <div class="employee-avatar profile-avatar-lg">
+                        @Model.FirstName.Substring(0, 1)@Model.LastName.Substring(0, 1)
+                    </div>
+
+                    <div class="employee-profile-summary">
+                        <div class="mb-2">
+                            <span class="employee-name d-block fw-semibold">@Model.FirstName @Model.LastName</span>
+                            <span class="employee-email d-block text-muted">@Model.Email</span>
+                        </div>
+
+                        <div class="mb-2">
+                            <span class="role-badge role-@Model.Role.ToLower().Replace(" ", "-")">
+                                @Model.Role
+                            </span>
+                            @if (Model.IsEmployed)
+                            {
+                                <span class="status-badge status-active ms-2">
+                                    <i class="bi bi-check-circle-fill"></i> Active
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="status-badge status-inactive ms-2">
+                                    <i class="bi bi-x-circle-fill"></i> Inactive
+                                </span>
+                            }
+                        </div>
+
+                        <div class="text-muted small">
+                            <div>
+                                Hire Date:
+                                <strong>@Model.HireDate.ToString("MMM dd, yyyy")</strong>
+                                <span class="ms-1">
+                                    (@((DateTime.UtcNow.Date - Model.HireDate.ToDateTime(TimeOnly.MinValue)).Days) days ago)
+                                </span>
+                            </div>
+
+                            <div>
+                                Termination:
+                                @if (Model.TerminationDate != null)
+                                {
+                                    var termDateTime = Model.TerminationDate.Value.ToDateTime(TimeOnly.MinValue);
+                                    var daysSince = (DateTime.Now.Date - termDateTime.Date).Days;
+                                    <span>
+                                        <strong>@Model.TerminationDate.Value.ToString("MMM dd, yyyy")</strong>
+                                        <span class="ms-1">(@daysSince days ago)</span>
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted fst-italic">—</span>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ms-auto d-flex flex-column align-items-end gap-2">
+                        <a asp-controller="Employee"
+                           asp-action="Edit"
+                           asp-route-id="@Model.UserId"
+                           class="btn-add-employee d-inline-flex align-items-center">
+                            <i class="bi bi-pencil me-1"></i>
+                            <span>Edit Employee</span>
+                        </a>
+
+                        <form asp-controller="Admin"
+                              asp-action="TerminateEmployeeContract"
+                              method="post"
+                              class="d-inline">
+                            <input type="hidden" name="userId" value="@Model.UserId" />
+                            @if (Model.IsEmployed)
+                            {
+                                <button class="btn-export d-inline-flex align-items-center" title="Terminate Contract">
+                                    <i class="bi bi-file-earmark-excel me-1"></i>
+                                    <span>Terminate Employee</span>
+                                </button>
+                            }
+                            else
+                            {
+                                <button class="btn-export d-inline-flex align-items-center" disabled>
+                                    <i class="bi bi-file-earmark-excel me-1"></i>
+                                    <span>Already Terminated</span>
+                                </button>
+                            }
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Info Cards -->
+            <div class="employee-details-grid">
+
+                <!-- Employment Info -->
+                <div class="content-card employees-table-card mb-4">
+                    <div class="card-header-custom">
+                        <h3 class="card-title-custom">Employment Information</h3>
+                    </div>
+
+                    <div class="p-3">
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="text-muted small">Full Name</div>
+                                <div class="fw-semibold">@Model.FirstName @Model.LastName</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">Email</div>
+                                <div class="fw-semibold">@Model.Email</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">Role</div>
+                                <div>
+                                    <span class="role-badge role-@Model.Role.ToLower().Replace(" ", "-")">
+                                        @Model.Role
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">Status</div>
+                                <div>
+                                    @if (Model.IsEmployed)
+                                    {
+                                        <span class="status-badge status-active">
+                                            <i class="bi bi-check-circle-fill"></i> Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="status-badge status-inactive">
+                                            <i class="bi bi-x-circle-fill"></i> Inactive
+                                        </span>
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">Hire Date</div>
+                                <div class="date-info">
+                                    <span class="date-primary">@Model.HireDate.ToString("MMM dd, yyyy")</span>
+                                    <span class="date-secondary">
+                                        @((DateTime.UtcNow.Date - Model.HireDate.ToDateTime(TimeOnly.MinValue)).Days) days ago
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">Termination Date</div>
+                                @if (Model.TerminationDate != null)
+                                {
+                                    var termDateTime2 = Model.TerminationDate.Value.ToDateTime(TimeOnly.MinValue);
+                                    var daysSince2 = (DateTime.Now.Date - termDateTime2.Date).Days;
+
+                                    <div class="date-info">
+                                        <span class="date-primary">@Model.TerminationDate.Value.ToString("MMM dd, yyyy")</span>
+                                        <span class="date-secondary">@daysSince2 days ago</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-muted fst-italic">—</div>
+                                }
+                            </div>
+
+                            <div class="col-12">
+                                <div class="text-muted small">Departments</div>
+                                @if (Model.Departments != null && Model.Departments.Any())
+                                {
+                                    <div class="d-flex flex-wrap gap-1">
+                                        @foreach (var dept in Model.Departments)
+                                        {
+                                            <span class="badge rounded-pill bg-light text-dark border department-badge">
+                                                <i class="bi bi-diagram-3 me-1"></i>@dept
+                                            </span>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="text-muted fst-italic">No Department Assigned</div>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Danger Zone -->
+                <div class="content-card employees-table-card mb-5">
+                    <div class="card-header-custom">
+                        <h3 class="card-title-custom text-danger">Danger Zone</h3>
+                    </div>
+
+                    <div class="p-3">
+                        <p class="text-muted mb-3">
+                            Deleting an employee will permanently remove their account and associated access.
+                            This action cannot be undone.
+                        </p>
+
+                        <form asp-controller="Admin"
+                              asp-action="DeleteEmployee"
+                              method="post"
+                              class="d-inline">
+                            <input type="hidden" name="userId" value="@Model.UserId" />
+                            <button class="btn-export d-inline-flex align-items-center"
+                                    style="background-color:#dc3545; border-color:#dc3545; color:#fff;"
+                                    title="Delete Employee">
+                                <i class="bi bi-trash-fill me-1"></i>
+                                <span>Delete Employee</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </main>
+
+    </div>
+
+</div>

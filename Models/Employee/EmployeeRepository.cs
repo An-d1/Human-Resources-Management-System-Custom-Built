@@ -22,6 +22,12 @@ namespace HRManagementSystem.Models
             _context.Employees.Update(employee);
             await _context.SaveChangesAsync();
         }
+        public async Task DeleteEmployeeAsync(Employee employee)
+        {
+            _context.Employees.Remove(employee);
+            await _context.SaveChangesAsync();
+        }
+
 
         public async Task<Employee> CreateAsync(Employee employee)
         {
