@@ -1,87 +1,52 @@
-﻿:root {
-    --sidebar-width: 260px;
-    --sidebar-bg: #212529; /* Dark background for sidebar */
-    --header-bg: #ffffff; /* Light header for contrast */
-    --body-bg: #f4f7f9; /* Light gray background for main content */
-    --primary-color: #0d6efd; /* Bootstrap primary color */
+﻿/* Admin page tweaks that sit on top of LandingPage.css */
+
+.hero--compact {
+    min-height: auto;
+    padding-top: 140px; /* offset your fixed global navbar */
+    padding-bottom: 2.5rem;
+    text-align: left;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: var(--body-bg); /* Apply light body background */
-}
-
-.wrapper {
-    display: flex;
-    min-height: 100vh;
-}
-
-/* 1. Sidebar Styling */
-.sidebar {
-    width: var(--sidebar-width);
-    flex-shrink: 0;
-    background-color: var(--sidebar-bg);
-    color: rgba(255, 255, 255, 0.85);
-    padding: 1rem 0;
-    position: fixed;
-    height: 100vh;
-    overflow-y: auto;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-}
-
-    .sidebar a {
-        color: rgba(255, 255, 255, 0.7);
-        padding: 0.75rem 1.5rem;
-        display: block;
-        text-decoration: none;
-        transition: background-color 0.2s, color 0.2s;
+    .hero--compact .hero-content {
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
-        .sidebar a:hover {
-            color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.1);
-        }
+.hero-sub {
+    max-width: 820px;
+}
 
-    .sidebar .nav-link.active {
-        color: #ffffff;
-        background-color: var(--primary-color);
-        border-radius: 0.25rem;
-        margin: 0 1rem;
+.small-muted {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Use landing "feature-card" style as a reusable panel */
+.activity-card .list-group-item {
+    border-left: 0;
+    border-right: 0;
+}
+
+    .activity-card .list-group-item:first-child {
+        border-top: 0;
     }
 
-.sidebar-header {
-    padding: 1rem 1.5rem;
-    text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 1rem;
-}
-
-/* 2. Main Content Area Styling */
-.main-content {
-    margin-left: var(--sidebar-width);
-    flex-grow: 1;
-    padding: 0;
-}
-
-/* 3. Top Header Styling */
-.top-navbar {
-    background-color: var(--header-bg);
-    border-bottom: 1px solid #dee2e6;
-    padding: 0.75rem 2rem;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-}
-
-/* Dashboard Card Styling (Matching login-card's shadow/border style) */
-.dashboard-card {
-    border: none;
-    border-radius: 0.5rem;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s;
-}
-
-    .dashboard-card:hover {
-        transform: translateY(-2px);
+    .activity-card .list-group-item:last-child {
+        border-bottom: 0;
     }
+
+/* Ensure printable contrast for icons in feature tiles */
+.feature-card i {
+    line-height: 1;
+}
+
+/* Optional: tighten spacing on this page */
+.features#quick-actions {
+    padding-top: 4rem;
+}
+
+.dashboard-preview {
+    padding-top: 4rem;
+    padding-bottom: 6rem;
+}

@@ -1,0 +1,32 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.userprefs
+
+# Build folders
+bin/
+obj/
+
+# Log files
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Publish output
+/publish/
+
+# Secrets and environment configs
+appsettings.*.json
+*.env
+
+# User-specific files
+*.dbmdl
+*.jfm
+
+# Backup files
+*.bak
+*.orig

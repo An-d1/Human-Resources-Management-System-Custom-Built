@@ -3,8 +3,11 @@ using HRManagementSystem.Models;
 using HRManagementSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HRManagementSystem
 {
@@ -90,12 +93,23 @@ namespace HRManagementSystem
             if (!context.Companies.Any())
             {
                 // - Company 
+
+                var hrCompany = new Company
+                {
+                    Id = Guid.Parse("552809FC-7190-42B7-B666-B168851385C5"),
+                    Name = "HRManagementSystem",
+                    CompanyEmail = "hrmanagementsystem@gmail.com",
+                    CompanyPhoneNumber = "06811111111"
+                };
+
                 var company = new Company
                 {
                     Id = Guid.Parse("a1111111-1111-1111-1111-111111111111"),
-                    Name = "***Company***"
+                    Name = "***Company***",
+                    CompanyEmail = "prg@gmail.com",
+                    CompanyPhoneNumber = "0671111111"
                 };
-                context.Companies.Add(company);
+                context.Companies.AddRange(hrCompany, company);
 
                 // - Departments 
                 var hrDept = new Department { Id = Guid.Parse("b1111111-1111-1111-1111-111111111111"), Name = "HR", CompanyId = company.Id };
@@ -105,16 +119,33 @@ namespace HRManagementSystem
                 context.Departments.AddRange(hrDept, itDept, financeDept);
 
                 // ROLES via RoleManager 
-                var roles = new[] { "Admin", "Manager", "Finance", "Employee" };
+                var roles = new[] {"MegaAdmin", "Admin", "Manager", "Finance", "Employee" };
                 foreach (var roleName in roles)
                 {
                     if (!await roleManager.RoleExistsAsync(roleName))
                         await roleManager.CreateAsync(new IdentityRole<Guid>(roleName));
                 }
-               
+
 
                 // - Users 
                 var hasher = new PasswordHasher<User>();
+
+                var megaAdmin = new User
+                {
+                    Id = Guid.Parse("c5555555-5555-5555-5555-555555555555"),
+                    UserName = "megaadmin@company.com",
+                    NormalizedUserName = "MEGAADMIN@COMPANY.COM",
+                    Email = "megaadmin@company.com",
+                    NormalizedEmail = "MEGAADMIN@COMPANY.COM",
+                    EmailConfirmed = true,
+                    FirstName = "SystemMega",
+                    LastName = "Admin",
+                    CompanyId = Guid.Parse("552809FC-7190-42B7-B666-B168851385C5"),
+                    PasswordHash = hasher.HashPassword(null!, "MegaAdmin123!"),
+                    SecurityStamp = Guid.NewGuid().ToString(),
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
+                };
 
                 var admin = new User
                 {
@@ -129,7 +160,8 @@ namespace HRManagementSystem
                     CompanyId = company.Id,
                     PasswordHash = hasher.HashPassword(null!, "Admin123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
                 var manager = new User
@@ -145,7 +177,8 @@ namespace HRManagementSystem
                     CompanyId = company.Id,
                     PasswordHash = hasher.HashPassword(null!, "Manager123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
                 var employee = new User
@@ -161,7 +194,8 @@ namespace HRManagementSystem
                     CompanyId = company.Id,
                     PasswordHash = hasher.HashPassword(null!, "Employee123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
                 var finance = new User
@@ -177,10 +211,11 @@ namespace HRManagementSystem
                     CompanyId = company.Id,
                     PasswordHash = hasher.HashPassword(null!, "Finance123!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
-                    ConcurrencyStamp = Guid.NewGuid().ToString()
+                    ConcurrencyStamp = Guid.NewGuid().ToString(),
+                    CreatedAt = DateTime.UtcNow,
                 };
 
-                context.Users.AddRange(admin, manager, employee, finance);
+                context.Users.AddRange(megaAdmin, admin, manager, employee, finance);
 
                 // - EmployeeDepartment relationships 
                 context.EmployeeDepartments.AddRange(
@@ -194,6 +229,7 @@ namespace HRManagementSystem
                 await context.SaveChangesAsync();
 
                 // ASSIGN USERS TO ROLES via UserManager 
+                await userManager.AddToRoleAsync(megaAdmin, "MegaAdmin");
                 await userManager.AddToRoleAsync(admin, "Admin");
                 await userManager.AddToRoleAsync(manager, "Manager");
                 await userManager.AddToRoleAsync(finance, "Finance");

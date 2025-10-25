@@ -7,93 +7,211 @@
     ViewData["Title"] = "Register As A New Company";
 }
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mt-2">
+<link rel="stylesheet" href="~/css/Account.css" asp-append-version="true" />
 
-            <div class="card login-card shadow-lg border-0">
-                <div class="card-body p-5">
+<div class="login-wrapper">
+    <div class="login-container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
 
-                    <div class="text-center mb-2">
-                        <i class="bi bi-building text-primary" style="font-size: 3.5rem;"></i>
+                <div class="login-card">
+                    <div class="login-card-body">
+
+                        <!-- Logo/Icon Section -->
+                        <div class="login-icon-wrapper">
+                            <div class="login-icon register-icon">
+                                <i class="bi bi-building"></i>
+                    </div>
+                        </div>
+
+                        <!-- Header Section -->
+                        <div class="login-header">
+                            <h1 class="login-title">Register Your Business</h1>
+                            <p class="login-subtitle">Submit your company information and our team will review your application within 24-48 hours.</p>
                     </div>
 
-                    <div class="text-center mb-4">
-                        <h1 class="h3 header-title mb-1">
-                            Sign Up Your Business
-                        </h1>
-                        <p class="text-secondary fs-6 mb-0">This request will be handled by a member of our staff</p>
-                    </div>
+                        <!-- Form Section -->
+                        <form asp-action="SendCompanyApplication" method="post" novalidate class="login-form">
 
-                    <form asp-action="SendCompanyApplication" method="post" novalidate>
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger-professional" role="alert"></div>
 
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger py-2 mb-3" role="alert"></div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 mb-3 mb-md-0">
-                                <label asp-for="CompanyName" class="form-label text-dark">Company Name</label>
-                                <div class="input-group input-group-lg">
-                                    <input asp-for="CompanyName" class="form-control form-control-dark" placeholder="XYZ Company" />
+                            <!-- Company Name & Tax ID Row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group-professional">
+                                        <label asp-for="CompanyName" class="form-label-professional">Company Name</label>
+                                        <div class="input-wrapper">
+                                            <span class="input-icon-left">
+                                                <i class="bi bi-building"></i>
+                                            </span>
+                                            <input asp-for="CompanyName"
+                                                   class="form-control-professional"
+                                                   placeholder="XYZ Corporation"
+                                                   autocomplete="organization" />
                                 </div>
-                                <span asp-validation-for="CompanyName" class="text-danger small"></span>
+                                        <span asp-validation-for="CompanyName" class="validation-message"></span>
                             </div>
+                                </div>
                             <div class="col-md-6">
-                                <label asp-for="TaxId" class="form-label text-dark">Tax Id (Optional)</label>
-                                <div class="input-group input-group-lg">
-                                    <input asp-for="TaxId" class="form-control form-control-dark" placeholder="H43814576S" />
+                                    <div class="form-group-professional">
+                                        <label asp-for="TaxId" class="form-label-professional">Tax ID <span class="optional-badge">(Optional)</span></label>
+                                        <div class="input-wrapper">
+                                            <span class="input-icon-left">
+                                                <i class="bi bi-file-text"></i>
+                                            </span>
+                                            <input asp-for="TaxId"
+                                                   class="form-control-professional"
+                                                   placeholder="H43814576S" />
                                 </div>
-                                <span asp-validation-for="TaxId" class="text-danger small"></span>
+                                        <span asp-validation-for="TaxId" class="validation-message"></span>
                             </div>
                         </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label text-dark">Email Address</label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input asp-for="Email" type="email"
-                                       class="form-control form-control-dark"
-                                       placeholder="your.email@example.com" />
                             </div>
-                            <span asp-validation-for="Email" class="text-danger small"></span>
+
+                            <!-- Email Field -->
+                            <div class="form-group-professional">
+                                <label asp-for="Email" class="form-label-professional">Business Email Address</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input asp-for="Email"
+                                           type="email"
+                                           class="form-control-professional"
+                                           placeholder="contact@yourcompany.com"
+                                           autocomplete="email" />
+                            </div>
+                                <span asp-validation-for="Email" class="validation-message"></span>
                         </div>
 
-                        <div class="mb-3">
-                            <label asp-for="PhoneNumber" class="form-label text-dark">Phone Number</label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                                <input asp-for="PhoneNumber" type="number"
-                                       class="form-control form-control-dark"/>
+                            <!-- Phone Number Field -->
+                            <div class="form-group-professional">
+                                <label asp-for="PhoneNumber" class="form-label-professional">Contact Phone Number</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-telephone"></i>
+                                    </span>
+                                    <input asp-for="PhoneNumber"
+                                           type="tel"
+                                           class="form-control-professional"
+                                           placeholder="+1 (555) 123-4567"
+                                           autocomplete="tel" />
                             </div>
-                            <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
+                                <span asp-validation-for="PhoneNumber" class="validation-message"></span>
                         </div>
 
-                        <div class="d-grid gap-3">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="bi bi-send-check"></i> Send Inquiry
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn-login-professional">
+                                <i class="bi bi-send-check me-2"></i>
+                                Submit Application
                             </button>
 
-                            <a asp-controller="Home" asp-action="Index" class="btn btn-outline-secondary btn-lg">
-                                <i class="bi bi-arrow-left"></i> Go Back
+                            <!-- Back Button -->
+                            <a asp-controller="LogIn" asp-action="Index" class="btn-secondary-professional">
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Back to Login
                             </a>
-                        </div>
+
                     </form>
 
-                    <hr class="my-3 border-gray-200" />
+                        <!-- Divider -->
+                        <div class="login-divider">
+                            <span>Need assistance?</span>
+                        </div>
 
-                    <div class="text-center">
-                        <i class="bi bi-info-circle me-1"></i>
-                        <p class="text-sm text-secondary mb-0">
-                             You can also contact directly at this email address: managementsystem@info.com
+                        <!-- Footer Info -->
+                        <div class="login-footer">
+                            <div class="contact-info-box">
+                                <i class="bi bi-envelope-at"></i>
+                                <div>
+                                    <p class="contact-label">
+                                        smartstaff@help.com
                         </p>
                     </div>
                 </div>
+                            <div class="security-notice mt-3">
+                                <i class="bi bi-shield-check"></i>
+                                <span>Your information is secure and will only be used for registration purposes</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="login-extra-info">
+                    <p>Already have an account? <a asp-controller="LogIn" asp-action="Index" class="link-professional">Sign in here</a></p>
             </div>
 
         </div>
     </div>
 </div>
+</div>
 
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form.login-form');
+            if (!form) return;
+
+            const submitBtn = form.querySelector('.btn-login-professional');
+            const defaultHtml = '<i class="bi bi-send-check me-2"></i>Submit Application';
+            const loadingHtml = '<span class="spinner-border spinner-border-sm me-2"></span>Submitting...';
+
+            function setLoading(state) {
+                if (!submitBtn) return;
+                submitBtn.disabled = state;
+                submitBtn.innerHTML = state ? loadingHtml : defaultHtml;
+            }
+
+            form.addEventListener('submit', function (e) {
+                // Use jQuery Validate result (since _ValidationScriptsPartial is loaded)
+                const isValid = typeof $ !== 'undefined' && $(form).length ? $(form).valid() : form.checkValidity();
+
+                if (!isValid) {
+                    // Prevent the submit (jQuery would do it anyway), show spinner briefly, then reset
+                    e.preventDefault();
+                    setLoading(true);
+                    setTimeout(() => setLoading(false), 1500); // <-- 3 seconds
+                    return;
+                }
+
+                // Form is valid -> lock and let it post
+                setLoading(true);
+            });
+
+            // Optional: input focus/blur styling 
+            document.querySelectorAll('.form-control-professional').forEach(input => {
+                input.addEventListener('input', function () {
+                    this.classList.toggle('has-value', this.value.trim() !== '');
+                });
+                input.addEventListener('focus', function () {
+                    this.parentElement.classList.add('focused');
+                });
+                input.addEventListener('blur', function () {
+                    this.parentElement.classList.remove('focused');
+                });
+            });
+
+            // Optional: phone formatter 
+            const phoneInput = document.querySelector('input[type="tel"]');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        if (value.length <= 3) {
+                            e.target.value = value;
+                        } else if (value.length <= 6) {
+                            e.target.value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+                        } else {
+                            e.target.value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 }

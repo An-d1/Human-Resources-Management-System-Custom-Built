@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HRManagementSystem.ViewModels.Account
+namespace HRManagementSystem.ViewModels
 {
     public class LogInViewModel
     {

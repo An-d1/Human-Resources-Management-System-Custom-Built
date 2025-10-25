@@ -1,0 +1,89 @@
+﻿@model HRManagementSystem.ViewModels.LandingPageViewModel
+@{
+    ViewData["Title"] = "SmartStaff - Professional Staff Management";
+}
+
+<div class="gradient-bg"></div>
+<div class="floating-orb orb-1"></div>
+<div class="floating-orb orb-2"></div>
+
+<link rel="stylesheet" href="~/css/LandingPage.css" asp-append-version="true" />
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="badge fs-4">
+            <i class="bi bi-person-fill-lock"></i> Trusted by @Model.TotalCompanies<span>+</span> Companies
+        </div>
+
+        <h1>Staff Management <br /><span class="gradient-text">Made Simple</span></h1>
+
+        <p>
+            Save time, cut errors, and keep your team running smoothly — SmartStaff brings all your HR and payroll operations together in one place.
+        </p>
+
+        <div class="cta-buttons">
+            <a asp-controller="Register" asp-action="CompanyRegister" class="btn btn-primary fs-3"> Sign Up Now!</a>
+        </div>
+
+        <div class="trust-badges">
+            <span class="trust-badge fs-5"><span class="checkmark">✓</span> No credit card required</span>
+            <span class="trust-badge fs-5"><span class="checkmark">✓</span> 14-day free trial</span>
+            <span class="trust-badge fs-5"><span class="checkmark">✓</span> Cancel anytime</span>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-number">@Model.TotalEmployees</div>
+                <div class="stat-label">Employees Managed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">@Model.TotalPayrollProcessed</div>
+                <div class="stat-label">Payrolls Processed</div>
+            </div>
+            <div class="stat">
+                <div class="stat-number">@Model.AccuracyRate<span>%</span></div>
+                <div class="stat-label">Accuracy Rate</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features" id="features">
+    <h2 class="section-title">Everything You Need to Succeed</h2>
+    <p class="section-subtitle">Comprehensive payroll management tools designed to save time, reduce errors, and provide actionable insights.</p>
+    <div class="features-grid">
+        @foreach (var feature in Model.Features)
+        {
+            <div class="feature-card">
+                <div class="feature-icon">@Html.Raw(feature.Icon)</div>
+                <h3>@feature.Title</h3>
+                <p>@feature.Description</p>
+            </div>
+        }
+    </div>
+</section>
+
+<section class="dashboard-preview">
+    <h2 class="section-title">Intuitive Design Meets Powerful Features</h2>
+    <p class="section-subtitle">
+        Our clean, professional interface makes complex payroll operations simple while providing deep insights at a glance.
+    </p>
+    <div class="preview-container">
+        <div class="preview-image">
+            <div class="preview-glow"></div>
+            <span style="position: relative; z-index: 1; font-weight: 600;">Dashboard Preview</span>
+        </div>
+    </div>
+</section>
+
+<section class="cta-section">
+    <div class="cta-box">
+        <h2>Ready to Modernize Your Payroll?</h2>
+        <p>Join thousands of companies that have transformed their payroll operations. Start your free trial today and experience the difference.</p>
+        <a asp-controller="Register" asp-action="CompanyRegister" class="btn btn-white">Get Started Free →</a>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/landing.js"></script>
+}
