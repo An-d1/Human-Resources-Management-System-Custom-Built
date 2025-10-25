@@ -1,5 +1,9 @@
-﻿@{
+﻿<link rel="stylesheet" href="~/css/Email.css" asp-append-version="true" />
+
+@{
     ViewData["Title"] = "Confirmation Email Sent";
+    // Ensure the layout is used to get the gradient background and shared CSS
+    // Layout = "_Layout";
 }
 
 <link rel="stylesheet" href="~/css/Email.css" asp-append-version="true" />
@@ -16,7 +20,7 @@
                         <div class="success-icon-wrapper">
                             <div class="success-icon">
                                 <i class="bi bi-check-circle-fill"></i>
-                            </div>
+                    </div>
                             <div class="success-pulse"></div>
                         </div>
 
@@ -35,7 +39,7 @@
                                 <h3>Activation Link Dispatched</h3>
                                 <p>
                                     The account confirmation link and initial login instructions have been successfully sent to the employee's registered email address.
-                                </p>
+                    </p>
                             </div>
                         </div>
 
@@ -44,7 +48,7 @@
                             <i class="bi bi-info-circle"></i>
                             <p>
                                 The employee must click the activation link in their email to verify their account before they can sign in for the first time.
-                            </p>
+                    </p>
                         </div>
 
                         <!-- Next Steps Box -->
@@ -71,16 +75,16 @@
                             <a asp-controller="Home" asp-action="Index" class="btn-login-professional">
                                 <i class="bi bi-arrow-left-circle me-2"></i>
                                 Return to Dashboard
-                            </a>
+                        </a>
 
                             <a asp-controller="Register" asp-action="Index" class="btn-secondary-professional">
                                 <i class="bi bi-person-plus me-2"></i>
                                 Add Another Employee
                             </a>
-                        </div>
-
                     </div>
+
                 </div>
+            </div>
 
                 <!-- Additional Info -->
                 <div class="login-extra-info">
@@ -88,10 +92,10 @@
                         <i class="bi bi-clock-history me-1"></i>
                         The activation link will expire in 24 hours
                     </p>
-                </div>
-
-            </div>
         </div>
+
+    </div>
+</div>
     </div>
 </div>
 

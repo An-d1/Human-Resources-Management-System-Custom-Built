@@ -553,3 +553,22 @@
         transform: translateY(0);
     }
 }
+
+/* Custom Styling for Validation Alert */
+.custom-alert-danger {
+    /* Use a very light red background (softer than default Bootstrap red) */
+    background-color: #ffeaea;
+    /* Set text color to a darker red for readability */
+    color: #a00000;
+    /* Remove default border */
+    border: none;
+    /* Add a solid left border for a clean, modern look */
+    border-left: 5px solid #dc3545;
+    /* Ensure padding is tight */
+    padding: 0.75rem 1rem;
+}
+
+    /* Ensure the icon (bi-exclamation-circle-fill) is the standard danger color */
+    .custom-alert-danger .bi-exclamation-circle-fill {
+        color: #dc3545; /* Bootstrap Red */
+    }

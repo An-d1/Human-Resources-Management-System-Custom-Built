@@ -1,4 +1,8 @@
 ﻿@model HRManagementSystem.ViewModels.RegisterCompanyViewModel
+
+<!-- Link to the custom login styles -->
+<link rel="stylesheet" href="~/css/Account.css" asp-append-version="true" />
+
 @{
     ViewData["Title"] = "Register As A New Company";
 }
@@ -17,14 +21,14 @@
                         <div class="login-icon-wrapper">
                             <div class="login-icon register-icon">
                                 <i class="bi bi-building"></i>
-                            </div>
+                    </div>
                         </div>
 
                         <!-- Header Section -->
                         <div class="login-header">
                             <h1 class="login-title">Register Your Business</h1>
                             <p class="login-subtitle">Submit your company information and our team will review your application within 24-48 hours.</p>
-                        </div>
+                    </div>
 
                         <!-- Form Section -->
                         <form asp-action="SendCompanyApplication" method="post" novalidate class="login-form">
@@ -44,11 +48,11 @@
                                                    class="form-control-professional"
                                                    placeholder="XYZ Corporation"
                                                    autocomplete="organization" />
-                                        </div>
-                                        <span asp-validation-for="CompanyName" class="validation-message"></span>
-                                    </div>
                                 </div>
-                                <div class="col-md-6">
+                                        <span asp-validation-for="CompanyName" class="validation-message"></span>
+                            </div>
+                                </div>
+                            <div class="col-md-6">
                                     <div class="form-group-professional">
                                         <label asp-for="TaxId" class="form-label-professional">Tax ID <span class="optional-badge">(Optional)</span></label>
                                         <div class="input-wrapper">
@@ -58,10 +62,10 @@
                                             <input asp-for="TaxId"
                                                    class="form-control-professional"
                                                    placeholder="H43814576S" />
-                                        </div>
-                                        <span asp-validation-for="TaxId" class="validation-message"></span>
-                                    </div>
                                 </div>
+                                        <span asp-validation-for="TaxId" class="validation-message"></span>
+                            </div>
+                        </div>
                             </div>
 
                             <!-- Email Field -->
@@ -76,9 +80,9 @@
                                            class="form-control-professional"
                                            placeholder="contact@yourcompany.com"
                                            autocomplete="email" />
-                                </div>
-                                <span asp-validation-for="Email" class="validation-message"></span>
                             </div>
+                                <span asp-validation-for="Email" class="validation-message"></span>
+                        </div>
 
                             <!-- Phone Number Field -->
                             <div class="form-group-professional">
@@ -92,9 +96,9 @@
                                            class="form-control-professional"
                                            placeholder="+1 (555) 123-4567"
                                            autocomplete="tel" />
-                                </div>
-                                <span asp-validation-for="PhoneNumber" class="validation-message"></span>
                             </div>
+                                <span asp-validation-for="PhoneNumber" class="validation-message"></span>
+                        </div>
 
                             <!-- Submit Button -->
                             <button type="submit" class="btn-login-professional">
@@ -108,7 +112,7 @@
                                 Back to Login
                             </a>
 
-                        </form>
+                    </form>
 
                         <!-- Divider -->
                         <div class="login-divider">
@@ -122,9 +126,9 @@
                                 <div>
                                     <p class="contact-label">
                                         smartstaff@help.com
-                                    </p>
-                                </div>
-                            </div>
+                        </p>
+                    </div>
+                </div>
                             <div class="security-notice mt-3">
                                 <i class="bi bi-shield-check"></i>
                                 <span>Your information is secure and will only be used for registration purposes</span>
@@ -137,11 +141,11 @@
                 <!-- Additional Info -->
                 <div class="login-extra-info">
                     <p>Already have an account? <a asp-controller="LogIn" asp-action="Index" class="link-professional">Sign in here</a></p>
-                </div>
-
             </div>
+
         </div>
     </div>
+</div>
 </div>
 
 @section Scripts

@@ -1,7 +1,12 @@
 wwwroot\css\AccessDenied.css
+<<<<<<< HEAD
 wwwroot\css\Account.css
 wwwroot\css\AdminDashboard.css
+=======
+>>>>>>> origin/main
 wwwroot\css\site.css
+wwwroot\css\Admin.css
+wwwroot\css\Account.css
 wwwroot\favicon.ico
 wwwroot\js\site.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
@@ -61,6 +66,7 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+<<<<<<< HEAD
 wwwroot\css\Admin.css
 wwwroot\css\MegaAdmin.css
 wwwroot\css\NavBar.css
@@ -68,4 +74,6 @@ wwwroot\js\LandingPage.js
 wwwroot\css\LandingPage.css
 wwwroot\js\LogIn.js
 wwwroot\js\NavBar.js
+=======
+>>>>>>> origin/main
 wwwroot\css\Email.css
