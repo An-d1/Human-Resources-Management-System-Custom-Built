@@ -30,6 +30,7 @@ namespace HRManagementSystem.Controllers
             var model = new AdminViewModel
             {
                 FirstName = customUser.FirstName,
+                Email = customUser.Email,
                 EmployeeCount = await _userRepository.GetTheTotalNumberOfEmployeesUnderTheCompanyAsync(customUser.CompanyId),
                 NewHires = await _userRepository.GetRecentHiresInTheLast30DaysAsync(customUser.CompanyId),
             };

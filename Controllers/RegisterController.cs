@@ -97,83 +97,103 @@ namespace HRManagementSystem.Controllers
                     var confirmationLink = Url.Action("ConfirmEmail", "Email", new { userId = user.Id, token = token }, Request.Scheme);
 
                     var companyName = await _companyRepository.GetCompanyNameByCompanyIdAsync(companyId.Value);
-
+                    var temporaryPassword = model.Password;
                     #region the html email to be sent to the user
 
-                    string subject = "Welcome to SmartStaff — Confirm Your Employee Account";
+                    string subject = "Welcome to SmartStaff — Confirm and Activate Your Employee Account";
                     string htmlBody = $@"
                         <!DOCTYPE html>
                         <html>
                         <head>
                             <style>
-                                /* Define Professional Color Palette */
                                 :root {{
-                                    --color-primary: #007bff; /* Deep Blue for Action */
-                                    --color-primary-hover: #0056b3; /* Darker Blue for Hover */
-                                    --color-text: #343a40; /* Dark Gray for main text */
-                                    --color-bg-light: #f8f9fa; /* Very Light Gray background */
-                                    --color-border: #e9ecef; /* Light Border */
+                                    --color-primary: #007bff;
+                                    --color-primary-hover: #0056b3;
+                                    --color-text: #343a40;
+                                    --color-bg-light: #f8f9fa;
+                                    --color-border: #e9ecef;
                                 }}
-            
+
                                 body {{
-                                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; /* Added Inter for theme consistency */
-                                    background-color: var(--color-bg-light); /* Very light background */
-                                    color: var(--color-text); /* Dark text */
+                                    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                                    background-color: var(--color-bg-light);
+                                    color: var(--color-text);
                                     margin: 0;
                                     padding: 0;
                                 }}
+
                                 .container {{
                                     max-width: 600px;
                                     margin: 40px auto;
-                                    padding: 30px; /* Increased padding */
+                                    padding: 30px;
                                     background-color: #ffffff;
                                     border-radius: 12px;
-                                    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); /* Softer, slightly stronger shadow */
+                                    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
                                     text-align: center;
                                 }}
+
                                 .header {{
-                                    /* Change border color to a professional accent blue */
-                                    border-bottom: 2px solid var(--color-primary); 
+                                    border-bottom: 2px solid var(--color-primary);
                                     padding-bottom: 20px;
                                     margin-bottom: 20px;
                                 }}
+
                                 .header h1 {{
-                                    color: var(--color-primary); /* Use primary blue for the title */
+                                    color: var(--color-primary);
                                     font-size: 28px;
                                     margin: 0;
                                 }}
+
                                 .content {{
                                     padding: 10px 0;
-                                    line-height: 1.7; /* Better readability */
+                                    line-height: 1.7;
+                                    font-size: 16px;
+                                    text-align: left;
                                 }}
+
+                                .credentials-box {{
+                                    background-color: var(--color-bg-light);
+                                    border: 1px solid var(--color-border);
+                                    border-radius: 8px;
+                                    padding: 15px;
+                                    margin: 20px 0;
+                                    text-align: left;
+                                    font-family: monospace;
+                                    font-size: 15px;
+                                }}
+
                                 .button {{
                                     display: inline-block;
-                                    padding: 14px 35px; /* Larger button for tap targets */
-                                    margin: 30px 0; /* More vertical space */
+                                    padding: 14px 35px;
+                                    margin: 30px 0;
                                     font-size: 17px;
-                                    font-weight: 600; /* Semi-bold text */
+                                    font-weight: 600;
                                     color: #ffffff;
-                                    background-color: var(--color-primary); /* Primary blue */
+                                    background-color: var(--color-primary);
                                     text-decoration: none;
                                     border-radius: 8px;
                                     transition: background-color 0.3s ease;
-                                    /* Important for email rendering: inline styles for button */
-                                    mso-padding-alt: 14px 35px; 
+                                    mso-padding-alt: 14px 35px;
                                 }}
+
                                 .button:hover {{
                                     background-color: var(--color-primary-hover);
                                 }}
+
                                 .footer {{
                                     padding-top: 25px;
                                     border-top: 1px solid var(--color-border);
                                     font-size: 12px;
-                                    color: #6c757d; /* Muted dark gray */
+                                    color: #6c757d;
                                     line-height: 1.5;
+                                    text-align: center;
                                 }}
+
                                 .disclaimer {{
                                     font-style: italic;
                                     margin-top: 20px;
-                                    color: #adb5bd; /* Muted light gray for less important text */
+                                    color: #adb5bd;
+                                    font-size: 13px;
                                 }}
                             </style>
                         </head>
@@ -182,28 +202,54 @@ namespace HRManagementSystem.Controllers
                                 <div class='header'>
                                     <h1>Welcome to SmartStaff</h1>
                                 </div>
+
                                 <div class='content'>
                                     <p>Dear {user.FirstName},</p>
+
                                     <p>
-                                        An administrator from <strong>{companyName}</strong> has created an employee account for you on <strong>SmartStaff</strong>
-                                        using this email address. Please confirm your email below to **activate your account** and start using the portal.
+                                        An administrator from <strong>{companyName}</strong> has created an employee account for you on 
+                                        <strong>SmartStaff</strong> using this email address.
+                                        Please confirm your email to <strong>activate your account</strong> and access your account.
                                     </p>
-                
+
+                                    <p>Here are your temporary login credentials:</p>
+
+                                    <div class='credentials-box'>
+                                        <p><strong>Email (Username):</strong> {user.Email}</p>
+                                        <p><strong>Temporary Password:</strong> {temporaryPassword}</p>
+                                    </div>
+
+                                    <p>
+                                        Before logging in, you must confirm your account using the button below:
+                                    </p>
+
                                     <table role='presentation' cellspacing='0' cellpadding='0' border='0' align='center'>
                                         <tr>
                                             <td style='border-radius: 8px; background-color: #007bff; mso-padding-alt: 14px 35px;' align='center'>
-                                                 <a href='{confirmationLink}' class='button' 
-                                                    style='color: #ffffff; display: block; text-decoration: none; border-radius: 8px;'>
+                                                <a href='{confirmationLink}' class='button'
+                                                   style='color: #ffffff; display: block; text-decoration: none; border-radius: 8px;'>
                                                     Confirm My Account
-                                                 </a>
+                                                </a>
                                             </td>
                                         </tr>
                                     </table>
-                
+
+                                    <p>
+                                        <strong>Important:</strong> Once you’ve confirmed your email and logged in for the first time,
+                                        please <strong>change your password immediately</strong> to keep your account secure.
+                                    </p>
+
+                                    <p>
+                                        After activation, you’ll be able to access your personal dashboard, submit requests,
+                                        and view your employment information managed by your company.
+                                    </p>
+
                                     <p class='disclaimer'>
                                         If you did not expect this invitation or believe this was sent by mistake, please ignore this email.
+                                        Your account will not be active until confirmed.
                                     </p>
                                 </div>
+
                                 <div class='footer'>
                                     <p>&copy; 2025 SmartStaff. All rights reserved.</p>
                                     <p style='margin-top: 5px;'>Please do not reply to this automated email.</p>
@@ -211,6 +257,7 @@ namespace HRManagementSystem.Controllers
                             </div>
                         </body>
                         </html>";
+
                     #endregion
 
                     // The email service set up sending the confirmation link for the user

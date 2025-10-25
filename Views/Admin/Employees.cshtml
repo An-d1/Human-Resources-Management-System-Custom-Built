@@ -195,6 +195,7 @@
                                 <th>Role</th>
                                 <th>Department</th>
                                 <th>Hire Date</th>
+                                <th>Termination Date</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -246,7 +247,7 @@
                                         }
                                     </td>
 
-                                    <td>
+                                    <td class="text-nowrap">
                                         <div class="date-info">
                                             <span class="date-primary">@employee.HireDate.ToString("MMM dd, yyyy")</span>
                                             <span class="date-secondary">
@@ -254,6 +255,30 @@
                                             </span>
                                         </div>
                                     </td>
+                                    <td class="text-nowrap">
+                                        @if (employee.TerminationDate != null)
+                                        {
+                                            var termDateTime = employee.TerminationDate.Value.ToDateTime(TimeOnly.MinValue);
+                                            var daysSince = (DateTime.Now.Date - termDateTime.Date).Days;
+
+                                            <div class="date-info">
+                                                <span class="date-primary">
+                                                    @employee.TerminationDate.Value.ToString("MMM dd, yyyy")
+                                                </span>
+                                                <span class="date-secondary">
+                                                    @daysSince days ago
+                                                </span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="date-info">
+                                                <span class="date-primary"></span>
+                                                <span class="date-secondary text-muted">—</span>
+                                            </div>
+                                        }
+                                    </td>
+
                                     <td>
                                         @if (employee.IsEmployed)
                                         {
