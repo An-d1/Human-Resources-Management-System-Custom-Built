@@ -40,8 +40,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcRW1haWxDb25maXJtYXRpb25TdWNjZXNzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Andis/Desktop/HR-ManagementSystem/Views/Email/PasswordResetEmailLinkWasSent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcUGFzc3dvcmRSZXNldEVtYWlsTGlua1dhc1NlbnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Andis/Desktop/HR-ManagementSystem/Views/ForgotResetPassword/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9yZ290UmVzZXRQYXNzd29yZFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Andis/Desktop/HR-ManagementSystem/Views/ForgotResetPassword/PasswordResetSuccessPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9yZ290UmVzZXRQYXNzd29yZFxQYXNzd29yZFJlc2V0U3VjY2Vzc1BhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Andis/Desktop/HR-ManagementSystem/Views/ForgotResetPassword/ResetPasswordSetNewOne.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRm9yZ290UmVzZXRQYXNzd29yZFxSZXNldFBhc3N3b3JkU2V0TmV3T25lLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Andis/Desktop/HR-ManagementSystem/Views/Home/Index.cshtml]

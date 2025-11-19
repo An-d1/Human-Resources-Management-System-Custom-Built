@@ -1,6 +1,7 @@
 ﻿using HRManagementSystem.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using RazorLight.Internal;
 
 namespace HRManagementSystem.Controllers
 {
@@ -50,6 +51,13 @@ namespace HRManagementSystem.Controllers
         }
 
         public IActionResult EmailConfirmationSuccess()
+        {
+            return View();
+        }
+
+        // Password reset link was sent confirmation page
+
+        public IActionResult PasswordResetEmailLinkWasSent()
         {
             return View();
         }

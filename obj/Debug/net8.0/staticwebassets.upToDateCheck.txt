@@ -6,10 +6,8 @@ wwwroot\css\Email.css
 wwwroot\css\LandingPage.css
 wwwroot\css\MegaAdmin.css
 wwwroot\css\NavBar.css
-wwwroot\css\RegisterEmployee.css
 wwwroot\css\site.css
 wwwroot\favicon.ico
-wwwroot\js\EmployeePageInteractions.js
 wwwroot\js\LandingPage.js
 wwwroot\js\LogIn.js
 wwwroot\js\NavBar.js
@@ -71,3 +69,5 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
+wwwroot\js\EmployeePageInteractions.js
+wwwroot\css\RegisterEmployee.css
