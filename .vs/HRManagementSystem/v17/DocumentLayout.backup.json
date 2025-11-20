@@ -7,6 +7,18 @@
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:views\\admin\\departmentslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\departmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:viewmodels\\departmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:viewmodels\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\views\\admin\\employees.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:views\\admin\\employees.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -19,14 +31,6 @@
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:models\\employee\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\departmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:viewmodels\\departmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\models\\department\\idepartmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:models\\department\\idepartmentrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -37,10 +41,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\models\\employee\\employeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:models\\employee\\employeerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:viewmodels\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\adddepartmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -166,7 +166,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -187,45 +187,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "DepartmentViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\DepartmentViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\DepartmentViewModel.cs",
-              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\DepartmentViewModel.cs",
-              "RelativeToolTip": "ViewModels\\DepartmentViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-20T14:50:56.703Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "Controllers\\AdminController.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAQwKYAAACFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T13:24:36.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Employee.cs",
-              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Employee\\Employee.cs",
-              "RelativeDocumentMoniker": "Models\\Employee\\Employee.cs",
-              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Employee\\Employee.cs",
-              "RelativeToolTip": "Models\\Employee\\Employee.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T13:00:03.951Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
               "Title": "EmployeeDetails.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\EmployeeDetails.cshtml",
               "RelativeDocumentMoniker": "Views\\Admin\\EmployeeDetails.cshtml",
@@ -238,7 +199,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Employees.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\Employees.cshtml",
               "RelativeDocumentMoniker": "Views\\Admin\\Employees.cshtml",
@@ -257,10 +218,70 @@
               "RelativeDocumentMoniker": "Views\\Admin\\DepartmentsList.cshtml",
               "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\DepartmentsList.cshtml",
               "RelativeToolTip": "Views\\Admin\\DepartmentsList.cshtml",
-              "ViewState": "AgIAAJwAAAAAAAAAAAAAAKcAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAK4AAAAAAAAAAAAAALIAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-11-20T10:52:04.571Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DepartmentViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\DepartmentViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\DepartmentViewModel.cs",
+              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\DepartmentViewModel.cs",
+              "RelativeToolTip": "ViewModels\\DepartmentViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T14:50:56.703Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EmployeeViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\EmployeeViewModel.cs",
+              "RelativeDocumentMoniker": "ViewModels\\EmployeeViewModel.cs",
+              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\EmployeeViewModel.cs",
+              "RelativeToolTip": "ViewModels\\EmployeeViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T13:34:50.725Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAAJ8AAAAAAAAAAAAiwLAAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T13:24:36.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Employee\\Employee.cs",
+              "RelativeDocumentMoniker": "Models\\Employee\\Employee.cs",
+              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Employee\\Employee.cs",
+              "RelativeToolTip": "Models\\Employee\\Employee.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T13:00:03.951Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Bookmark",
@@ -268,7 +289,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "IDepartmentRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Department\\IDepartmentRepository.cs",
               "RelativeDocumentMoniker": "Models\\Department\\IDepartmentRepository.cs",
@@ -281,7 +302,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "DepartmentRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Department\\DepartmentRepository.cs",
               "RelativeDocumentMoniker": "Models\\Department\\DepartmentRepository.cs",
@@ -294,7 +315,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "EmployeeRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Employee\\EmployeeRepository.cs",
               "RelativeDocumentMoniker": "Models\\Employee\\EmployeeRepository.cs",
@@ -303,19 +324,6 @@
               "ViewState": "AgIAAA8AAAAAAAAAAAAowCoAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-25T13:00:30.069Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "EmployeeViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\EmployeeViewModel.cs",
-              "RelativeDocumentMoniker": "ViewModels\\EmployeeViewModel.cs",
-              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\EmployeeViewModel.cs",
-              "RelativeToolTip": "ViewModels\\EmployeeViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T13:34:50.725Z",
               "EditorCaption": ""
             },
             {
@@ -369,14 +377,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-25T11:41:52.485Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",

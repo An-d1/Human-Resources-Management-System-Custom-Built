@@ -1,0 +1,58 @@
+﻿@{
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+}
+
+<nav class="dashboard-sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-brand">
+            <i class="bi bi-briefcase-fill"></i>
+            <span>SmartStaff</span>
+        </div>
+        <span class="sidebar-badge">Admin</span>
+    </div>
+
+    <ul class="sidebar-nav">
+        <li class="nav-item @(currentController == "Admin" && currentAction == "Index" ? "active" : "")">
+            <a asp-controller="Admin" asp-action="Index" class="nav-link">
+                <i class="bi bi-grid-fill"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li class="nav-item @(currentController == "Admin" && currentAction == "Employees" ? "active" : "")">
+            <a asp-controller="Admin" asp-action="Employees" class="nav-link">
+                <i class="bi bi-people-fill"></i>
+                <span>Employees</span>
+            </a>
+        </li>
+
+        <li class="nav-item @(currentController == "Admin" && currentAction == "DepartmentsList" ? "active" : "")">
+            <a asp-controller="Admin" asp-action="DepartmentsList" class="nav-link">
+                <i class="bi bi-building"></i>
+                <span>Departments</span>
+            </a>
+        </li>
+
+        <li class="nav-item @(currentController == "Reports" && currentAction == "Index" ? "active" : "")">
+            <a asp-controller="Reports" asp-action="Index" class="nav-link">
+                <i class="bi bi-file-earmark-bar-graph-fill"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+
+        <li class="nav-item @(currentController == "TimeTracking" && currentAction == "Index" ? "active" : "")">
+            <a asp-controller="TimeTracking" asp-action="Index" class="nav-link">
+                <i class="bi bi-clock-history"></i>
+                <span>Time Tracking</span>
+            </a>
+        </li>
+
+        <li class="nav-item @(currentController == "Settings" && currentAction == "Index" ? "active" : "")">
+            <a asp-controller="Settings" asp-action="Index" class="nav-link">
+                <i class="bi bi-gear-fill"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
+</nav>

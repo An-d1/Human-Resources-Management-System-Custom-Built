@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\views\\shared\\_adminsidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:views\\shared\\_adminsidebar.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\views\\admin\\departmentslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:views\\admin\\departmentslist.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\departmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:viewmodels\\departmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:controllers\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:viewmodels\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\views\\admin\\employees.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -25,6 +25,14 @@
     {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\views\\admin\\employeedetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:views\\admin\\employeedetails.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\departmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:viewmodels\\departmentviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\viewmodels\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:viewmodels\\employeeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\models\\employee\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -49,10 +57,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\controllers\\departmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:controllers\\departmentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|solutionrelative:views\\admin\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0E436B75-A096-458E-8071-2DCEDCF4819F}|HRManagementSystem.csproj|c:\\users\\andis\\desktop\\hr-managementsystem\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -166,7 +170,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -186,16 +190,80 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_AdminSidebar.cshtml",
+              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Shared\\_AdminSidebar.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_AdminSidebar.cshtml",
+              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Shared\\_AdminSidebar.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_AdminSidebar.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T16:09:28.827Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DepartmentsList.cshtml",
+              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\DepartmentsList.cshtml",
+              "RelativeDocumentMoniker": "Views\\Admin\\DepartmentsList.cshtml",
+              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\DepartmentsList.cshtml",
+              "RelativeToolTip": "Views\\Admin\\DepartmentsList.cshtml",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAUwCkAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T10:52:04.571Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\AdminController.cs",
+              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
+              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\AdminController.cs",
+              "RelativeToolTip": "Controllers\\AdminController.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAawGYAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-25T13:24:36.968Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 5,
               "Title": "EmployeeDetails.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\EmployeeDetails.cshtml",
               "RelativeDocumentMoniker": "Views\\Admin\\EmployeeDetails.cshtml",
               "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\EmployeeDetails.cshtml",
               "RelativeToolTip": "Views\\Admin\\EmployeeDetails.cshtml",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAEcBAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAAACcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-25T18:05:45.11Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Admin\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\Index.cshtml",
+              "RelativeToolTip": "Views\\Admin\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-10-25T11:13:06.624Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
@@ -205,27 +273,14 @@
               "RelativeDocumentMoniker": "Views\\Admin\\Employees.cshtml",
               "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\Employees.cshtml",
               "RelativeToolTip": "Views\\Admin\\Employees.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAEwKYAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-10-25T11:39:02.902Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DepartmentsList.cshtml",
-              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\DepartmentsList.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\DepartmentsList.cshtml",
-              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\DepartmentsList.cshtml",
-              "RelativeToolTip": "Views\\Admin\\DepartmentsList.cshtml",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAAALIAAAAyAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-20T10:52:04.571Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "DepartmentViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\DepartmentViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\DepartmentViewModel.cs",
@@ -238,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
               "Title": "EmployeeViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\EmployeeViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\EmployeeViewModel.cs",
@@ -251,20 +306,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AdminController.cs",
-              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\AdminController.cs",
-              "RelativeDocumentMoniker": "Controllers\\AdminController.cs",
-              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\AdminController.cs",
-              "RelativeToolTip": "Controllers\\AdminController.cs",
-              "ViewState": "AgIAAJ8AAAAAAAAAAAAiwLAAAAA8AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-25T13:24:36.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 8,
               "Title": "Employee.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Employee\\Employee.cs",
               "RelativeDocumentMoniker": "Models\\Employee\\Employee.cs",
@@ -276,20 +318,8 @@
               "EditorCaption": ""
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "IDepartmentRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Department\\IDepartmentRepository.cs",
               "RelativeDocumentMoniker": "Models\\Department\\IDepartmentRepository.cs",
@@ -302,7 +332,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 10,
               "Title": "DepartmentRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Department\\DepartmentRepository.cs",
               "RelativeDocumentMoniker": "Models\\Department\\DepartmentRepository.cs",
@@ -315,7 +345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "EmployeeRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Employee\\EmployeeRepository.cs",
               "RelativeDocumentMoniker": "Models\\Employee\\EmployeeRepository.cs",
@@ -328,7 +358,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "AddDepartmentViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\AddDepartmentViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\AddDepartmentViewModel.cs",
@@ -341,7 +371,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "DepartmentController.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\DepartmentController.cs",
               "RelativeDocumentMoniker": "Controllers\\DepartmentController.cs",
@@ -354,20 +384,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Admin\\Index.cshtml",
-              "ToolTip": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\Index.cshtml",
-              "RelativeToolTip": "Views\\Admin\\Index.cshtml",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAEwC4AAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-10-25T11:13:06.624Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -380,7 +397,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "IEmployeeRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Employee\\IEmployeeRepository.cs",
               "RelativeDocumentMoniker": "Models\\Employee\\IEmployeeRepository.cs",
@@ -393,7 +410,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "Data\\ApplicationDbContext.cs",
@@ -406,7 +423,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "UserRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\User\\UserRepository.cs",
               "RelativeDocumentMoniker": "Models\\User\\UserRepository.cs",
@@ -419,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Register\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\Register\\Index.cshtml",
@@ -432,7 +449,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "AddDepartmentView.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Admin\\AddDepartmentView.cshtml",
               "RelativeDocumentMoniker": "Views\\Admin\\AddDepartmentView.cshtml",
@@ -445,7 +462,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "RegisterEmployeeViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\RegisterEmployeeViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\RegisterEmployeeViewModel.cs",
@@ -458,7 +475,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "RegisterController.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\RegisterController.cs",
               "RelativeDocumentMoniker": "Controllers\\RegisterController.cs",
@@ -471,7 +488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "IUserRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\User\\IUserRepository.cs",
               "RelativeDocumentMoniker": "Models\\User\\IUserRepository.cs",
@@ -484,7 +501,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\User\\User.cs",
               "RelativeDocumentMoniker": "Models\\User\\User.cs",
@@ -497,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "AdminViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\AdminViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\AdminViewModel.cs",
@@ -510,7 +527,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "PasswordResetSuccessPage.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\ForgotResetPassword\\PasswordResetSuccessPage.cshtml",
               "RelativeDocumentMoniker": "Views\\ForgotResetPassword\\PasswordResetSuccessPage.cshtml",
@@ -522,7 +539,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "ResetPasswordSetNewOne.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\ForgotResetPassword\\ResetPasswordSetNewOne.cshtml",
               "RelativeDocumentMoniker": "Views\\ForgotResetPassword\\ResetPasswordSetNewOne.cshtml",
@@ -535,7 +552,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "ResetPasswordViewModel.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\ViewModels\\ResetPasswordViewModel.cs",
               "RelativeDocumentMoniker": "ViewModels\\ResetPasswordViewModel.cs",
@@ -547,7 +564,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "ForgotResetPasswordController.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\ForgotResetPasswordController.cs",
               "RelativeDocumentMoniker": "Controllers\\ForgotResetPasswordController.cs",
@@ -560,7 +577,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "PasswordResetEmailLinkWasSent.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\Email\\PasswordResetEmailLinkWasSent.cshtml",
               "RelativeDocumentMoniker": "Views\\Email\\PasswordResetEmailLinkWasSent.cshtml",
@@ -572,7 +589,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "EmailController.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\EmailController.cs",
               "RelativeDocumentMoniker": "Controllers\\EmailController.cs",
@@ -584,7 +601,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "ForgotPassword.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\ForgotResetPassword\\ForgotPassword.cshtml",
               "RelativeDocumentMoniker": "Views\\ForgotResetPassword\\ForgotPassword.cshtml",
@@ -596,7 +613,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "AdminDashboard.css",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\wwwroot\\css\\AdminDashboard.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\AdminDashboard.css",
@@ -608,7 +625,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 33,
               "Title": "EmployeePageInteractions.js",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\wwwroot\\js\\EmployeePageInteractions.js",
               "RelativeDocumentMoniker": "wwwroot\\js\\EmployeePageInteractions.js",
@@ -620,7 +637,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 34,
               "Title": "TemporaryPasswordGenerator.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Services\\TemporaryPasswordGenerator.cs",
               "RelativeDocumentMoniker": "Services\\TemporaryPasswordGenerator.cs",
@@ -632,7 +649,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 35,
               "Title": "CompanyRepository.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Models\\Company\\CompanyRepository.cs",
               "RelativeDocumentMoniker": "Models\\Company\\CompanyRepository.cs",
@@ -644,7 +661,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 36,
               "Title": "MegaAdminController.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Controllers\\MegaAdminController.cs",
               "RelativeDocumentMoniker": "Controllers\\MegaAdminController.cs",
@@ -656,7 +673,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 37,
               "Title": "RegisterEmployee.css",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\wwwroot\\css\\RegisterEmployee.css",
               "RelativeDocumentMoniker": "wwwroot\\css\\RegisterEmployee.css",
@@ -668,7 +685,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 38,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Views\\MegaAdmin\\Index.cshtml",
               "RelativeDocumentMoniker": "Views\\MegaAdmin\\Index.cshtml",
@@ -680,7 +697,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 39,
               "Title": "ApplicationDbContextModelSnapshot.cs",
               "DocumentMoniker": "C:\\Users\\Andis\\Desktop\\HR-ManagementSystem\\Migrations\\ApplicationDbContextModelSnapshot.cs",
               "RelativeDocumentMoniker": "Migrations\\ApplicationDbContextModelSnapshot.cs",
