@@ -64,7 +64,7 @@ namespace HRManagementSystem.Controllers
                     Email = model.Email,
                     UserName = model.Email,
                     PhoneNumber = model.PhoneNumber,
-                    CompanyId = companyId.Value,
+                    CompanyId = companyId,
                     CreatedAt = DateTime.UtcNow
                 };
                 var temporaryPassword = _temporaryPasswordGenerator.GenerateRandomPassword();
@@ -100,7 +100,7 @@ namespace HRManagementSystem.Controllers
                     // Url builder to be sent to the users email address, along with the userId and the token so the user doesn't have to interact
                     var confirmationLink = Url.Action("ConfirmEmail", "Email", new { userId = user.Id, token = token }, Request.Scheme);
 
-                    var companyName = await _companyRepository.GetCompanyNameByCompanyIdAsync(companyId.Value);
+                    var companyName = await _companyRepository.GetCompanyNameByCompanyIdAsync(companyId);
                     #region the html email to be sent to the user
 
                     string subject = "Welcome to SmartStaff — Confirm and Activate Your Employee Account";

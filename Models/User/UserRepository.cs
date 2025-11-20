@@ -27,14 +27,15 @@ namespace HRManagementSystem.Models;
                 .CountAsync(u => u.CompanyId == companyId && u.CreatedAt >= dateThreshold);
         }
 
-        public async Task<Guid?> GetCompanyIdByUserIdAsync(Guid userId) // The id of the admin that is creating the user
+        public async Task<Guid> GetCompanyIdByUserIdAsync(Guid userId)
         {
+            // gets the companyId
             var companyId = await _context.Users
                 .Where(u => u.Id == userId)
                 .Select(u => u.CompanyId)
                 .FirstOrDefaultAsync();
 
-            return companyId == Guid.Empty ? null : companyId;
+            return companyId;
         }
-    }
+}
 

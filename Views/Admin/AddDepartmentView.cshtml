@@ -1,0 +1,108 @@
+﻿@model HRManagementSystem.ViewModels.AddDepartmentViewModel
+@{
+    ViewData["Title"] = "Add Department";
+}
+
+<link rel="stylesheet" href="~/css/RegisterEmployee.css" asp-append-version="true" />
+
+<div class="login-wrapper">
+    <div class="login-container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+                <div class="login-card">
+                    <div class="login-card-body">
+
+                        <div class="login-icon-wrapper">
+                            <div class="login-icon register-employee-icon">
+                                <i class="bi bi-building-add"></i>
+                            </div>
+                        </div>
+
+                        <div class="login-header">
+                            <h1 class="login-title">Add Department</h1>
+                            <p class="login-subtitle">Create a new department for your organization.</p>
+                        </div>
+
+                        <form asp-action="AddDepartment" method="post" novalidate class="login-form">
+
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger-professional" role="alert"></div>
+
+                            <div class="form-group-professional">
+                                <label asp-for="DepartmentName" class="form-label-professional">Department Name</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-diagram-3"></i>
+                                    </span>
+                                    <input asp-for="DepartmentName"
+                                           class="form-control-professional"
+                                           placeholder="e.g. Human Resources"
+                                           autocomplete="off" />
+                                </div>
+                                <span asp-validation-for="DepartmentName" class="validation-message"></span>
+                            </div>
+
+                            <button type="submit" class="btn-login-professional mt-4">
+                                <i class="bi bi-plus-circle-fill me-2"></i>
+                                Create Department
+                            </button>
+
+                            <a asp-action="Index" class="btn-secondary-professional">
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Back to List
+                            </a>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 1. Input Animation Logic (Keep labels floating if text exists)
+            const inputs = document.querySelectorAll('.form-control-professional');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        this.classList.add('has-value');
+                    } else {
+                        this.classList.remove('has-value');
+                    }
+                });
+
+                // Check on load in case of validation error return
+                if (input.value.trim() !== '') {
+                    input.classList.add('has-value');
+                }
+
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('focused');
+                });
+            });
+
+            // 2. Button Spinner Logic
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const submitBtn = this.querySelector('.btn-login-professional');
+                    if (submitBtn && form.checkValidity()) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+                    }
+                });
+            }
+        });
+    </script>
+}

@@ -3,7 +3,6 @@ using HRManagementSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HRManagementSystem.Controllers
 {
@@ -11,16 +10,17 @@ namespace HRManagementSystem.Controllers
     public class AdminController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IUserRepository _userRepository;
+        private readonly IDepartmentRepository _departmentRepository;
+
 
         private readonly IEmployeeRepository _employeeRepository;
-        public AdminController(UserManager<User> userManager, RoleManager<IdentityRole<Guid>> roleManager, IUserRepository userRepository, IEmployeeRepository employeeRepository)
+        public AdminController(UserManager<User> userManager, IUserRepository userRepository, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
         {
             _userManager = userManager;
-            _roleManager = roleManager;
             _userRepository = userRepository;
             _employeeRepository = employeeRepository;
+            _departmentRepository = departmentRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -42,10 +42,9 @@ namespace HRManagementSystem.Controllers
         public async Task<IActionResult> Employees()
         {
             var currentUser = await _userManager.GetUserAsync(User); // Get the current user
-            Guid adminId = currentUser.Id; // Get the current Admin Id
-            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(adminId); // Get his Id so all employees related to the user can be found
+            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(currentUser.Id); // Get his company Id so all employees related to the user can be found
 
-            var employeesList = await _employeeRepository.ReturnAllEmployeesOfTheCompanyAsync(companyId.Value);
+            var employeesList = await _employeeRepository.ReturnAllEmployeesOfTheCompanyAsync(companyId);
             var modelList = new List<EmployeeViewModel>();
 
             foreach (var employee in employeesList)
@@ -67,7 +66,7 @@ namespace HRManagementSystem.Controllers
                     Departments = await _employeeRepository.GetDepartmentNamesByUserIdAsync(user.Id),
                     HireDate = employee.HireDate,
                     TerminationDate = employee.TerminationDate,
-                    IsEmployed = employee.IsEmployed
+                    IsEmployed = employee.IsEmployed,
                 };
 
                 modelList.Add(model);
@@ -107,7 +106,7 @@ namespace HRManagementSystem.Controllers
             // Build the ViewModel
             var model = new EmployeeViewModel
             {
-                UserId = user.Id.ToString(), // keep it string in the ViewModel
+                UserId = user.Id.ToString(), // string
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -160,7 +159,65 @@ namespace HRManagementSystem.Controllers
             }
         }
 
+        // here goes the code for the department
 
+        public async Task<IActionResult> DepartmentsList() // to show all the departments , view
+        {
+            var currentUser = await _userManager.GetUserAsync(User); // Get the current user
+            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(currentUser.Id); // Get his company Id so all departments related to the user can be found
+
+            var departmentsList = await _departmentRepository.GetAllDepartmentsOfTheCompanyAsync(companyId);
+            var modelList = new List<DepartmentViewModel>();
+
+            foreach (var department in departmentsList)
+            {
+
+                var model = new DepartmentViewModel
+                {
+                    DepartmentId = department.Id.ToString(),
+                    DepartmentName = department.Name,
+                };
+
+                modelList.Add(model);
+            }
+
+            return View(modelList);
+        }
+
+        [HttpGet]
+        public IActionResult AddDepartmentView()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddDepartment(AddDepartmentViewModel departmentViewModel)
+        {
+            var currentUser = await _userManager.GetUserAsync(User); // Get the current user
+
+            if (currentUser == null)
+            {
+                return Challenge(); // forces them to log in again
+            }
+
+            Guid adminsCompanyId = await _userRepository.GetCompanyIdByUserIdAsync(currentUser.Id); // Get his company Id so all employees related to the user can be found
+
+            if (ModelState.IsValid)
+            {
+                Department department = new Department();
+                {
+                    department.Id = new Guid();
+                    department.Name = departmentViewModel.DepartmentName;
+                    department.CompanyId = adminsCompanyId;
+                };
+
+                await _departmentRepository.AddDepartmentWithAdminsCompanyIdAsync(department);
+
+                return RedirectToAction("Index");
+            }
+
+            return View(departmentViewModel);
+        }
     }
 
 }

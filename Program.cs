@@ -3,12 +3,8 @@ using HRManagementSystem.Models;
 using HRManagementSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net;
 using System.Net.Mail;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-
 namespace HRManagementSystem
 {
     public class Program
@@ -43,6 +39,7 @@ namespace HRManagementSystem
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
