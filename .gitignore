@@ -1,3 +1,4 @@
+
 # Visual Studio files
 .vs/
 *.suo
@@ -9,12 +10,35 @@
 bin/
 obj/
 
+# wwwroot library files
+wwwroot/lib/
+
+# Publish profiles
+Properties/PublishProfiles/
+
+# EF migrations temp files
+*.migrations
+
 # Log files
 *.log
 
 # Temporary files
 *.tmp
 *.temp
+
+# Backup files
+*.bak
+*.orig
+
+# Rider / IntelliJ-based IDEs
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Cache files
+*.cache
 
 # Publish output
 /publish/
@@ -23,10 +47,9 @@ obj/
 appsettings.*.json
 *.env
 
-# User-specific files
+# Database design files
 *.dbmdl
 *.jfm
 
-# Backup files
-*.bak
-*.orig
+# Node
+node_modules/
