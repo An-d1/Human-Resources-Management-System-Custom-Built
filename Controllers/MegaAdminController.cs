@@ -14,11 +14,15 @@ namespace HRManagementSystem.Controllers
         private readonly UserManager<User> _userManager;
 
         private readonly EmailServiceSender _emailSender;
-        public MegaAdminController(ICompanyRepository companyRepository, UserManager<User> userManager, EmailServiceSender emailServiceSender)
+
+        private readonly TemporaryPasswordGenerator _temporaryPasswordGenerator;
+        public MegaAdminController(ICompanyRepository companyRepository, UserManager<User> userManager, EmailServiceSender emailServiceSender,
+            TemporaryPasswordGenerator temporaryPasswordGenerator)
         {
             _companyRepository = companyRepository;
             _userManager = userManager;
             _emailSender = emailServiceSender;
+            _temporaryPasswordGenerator = temporaryPasswordGenerator;
         }
 
         public async Task<IActionResult> Index()
@@ -49,7 +53,7 @@ namespace HRManagementSystem.Controllers
                 CompanyId = company.Id
             };
 
-            var temporaryPassword = $"{company.Name}A!@.3";
+            var temporaryPassword = _temporaryPasswordGenerator.GenerateRandomPassword();
 
             var existing = await _userManager.FindByEmailAsync(user.Email);
             if (existing != null)

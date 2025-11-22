@@ -1,134 +1,166 @@
 ﻿@model HRManagementSystem.ViewModels.RegisterEmployeeViewModel
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-<!-- Link to the custom login styles -->
-<link rel="stylesheet" href="~/css/Account.css" asp-append-version="true" />
-
 @{
     ViewData["Title"] = "Register New Employee";
 }
 
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 col-md-8 col-lg-6 mt-2">
+<link rel="stylesheet" href="~/css/RegisterEmployee.css" asp-append-version="true" />
 
-            <div class="card login-card shadow-lg border-0">
-                <div class="card-body p-5">
+<div class="login-wrapper">
+    <div class="login-container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
 
-                    <div class="text-center mb-2">
-                        <i class="bi bi-person-plus-fill text-primary" style="font-size: 3.5rem;"></i>
-                    </div>
+                <div class="login-card">
+                    <div class="login-card-body">
 
-                    <div class="text-center mb-4">
-                        <h1 class="h3 header-title mb-1">New Employee Registration</h1>
-                        <p class="text-secondary fs-6 mb-0">Admin use only. Create a new account for the employee.</p>
-                    </div>
-
-                    <form asp-action="CreateNewUserAccountFromAdmin" method="post" novalidate>
-
-                        <div asp-validation-summary="ModelOnly" class="alert custom-alert-danger py-2 mb-3" role="alert">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-exclamation-circle-fill me-2 fs-5"></i>
-                                <strong class="small">Invalid login attempt.</strong>
+                        <!-- Logo/Icon Section -->
+                        <div class="login-icon-wrapper">
+                            <div class="login-icon register-employee-icon">
+                                <i class="bi bi-person-plus-fill"></i>
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 mb-3 mb-md-0">
-                                <label asp-for="FirstName" class="form-label text-dark">First Name</label>
-                                <div class="input-group input-group-lg">
-                                    <input asp-for="FirstName" class="form-control form-control-dark" placeholder="John" />
+                        <!-- Header Section -->
+                        <div class="login-header">
+                            <h1 class="login-title">New Employee Registration</h1>
+                            <p class="login-subtitle">Admin use only. Create a new employee account with temporary credentials.</p>
+                        </div>
+
+                        <!-- Form Section -->
+                        <form asp-action="CreateNewUserAccountFromAdmin" method="post" novalidate class="login-form">
+
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger-professional" role="alert"></div>
+
+                            <!-- First Name & Last Name Row -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group-professional">
+                                        <label asp-for="FirstName" class="form-label-professional">First Name</label>
+                                        <div class="input-wrapper">
+                                            <span class="input-icon-left">
+                                                <i class="bi bi-person"></i>
+                                            </span>
+                                            <input asp-for="FirstName"
+                                                   class="form-control-professional"
+                                                   placeholder="John"
+                                                   autocomplete="given-name" />
+                                        </div>
+                                        <span asp-validation-for="FirstName" class="validation-message"></span>
+                                    </div>
                                 </div>
-                                <span asp-validation-for="FirstName" class="text-danger small"></span>
-                            </div>
-                            <div class="col-md-6">
-                                <label asp-for="LastName" class="form-label text-dark">Last Name</label>
-                                <div class="input-group input-group-lg">
-                                    <input asp-for="LastName" class="form-control form-control-dark" placeholder="Doe" />
+                                <div class="col-md-6">
+                                    <div class="form-group-professional">
+                                        <label asp-for="LastName" class="form-label-professional">Last Name</label>
+                                        <div class="input-wrapper">
+                                            <span class="input-icon-left">
+                                                <i class="bi bi-person"></i>
+                                            </span>
+                                            <input asp-for="LastName"
+                                                   class="form-control-professional"
+                                                   placeholder="Doe"
+                                                   autocomplete="family-name" />
+                                        </div>
+                                        <span asp-validation-for="LastName" class="validation-message"></span>
+                                    </div>
                                 </div>
-                                <span asp-validation-for="LastName" class="text-danger small"></span>
                             </div>
-                        </div>
 
-                        <div class="mb-3">
-                            <label asp-for="Email" class="form-label text-dark">Email Address</label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input asp-for="Email" type="email"
-                                       class="form-control form-control-dark"
-                                       placeholder="john.doe@company.com" />
+                            <!-- Email Field -->
+                            <div class="form-group-professional">
+                                <label asp-for="Email" class="form-label-professional">Email Address</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+                                    <input asp-for="Email"
+                                           type="email"
+                                           class="form-control-professional"
+                                           placeholder="john.doe@company.com"
+                                           autocomplete="email" />
+                                </div>
+                                <span asp-validation-for="Email" class="validation-message"></span>
                             </div>
-                            <span asp-validation-for="Email" class="text-danger small"></span>
-                        </div>
 
-                        <div class="mb-3">
-                            <label asp-for="PhoneNumber" class="form-label text-dark">Phone Number</label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                                <input asp-for="PhoneNumber" type="number"
-                                       class="form-control form-control-dark"/>
+                            <!-- Phone Number Field -->
+                            <div class="form-group-professional">
+                                <label asp-for="PhoneNumber" class="form-label-professional">Phone Number</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-telephone"></i>
+                                    </span>
+                                    <input asp-for="PhoneNumber"
+                                           type="tel"
+                                           class="form-control-professional"
+                                           placeholder="+1 (555) 123-4567"
+                                           autocomplete="tel" />
+                                </div>
+                                <span asp-validation-for="PhoneNumber" class="validation-message"></span>
                             </div>
-                            <span asp-validation-for="PhoneNumber" class="text-danger small"></span>
-                        </div>
-
-                        <div class="mb-3">
-                            <label asp-for="Password" class="form-label text-dark">Temporary Password</label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                                <input asp-for="Password" type="password" id="passwordInput"
-                                       class="form-control form-control-dark"
-                                       placeholder="Temporary Password" autocomplete="new-password" />
+                            
+                            <div class="alert alert-warning d-flex align-items-center mb-4" role="alert">
+                                <i class="bi bi-exclamation-triangle-fill me-2 fs-5"></i>
+                                <div>
+                                    The temporary password will be randomly generated by the system to ensure maximum security and transparency.
+                                </div>
                             </div>
-                            <span asp-validation-for="Password" class="text-danger small"></span>
-                        </div>
 
-                        <div class="mb-4">
-                            <label asp-for="ConfirmPassword" class="form-label text-dark">Confirm Password</label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                                <input asp-for="ConfirmPassword" type="password"
-                                       class="form-control form-control-dark"
-                                       placeholder="Confirm Temporary Password" />
+
+                            <!-- Role Field -->
+                            <div class="form-group-professional">
+                                <label asp-for="Role" class="form-label-professional">User Role</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-person-lines-fill"></i>
+                                    </span>
+                                    <select asp-for="Role" class="form-control-professional select-professional">
+                                        <option value="">-- Select Role --</option>
+                                        <option value="Employee">Employee (Default)</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="Manager">Manager</option>
+                                        <option value="Admin">Administrator</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="Role" class="validation-message"></span>
                             </div>
-                            <span asp-validation-for="ConfirmPassword" class="text-danger small"></span>
-                        </div>
 
-                        <div class="mb-5">
-                            <label asp-for="Role" class="form-label text-dark">User Role</label>
-                            <div class="input-group input-group-lg">
-                                <span class="input-group-text"><i class="bi bi-person-lines-fill"></i></span>
-                                <select asp-for="Role" class="form-select form-control-dark">
-                                    <option value="">-- Select Role --</option>
-                                    <option value="Employee">Employee (Default)</option>
-                                    <option value="Manager">Manager</option>
-                                    <option value="Admin">Administrator</option>
-                                </select>
+                            <!-- Info Notice -->
+                            <div class="info-notice mb-4">
+                                <i class="bi bi-info-circle"></i>
+                                <p>
+                                    The employee will receive an activation email. Ensure all information is correct before submission.
+                                </p>
                             </div>
-                            <span asp-validation-for="Role" class="text-danger small"></span>
-                        </div>
 
-
-                        <div class="d-grid gap-3">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="bi bi-person-check-fill me-2"></i> Register Employee
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn-login-professional">
+                                <i class="bi bi-person-check-fill me-2"></i>
+                                Register Employee
                             </button>
 
-                            <a asp-controller="Admin" asp-action="Index" class="btn btn-outline-secondary btn-lg">
-                                <i class="bi bi-arrow-left"></i> Back to Dashboard
+                            <!-- Back Button -->
+                            <a asp-controller="Admin" asp-action="Index" class="btn-secondary-professional">
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Back to Dashboard
                             </a>
+
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="login-divider">
+                            <span>Security Notice</span>
                         </div>
-                    </form>
 
-                    <hr class="my-5 border-gray-200" />
+                        <!-- Footer Info -->
+                        <div class="login-footer">
+                            <div class="security-notice">
+                                <i class="bi bi-shield-lock"></i>
+                                <span>All employee data is encrypted and stored securely</span>
+                            </div>
+                        </div>
 
-                    <div class="text-center">
-                        <p class="text-sm text-secondary mb-0">
-                            <i class="bi bi-info-circle me-1"></i> Ensure all fields are correct before submission.
-                        </p>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
@@ -136,4 +168,96 @@
 @section Scripts
 {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById('passwordInput');
+            var toggleIcon = document.getElementById('toggleIcon');
+
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('bi-eye');
+                toggleIcon.classList.add('bi-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('bi-eye-slash');
+                toggleIcon.classList.add('bi-eye');
+            }
+        }
+
+        function toggleConfirmPasswordVisibility() {
+            var confirmPasswordInput = document.getElementById('confirmPasswordInput');
+            var toggleConfirmIcon = document.getElementById('toggleConfirmIcon');
+
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                toggleConfirmIcon.classList.remove('bi-eye');
+                toggleConfirmIcon.classList.add('bi-eye-slash');
+            } else {
+                confirmPasswordInput.type = 'password';
+                toggleConfirmIcon.classList.remove('bi-eye-slash');
+                toggleConfirmIcon.classList.add('bi-eye');
+            }
+        }
+
+        // Add active states to inputs
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.form-control-professional');
+
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    if (this.value.trim() !== '') {
+                        this.classList.add('has-value');
+                    } else {
+                        this.classList.remove('has-value');
+                    }
+                });
+
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('focused');
+                });
+
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('focused');
+                });
+            });
+
+            // Form submission handling
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const submitBtn = this.querySelector('.btn-login-professional');
+
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating Account...';
+
+                        setTimeout(() => {
+                            if (!form.checkValidity()) {
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = '<i class="bi bi-person-check-fill me-2"></i>Register Employee';
+                            }
+                        }, 100);
+                    }
+                });
+            }
+
+            // Phone number formatting
+            const phoneInput = document.querySelector('input[type="tel"]');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function(e) {
+                    let value = e.target.value.replace(/\D/g, '');
+                    if (value.length > 0) {
+                        if (value.length <= 3) {
+                            e.target.value = value;
+                        } else if (value.length <= 6) {
+                            e.target.value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+                        } else {
+                            e.target.value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
 }
