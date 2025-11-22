@@ -50,3 +50,12 @@
     padding-top: 4rem;
     padding-bottom: 6rem;
 }
+
+.dashboard-main {
+    margin-left: 260px;
+    transition: margin-left 0.3s;
+}
+
+.smartstaff-sidebar.collapsed ~ .dashboard-main {
+    margin-left: 80px;
+}

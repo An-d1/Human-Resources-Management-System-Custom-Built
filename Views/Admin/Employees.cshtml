@@ -107,7 +107,7 @@
                         <i class="bi bi-person-check"></i>
                     </div>
                     <div class="stat-info">
-                        <span class="stat-number">@Model.Count(e => e.IsEmployed)</span>
+                        <span class="stat-number">@Model.Count(e => e.IsEmployed & e.IsEmailConfirmed == true)</span>
                         <span class="stat-text">Active</span>
                     </div>
                 </div>
@@ -120,32 +120,27 @@
                     <span class="employee-count-badge">@Model.Count() employees</span>
                 </div>
                 <div class="table-responsive">
-                    <table class="employees-table">
+                    <table class="table table-hover align-middle employees-table">
                         <thead>
                             <tr>
                                 <th>
                                     <input type="checkbox" id="selectAll" class="table-checkbox">
                                 </th>
-                                <th>User ID</th>
                                 <th>Employee Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
-                                <th>Department</th>
-                                <th>Hire Date</th>
-                                <th>Termination Date</th>
+                                <th>Department</th>  
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
+
                         <tbody id="employeeTableBody">
                             @foreach (var employee in Model)
                             {
-                                <tr class="employee-row" data-employee-id="@employee.UserId">
+                                <tr class="employee-row">
                                     <td>
                                         <input type="checkbox" class="table-checkbox employee-checkbox">
-                                    </td>
-                                    <td>
-                                        <span class="employee-id">@employee.UserId</span>
                                     </td>
                                     <td>
                                         <div class="employee-info">
@@ -158,16 +153,19 @@
                                             </div>
                                         </div>
                                     </td>
+
                                     <td>
                                         <span class="employee-email">@employee.Email</span>
                                     </td>
+
                                     <td>
                                         <span class="role-badge role-@employee.Role.ToLower().Replace(" ", "-")">
                                             @employee.Role
                                         </span>
                                     </td>
+
                                     <td>
-                                        @if (employee.Departments != null && employee.Departments.Any())
+                                        @if (employee.Departments.Any())
                                         {
                                             <div class="d-flex flex-wrap gap-1">
                                                 @foreach (var dept in employee.Departments)
@@ -184,40 +182,9 @@
                                         }
                                     </td>
 
-                                    <td class="text-nowrap">
-                                        <div class="date-info">
-                                            <span class="date-primary">@employee.HireDate.ToString("MMM dd, yyyy")</span>
-                                            <span class="date-secondary">
-                                                @((DateTime.UtcNow.Date - employee.HireDate.ToDateTime(TimeOnly.MinValue)).Days) days ago
-                                            </span>
-                                        </div>
-                                    </td>
-                                    <td class="text-nowrap">
-                                        @if (employee.TerminationDate != null)
-                                        {
-                                            var termDateTime = employee.TerminationDate.Value.ToDateTime(TimeOnly.MinValue);
-                                            var daysSince = (DateTime.Now.Date - termDateTime.Date).Days;
-
-                                            <div class="date-info">
-                                                <span class="date-primary">
-                                                    @employee.TerminationDate.Value.ToString("MMM dd, yyyy")
-                                                </span>
-                                                <span class="date-secondary">
-                                                    @daysSince days ago
-                                                </span>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="date-info">
-                                                <span class="date-primary"></span>
-                                                <span class="date-secondary text-muted">—</span>
-                                            </div>
-                                        }
-                                    </td>
-
+                                    <!-- STATUS -->
                                     <td>
-                                        @if (employee.IsEmployed)
+                                        @if (employee.IsEmployed && employee.IsEmailConfirmed == true)
                                         {
                                             <span class="status-badge status-active">
                                                 <i class="bi bi-check-circle-fill"></i> Active
@@ -230,28 +197,26 @@
                                             </span>
                                         }
                                     </td>
+
+                                    <!-- ACTIONS -->
                                     <td>
                                         <div class="action-buttons">
                                             <a asp-controller="Admin"
                                                asp-action="EmployeeDetails"
                                                asp-route-id="@employee.UserId"
-                                               class="action-icon-btn action-view"
-                                               title="View Details">
+                                               class="action-icon-btn action-view" title="View">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <a asp-controller="Employee" asp-action="Edit" asp-route-id="@employee.UserId" class="action-icon-btn action-edit" title="Edit">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
+
                                             <form asp-action="TerminateEmployeeContract"
                                                   asp-controller="Admin"
                                                   method="post"
                                                   class="d-inline">
                                                 <input type="hidden" name="userId" value="@employee.UserId" />
-                                                <button class="action-icon-btn action-view" title="Terminate Contract">
+                                                <button class="action-icon-btn action-view" title="Terminate">
                                                     <i class="bi bi-file-earmark-excel"></i>
                                                 </button>
                                             </form>
-
                                         </div>
                                     </td>
                                 </tr>

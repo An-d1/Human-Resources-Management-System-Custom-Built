@@ -26,11 +26,12 @@ namespace HRManagementSystem.Controllers
         {
             string userId = _userManager.GetUserId(User);
             var customUser = await _userManager.FindByIdAsync(userId);
-            
+
             var model = new AdminViewModel
             {
                 FirstName = customUser.FirstName,
                 Email = customUser.Email,
+                DepartmentsCount = await _departmentRepository.GetTheTotalNumberOfDepartmentsUnderTheCompanyAsync(customUser.CompanyId),
                 EmployeeCount = await _userRepository.GetTheTotalNumberOfEmployeesUnderTheCompanyAsync(customUser.CompanyId),
                 NewHires = await _userRepository.GetRecentHiresInTheLast30DaysAsync(customUser.CompanyId),
             };
@@ -61,6 +62,7 @@ namespace HRManagementSystem.Controllers
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Email = user.Email,
+                    IsEmailConfirmed = user.EmailConfirmed,
                     Phone = user.PhoneNumber,
                     Role = roles.FirstOrDefault(),
                     Departments = await _employeeRepository.GetDepartmentNamesByUserIdAsync(user.Id),

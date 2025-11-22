@@ -18,96 +18,6 @@ body {
     min-height: 100vh;
 }
 
-/* Sidebar Styles */
-.dashboard-sidebar {
-    width: 260px;
-    background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
-    color: white;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    height: 100vh;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
-}
-
-.sidebar-header {
-    padding: 2rem 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.sidebar-brand {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.sidebar-brand i {
-    color: #0891b2;
-    font-size: 1.75rem;
-}
-
-.sidebar-badge {
-    display: inline-block;
-    background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%);
-    padding: 0.25rem 0.75rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.sidebar-nav {
-    flex: 1;
-    padding: 1rem 0;
-    list-style: none;
-    overflow-y: auto;
-}
-
-.sidebar-nav .nav-item {
-    margin: 0.25rem 0.75rem;
-}
-
-.sidebar-nav .nav-link {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.875rem 1rem;
-    color: rgba(255, 255, 255, 0.7);
-    text-decoration: none;
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    font-weight: 500;
-}
-
-.sidebar-nav .nav-link i {
-    font-size: 1.25rem;
-    width: 24px;
-    text-align: center;
-}
-
-.sidebar-nav .nav-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    transform: translateX(4px);
-}
-
-.sidebar-nav .nav-item.active .nav-link {
-    background: linear-gradient(135deg, #1e3a8a 0%, #0891b2 100%);
-    color: white;
-    box-shadow: 0 4px 12px rgba(8, 145, 178, 0.3);
-}
-
-.sidebar-footer {
-    padding: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
 .btn-logout {
     display: flex;
     align-items: center;
@@ -509,6 +419,16 @@ body {
     background: rgba(30, 58, 138, 0.08);
 }
 
+.action-btn-purple {
+    border-color: rgba(132, 30, 138, 0.2);
+    background: rgba(132, 30, 138, 0.03);
+}
+
+.action-btn-purple:hover {
+    border-color: #752d79;
+    background: rgba(132, 30, 138, 0.08);
+}
+
 .action-btn-success {
     border-color: rgba(5, 150, 105, 0.2);
     background: rgba(5, 150, 105, 0.03);
@@ -551,6 +471,11 @@ body {
 
 .action-btn-primary .action-icon {
     background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+}
+
+.action-btn-purple .action-icon {
+    background: linear-gradient(135deg, #752d79 0%, #b84fbd 100%);
     color: white;
 }
 
@@ -839,6 +764,7 @@ body {
 /* Employees Table Card */
 .employees-table-card {
     margin-top: 0;
+    padding-bottom: 1rem; /* Adds space at the bottom of the card */
 }
 
 .employee-count-badge {
@@ -851,7 +777,6 @@ body {
 }
 
 .table-responsive {
-    overflow-x: auto;
 }
 
 .employees-table {

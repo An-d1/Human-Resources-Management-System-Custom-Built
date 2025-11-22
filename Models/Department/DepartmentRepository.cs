@@ -17,6 +17,11 @@ namespace HRManagementSystem.Models
                 .Where(d => d.CompanyId == companyId) 
                 .ToListAsync();
         }
+        public async Task<int> GetTheTotalNumberOfDepartmentsUnderTheCompanyAsync(Guid companyId)
+        {
+            return await _context.Departments
+            .CountAsync(d => d.CompanyId == companyId);
+        }
 
         public async Task<Department> GetByIdAsync(Guid guid)
         {

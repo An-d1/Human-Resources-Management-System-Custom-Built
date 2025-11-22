@@ -80,8 +80,9 @@ namespace HRManagementSystem
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Login}/{action=Index}/{id?}"); // So the user is always prompted with the log in page
+                pattern: "{controller=LandingPage}/{action=Index}/{id?}"); // So the user is always prompted with the log in page
 
+            app.MapControllers();
             using var scope = app.Services.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 

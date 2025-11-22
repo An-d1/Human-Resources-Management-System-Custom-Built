@@ -33,11 +33,11 @@ namespace HRManagementSystem.Migrations
 
                     b.Property<string>("CompanyEmail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CompanyPhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -50,6 +50,12 @@ namespace HRManagementSystem.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CompanyEmail")
+                        .IsUnique();
+
+                    b.HasIndex("CompanyPhoneNumber")
+                        .IsUnique();
 
                     b.ToTable("Companies");
                 });

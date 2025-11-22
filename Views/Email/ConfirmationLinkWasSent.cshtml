@@ -72,7 +72,7 @@
 
                         <!-- Action Buttons -->
                         <div class="action-buttons">
-                            <a asp-controller="Home" asp-action="Index" class="btn-login-professional">
+                            <a asp-controller="Admin" asp-action="Index" class="btn-login-professional">
                                 <i class="bi bi-arrow-left-circle me-2"></i>
                                 Return to Dashboard
                         </a>
@@ -101,41 +101,19 @@
 
 @section Scripts
 {
-    <script>
-        // Add celebration animation on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            const successIcon = document.querySelector('.success-icon');
-            const successCard = document.querySelector('.success-card');
+<script>
+    // Add celebration animation on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const successIcon = document.querySelector('.success-icon');
+        const successCard = document.querySelector('.success-card');
 
-            // Trigger animations
+        // Trigger animations
+        setTimeout(() => {
+            successIcon.style.transform = 'scale(1.1)';
             setTimeout(() => {
-                successIcon.style.transform = 'scale(1.1)';
-                setTimeout(() => {
-                    successIcon.style.transform = 'scale(1)';
-                }, 300);
-            }, 200);
-
-            // Add confetti effect (optional)
-            createConfetti();
-        });
-
-        function createConfetti() {
-            const colors = ['#1e3a8a', '#0891b2', '#3b82f6', '#06b6d4'];
-            const confettiCount = 30;
-
-            for (let i = 0; i < confettiCount; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.className = 'confetti';
-                    confetti.style.left = Math.random() * 100 + '%';
-                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                    confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                    document.querySelector('.login-wrapper').appendChild(confetti);
-
-                    setTimeout(() => confetti.remove(), 4000);
-                }, i * 50);
-            }
-        }
-    </script>
+                successIcon.style.transform = 'scale(1)';
+            }, 300);
+        }, 200);
+    });
+</script>
 }

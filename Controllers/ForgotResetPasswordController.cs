@@ -206,7 +206,7 @@ namespace HRManagementSystem.Controllers
             if (result.Succeeded)
             {
                 // If successful, show a confirmation success page.
-                return View("PasswordResetSuccessPage");
+                return RedirectToAction("PasswordResetSuccessPage");
             }
 
             // If it failed for any reason (e.g., token expired), show an error page.

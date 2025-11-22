@@ -50,10 +50,7 @@ namespace HRManagementSystem.Controllers
         public async Task<IActionResult> CreateNewUserAccountFromAdmin(RegisterEmployeeViewModel model)
         {
             var currentUser = await _userManager.GetUserAsync(User); // Get the current user
-
-            Guid adminId = currentUser.Id; // Get the current Admin Id
-
-            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(adminId); // Get his Id so it can be assigned as the employees Id also
+            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(currentUser.Id); // Get his Id so it can be assigned as the employees Id also
 
             if (ModelState.IsValid)
             {
@@ -385,9 +382,18 @@ namespace HRManagementSystem.Controllers
                     ";
 
                 #endregion
+
+                try
+                {
+                    await _companyRepository.AddCompanyAsync(Company);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View("CompanyRegister", model);
+                }
+
                 await _emailSender.SendEmailAsync(Company.CompanyEmail, subject, htmlBody);
-                
-                await _companyRepository.AddCompanyAsync(Company);
 
                 return RedirectToAction("InquirySuccessfulView", "Register");
             }

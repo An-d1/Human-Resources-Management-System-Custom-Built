@@ -43,6 +43,20 @@ public class CompanyRepository : ICompanyRepository
     }
     public async Task<Company> AddCompanyAsync(Company company)
     {
+        // Check email uniqueness
+        bool emailExists = await _context.Companies
+            .AnyAsync(c => c.CompanyEmail == company.CompanyEmail);
+
+        if (emailExists)
+            throw new InvalidOperationException("A company with this email already exists.");
+
+        // Check phone number uniqueness
+        bool phoneExists = await _context.Companies
+            .AnyAsync(c => c.CompanyPhoneNumber == company.CompanyPhoneNumber);
+
+        if (phoneExists)
+            throw new InvalidOperationException("A company with this phone number already exists.");
+
         _context.Companies.Add(company);
         await _context.SaveChangesAsync();
         return company;

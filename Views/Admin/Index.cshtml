@@ -79,23 +79,12 @@
 
                 <div class="stat-card stat-card-success">
                     <div class="stat-icon">
-                        <i class="bi bi-calendar-check"></i>
+                        <i class="bi bi-building"></i>
                     </div>
                     <div class="stat-content">
-                        <span class="stat-label">Pending PTO</span>
-                        <h2 class="stat-value">42</h2>
-                        <span class="stat-description">Requests awaiting approval</span>
-                    </div>
-                </div>
-
-                <div class="stat-card stat-card-warning">
-                    <div class="stat-icon">
-                        <i class="bi bi-exclamation-triangle-fill"></i>
-                    </div>
-                    <div class="stat-content">
-                        <span class="stat-label">Open Tickets</span>
-                        <h2 class="stat-value">8</h2>
-                        <span class="stat-description">Unresolved support issues</span>
+                        <span class="stat-label">Total Departments:</span>
+                        <h2 class="stat-value">@Model.DepartmentsCount</h2>
+                        <span class="stat-description">Registered in the system</span>
                     </div>
                 </div>
 
@@ -107,6 +96,17 @@
                         <span class="stat-label">New Hires (30d)</span>
                         <h2 class="stat-value">@Model.NewHires</h2>
                         <span class="stat-description">Recently onboarded</span>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-card-warning">
+                    <div class="stat-icon">
+                        <i class="bi bi-exclamation-triangle-fill"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Open Tickets</span>
+                        <h2 class="stat-value">8</h2>
+                        <span class="stat-description">Unresolved support issues</span>
                     </div>
                 </div>
             </div>
@@ -199,6 +199,16 @@
                                 </div>
                             </a>
 
+                            <a asp-controller="Calendar" asp-action="Index" class="action-btn action-btn-purple">
+                                <div class="action-icon">
+                                    <i class="bi bi-calendar-event"></i>
+                                </div>
+                                <div class="action-content">
+                                    <span class="action-title">Holiday Calendar</span>
+                                    <span class="action-description">View or modify</span>
+                                </div>
+                            </a>
+
                             <a asp-controller="Reports" asp-action="Generate" class="action-btn action-btn-warning">
                                 <div class="action-icon">
                                     <i class="bi bi-graph-up"></i>
@@ -219,32 +229,3 @@
     </div>
 </div>
 
-@section Scripts
-{
-    <script>
-        // Mobile sidebar toggle functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            const sidebarToggle = document.getElementById('sidebarToggle');
-            const sidebar = document.querySelector('.dashboard-sidebar');
-            const wrapper = document.querySelector('.dashboard-wrapper');
-
-            if (sidebarToggle && sidebar) {
-                sidebarToggle.addEventListener('click', function() {
-                    sidebar.classList.toggle('sidebar-open');
-                    wrapper.classList.toggle('sidebar-active');
-                });
-
-                // Close sidebar when clicking outside on mobile
-                document.addEventListener('click', function(event) {
-                    const isClickInside = sidebar.contains(event.target) || sidebarToggle.contains(event.target);
-
-                    if (!isClickInside && window.innerWidth <= 768) {
-                        sidebar.classList.remove('sidebar-open');
-                        wrapper.classList.remove('sidebar-active');
-                    }
-                });
-            }
-        });
-    </script>
-    <script src="~/js/dashboard.js" asp-append-version="true"></script>
-}
