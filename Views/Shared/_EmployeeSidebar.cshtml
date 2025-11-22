@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Mvc
+
+<div class="smartstaff-sidebar" id="sidebar">
+    <div class="sidebar-top">
+        <div class="sidebar-brand">
+            <i class="bi bi-person-bounding-box"></i>
+            <span class="brand-text">SmartStaff</span>
+        </div>
+
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+    </div>
+
+    <ul class="sidebar-menu">
+
+        <!-- My Schedule -->
+        <a asp-controller="Employee" asp-action="Schedule"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Schedule" ? "active" : "")">
+            <i class="bi bi-calendar-week"></i>
+            <span>My Schedule</span>
+        </a>
+
+        <!-- Check In / Out -->
+        <a asp-controller="Employee" asp-action="CheckInOut"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "CheckInOut" ? "active" : "")">
+            <i class="bi bi-clock-history"></i>
+            <span>Check In / Out</span>
+        </a>
+
+        <!-- Payroll -->
+        <a asp-controller="Employee" asp-action="Payroll"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Payroll" ? "active" : "")">
+            <i class="bi bi-cash"></i>
+            <span>Payroll</span>
+        </a>
+
+        <!-- Profile -->
+        <a asp-controller="Employee" asp-action="Profile"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Profile" ? "active" : "")">
+            <i class="bi bi-person-circle"></i>
+            <span>Profile</span>
+        </a>
+
+    </ul>
+
+    <div class="sidebar-footer">
+        <a asp-controller="Login" asp-action="Logout" class="sidebar-link logout">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</div>

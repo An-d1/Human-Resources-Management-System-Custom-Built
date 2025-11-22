@@ -7,6 +7,6 @@
         public User User { get; set; } = default!;
         public DateOnly HireDate { get; set; }
         public DateOnly? TerminationDate { get; set; }
-        public bool isEmployed { get; set; } = true; // always true unless contract terminated is not null which sets it to false
+        public bool IsEmployed { get; set; } = true; // always true unless contract terminated which sets it to false
     }
 

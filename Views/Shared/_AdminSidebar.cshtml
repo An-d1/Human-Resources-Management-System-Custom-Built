@@ -1,0 +1,66 @@
+﻿@(ViewContext.RouteData.Values["action"]!.ToString() == "<ActionName>" ? "active" : "")
+
+
+<div class="smartstaff-sidebar" id="sidebar">
+    <div class="sidebar-top">
+        <div class="sidebar-brand">
+            <i class="bi bi-person-bounding-box"></i>
+            <span class="brand-text">SmartStaff</span>
+        </div>
+
+        <button class="sidebar-toggle" id="sidebarToggle">
+            <i class="bi bi-chevron-left"></i>
+        </button>
+    </div>
+
+    <ul class="sidebar-menu">
+        <a asp-controller="Admin" asp-action="Index"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Index" ? "active" : "")">
+            <i class="bi bi-grid-fill"></i>
+            <span>Dashboard</span>
+        </a>
+
+
+        <a asp-controller="Admin" asp-action="Employees"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Employees" ? "active" : "")">
+            <i class="bi bi-people-fill"></i>
+            <span>Employees</span>
+        </a>
+
+
+        <a asp-controller="Admin" asp-action="DepartmentsList"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "DepartmentsList" ? "active" : "")">
+            <i class="bi bi-building"></i>
+            <span>Departments</span>
+        </a>
+
+
+        <a asp-controller="Admin" asp-action="Payroll"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Payroll" ? "active" : "")">
+            <i class="bi bi-cash-stack"></i>
+            <span>Payroll</span>
+        </a>
+
+
+        <a asp-controller="Admin" asp-action="Reports"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Reports" ? "active" : "")">
+            <i class="bi bi-bar-chart"></i>
+            <span>Reports</span>
+        </a>
+
+
+        <a asp-controller="Admin" asp-action="Settings"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Settings" ? "active" : "")">
+            <i class="bi bi-gear-fill"></i>
+            <span>Settings</span>
+        </a>
+
+    </ul>
+
+    <div class="sidebar-footer">
+        <a asp-controller="LogIn" asp-action="Logout" class="sidebar-link logout">
+            <i class="bi bi-box-arrow-right"></i>
+            <span>Logout</span>
+        </a>
+    </div>
+</div>

@@ -150,10 +150,10 @@ C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\staticwebassets.buil
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\staticwebassets.build.json.cache
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\staticwebassets.build.endpoints.json
-C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\HRManage.2BA030BA.Up2Date
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\HRManagementSystem.dll
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\refint\HRManagementSystem.dll
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\HRManagementSystem.pdb
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\HRManagementSystem.genruntimeconfig.cache
 C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\ref\HRManagementSystem.dll
+C:\Users\Andis\Desktop\HR-ManagementSystem\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

@@ -1,6 +1,10 @@
-﻿using System.Security.Principal;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Principal;
 
 namespace HRManagementSystem.Models;
+
+[Index(nameof(CompanyEmail), IsUnique = true)] // so email and phone number have to be unique on the db
+[Index(nameof(CompanyPhoneNumber), IsUnique = true)] // so email and phone number have to be unique on the db
 
 public class Company
 {
