@@ -1,0 +1,122 @@
+﻿@model HRManagementSystem.ViewModels.CheckInViewModel;
+
+@{
+    ViewData["Title"] = "Check In / Check Out";
+}
+
+<link rel="stylesheet" href="~/css/AdminDashboard.css" />
+<link rel="stylesheet" href="~/css/Admin.css" />
+
+<div class="dashboard-wrapper">
+
+    @await Html.PartialAsync("_EmployeeSidebar")  <!-- or _AdminSidebar depending on role -->
+
+    <div class="dashboard-main p-4">
+
+        <!-- JS time-->
+        <div class="d-flex justify-content-center mb-4">
+            <div class="text-center">
+                <h2 id="liveTime" class="fw-bold"></h2>
+                <p id="liveDate" class="text-muted"></p>
+            </div>
+        </div>
+
+        <!-- Check-In / Check-Out Card -->
+        <div class="card shadow-sm mx-auto" style="max-width: 450px;">
+            <div class="card-body text-center">
+
+                <h4 class="card-title mb-3">
+                    @if (Model.IsCheckedIn)
+                    {
+                        <span class="text-success">You are currently checked in</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">You are not checked in</span>
+                    }
+                </h4>
+
+                <!-- Show today's entries -->
+        <h5 class="mb-3">Today's Activity</h5>
+
+        @if (Model.TodayEntries.Any())
+        {
+            <ul class="list-group mb-3">
+                @foreach (var entry in Model.TodayEntries)
+                {
+                    <li class="list-group-item">
+
+                        <strong>Check-in:</strong> @entry.ClockInUtc.ToLocalTime().ToString("HH:mm")
+
+                        <br />
+
+                        @if (entry.ClockOutUtc != null)
+                        {
+                            <strong>Check-out:</strong> @entry.ClockOutUtc.Value.ToLocalTime().ToString("HH:mm")
+                        }
+                        else
+                        {
+                            <strong>Status:</strong> <span class="text-success">Currently checked in</span>
+                        }
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <p class="text-muted fst-italic">No time entries today.</p>
+        }
+
+                @if (Model.IsCheckedIn)
+                {
+                    <!-- check out button -->
+                    <form asp-action="CheckOutEmployee" asp-controller="Home">
+                        <button type="submit" class="btn btn-danger btn-lg px-5 py-2 shadow">
+                            Check Out
+                        </button>
+                    </form>
+                }
+                else
+                {
+                    <!-- check in button-->
+                    <form asp-action="CheckInEmployee" asp-controller="Home">
+                        <button type="submit" class="btn btn-success btn-lg px-5 py-2 shadow">
+                            Check In
+                        </button>
+                    </form>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function updateClock() {
+            const now = new Date();
+
+            // Time
+            const timeString = now.toLocaleTimeString('en-GB', {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            });
+            document.getElementById("liveTime").textContent = timeString;
+
+            // Date
+            const dateString = now.toLocaleDateString('en-GB', {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            });
+            document.getElementById("liveDate").textContent = dateString;
+        }
+
+        // Update every second
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+}

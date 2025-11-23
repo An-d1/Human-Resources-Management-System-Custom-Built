@@ -23,14 +23,8 @@
             <span>Employee Dashboard</span>
         </a>
 
-        <a asp-controller="Employee" asp-action="Schedule"
-           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Schedule" ? "active" : "")">
-            <i class="bi bi-calendar-week"></i>
-            <span>My Schedule</span>
-        </a>
-
         <!-- Check In / Out -->
-        <a asp-controller="Employee" asp-action="CheckInOut"
+        <a asp-controller="Home" asp-action="CheckInOut"
            class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "CheckInOut" ? "active" : "")">
             <i class="bi bi-clock-history"></i>
             <span>Check In / Out</span>
@@ -40,6 +34,12 @@
            class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "CalendarIndex" ? "active" : "")">
             <i class="bi bi-calendar-event"></i>
             <span>Calendar</span>
+        </a>
+
+        <a asp-controller="Employee" asp-action="Schedule"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Schedule" ? "active" : "")">
+            <i class="bi bi-calendar-week"></i>
+            <span>My Schedule</span>
         </a>
 
         <!-- Payroll -->

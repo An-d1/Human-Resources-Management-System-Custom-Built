@@ -5,9 +5,9 @@
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public User User { get; set; } = default!;
-
-        public decimal HourlyRate;
+        public decimal HourlyRate { get; set; }
         public DateOnly EffectiveFrom { get; set; }
         public DateTime EffectiveTo { get; set; }
     }
 
+    

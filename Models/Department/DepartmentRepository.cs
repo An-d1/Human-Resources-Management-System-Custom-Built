@@ -33,5 +33,18 @@ namespace HRManagementSystem.Models
             _context.Departments.Add(department);
             await _context.SaveChangesAsync();
         }
+        public async Task<bool> DeleteAsync(Guid id)
+        {
+            var department = await _context.Departments
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (department == null)
+                return false;
+
+            _context.Departments.Remove(department);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

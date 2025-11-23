@@ -40,8 +40,8 @@
             <span>Calendar</span>
         </a>
 
-        <a asp-controller="Admin" asp-action="Payroll"
-           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Payroll" ? "active" : "")">
+        <a asp-controller="Payroll" asp-action="PayRollEmployees"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "PayRollEmployees" ? "active" : "")">
             <i class="bi bi-cash-stack"></i>
             <span>Payroll</span>
         </a>

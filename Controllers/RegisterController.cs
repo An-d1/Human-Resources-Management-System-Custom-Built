@@ -14,7 +14,6 @@ namespace HRManagementSystem.Controllers
     public class RegisterController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
 
         private readonly ApplicationDbContext _context;
         private readonly IUserRepository _userRepository;
@@ -23,14 +22,13 @@ namespace HRManagementSystem.Controllers
         private readonly EmailServiceSender _emailSender;
 
         private readonly TemporaryPasswordGenerator _temporaryPasswordGenerator;
-        public RegisterController(UserManager<User> userManager, SignInManager<User> signInManager,
+        public RegisterController(UserManager<User> userManager,
             ApplicationDbContext context, IUserRepository userRepository, ICompanyRepository companyRepository,
             IEmployeeRepository employeeRepository,
             EmailServiceSender emailSender, TemporaryPasswordGenerator temporaryPasswordGenerator)
 
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _context = context;
             _userRepository = userRepository;
             _companyRepository = companyRepository;

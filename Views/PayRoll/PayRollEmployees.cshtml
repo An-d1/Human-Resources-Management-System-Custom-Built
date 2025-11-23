@@ -1,0 +1,117 @@
+﻿@using HRManagementSystem.ViewModels
+@model IEnumerable<EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Payroll Employees";
+}
+
+<link rel="stylesheet" href="~/css/AdminDashboard.css" />
+<link rel="stylesheet" href="~/css/Admin.css" />
+
+<div class="dashboard-wrapper">
+
+    @await Html.PartialAsync("_AdminSidebar")
+
+    <div class="dashboard-main">
+
+        <!-- Top Navigation -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="sidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="header-welcome">
+                    <h1 class="header-title">Payroll Management</h1>
+                    <p class="header-subtitle">Calculate payroll for your employees</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="dashboard-content p-4">
+
+            <div class="row g-4">
+                @if (ViewBag.ShowPayrollModal == true)
+                {
+                    <div class="modal fade show"
+                         id="payrollResultModal"
+                         tabindex="-1"
+                         style="display:block; background:rgba(0,0,0,0.45);"
+                         aria-modal="true"
+                         role="dialog">
+
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Payroll Result</h5>
+                                </div>
+
+                                <div class="modal-body text-center">
+                                    <h4 class="fw-bold">€ @ViewBag.Total</h4>
+                                    <p class="text-muted">Total salary for this payroll period.</p>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <a asp-action="PayRollEmployees" asp-controller="PayRoll" class="btn btn-primary">Close</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                }
+
+                @foreach (var emp in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card shadow-sm">
+
+                            <div class="card-body">
+
+                                <!-- Avatar -->
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="employee-avatar me-3">
+                                        @emp.FirstName.Substring(0, 1)@emp.LastName.Substring(0, 1)
+                                    </div>
+
+                                    <div>
+                                        <h5 class="fw-semibold m-0">@emp.FirstName @emp.LastName</h5>
+                                        <small class="text-muted">ID: @emp.UserId</small>
+                                    </div>
+                                </div>
+
+                                <p class="mb-1"><strong>Role:</strong> @emp.Role</p>
+
+                                <p class="mb-3">
+                                    <strong>Departments:</strong><br />
+                                    @if (emp.Departments?.Any() == true)
+                                    {
+                                        @string.Join(", ", emp.Departments)
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">None</span>
+                                    }
+                                </p>
+
+                                <form asp-controller="Payroll" asp-action="Calculate" method="post">
+                                    <input type="hidden" name="userId" value="@emp.UserId" />
+                                    <button class="btn btn-primary w-100">
+                                        <i class="bi bi-calculator"></i> Calculate Payroll
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

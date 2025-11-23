@@ -1,0 +1,96 @@
+﻿@model HRManagementSystem.ViewModels.AssignDepartmentViewModel
+
+@{
+    ViewData["Title"] = "Assign Department";
+}
+
+<div class="dashboard-wrapper">
+
+    <!-- Main Content -->
+    <div class="dashboard-main">
+
+        <!-- Top Navigation -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="sidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="header-welcome">
+                    <h1 class="header-title">Assign Department</h1>
+                    <p class="header-subtitle">
+                        Link employee to a department
+                    </p>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="header-icon-btn">
+                    <i class="bi bi-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="dashboard-content">
+
+            <div class="content-card employees-table-card mb-4">
+                <div class="card-header-custom">
+                    <h3 class="card-title-custom">Assign Department</h3>
+                </div>
+
+                <div class="p-4">
+
+                    <div class="mb-4">
+                        <div class="text-muted small">Employee</div>
+                        <div class="fw-semibold fs-5">
+                            @Model.EmployeeFullName
+                            <span class="badge bg-light ms-2 text-dark border">
+                                ID: @Model.UserId
+                            </span>
+                        </div>
+                    </div>
+
+                    <form asp-controller="Admin"
+                          asp-action="AssignEmployeeToDepartment"
+                          method="post">
+
+                        <input type="hidden" asp-for="UserId" />
+
+                        <!-- Department dropdown -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Select Department</label>
+                            <select asp-for="SelectedDepartmentId"
+                                    asp-items="Model.Departments"
+                                    class="form-select form-select-lg border rounded-3">
+                                <option value="">-- Select a Department --</option>
+                            </select>
+                        </div>
+
+                        <!-- Action buttons -->
+                        <div class="d-flex gap-3 mt-4">
+                            <button type="submit"
+                                    class="btn-add-employee d-inline-flex align-items-center">
+                                <i class="bi bi-check-circle me-1"></i>
+                                <span>Assign Department</span>
+                            </button>
+
+                            <a asp-controller="Admin"
+                               asp-action="EmployeeDetails"
+                               asp-route-id="@Model.UserId"
+                               class="btn-export d-inline-flex align-items-center">
+                                <i class="bi bi-x-circle me-1"></i>
+                                <span>Cancel</span>
+                            </a>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+</div>

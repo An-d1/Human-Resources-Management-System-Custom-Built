@@ -1,4 +1,5 @@
-﻿using HRManagementSystem.Models;
+﻿using HRManagementSystem.DTO;
+using HRManagementSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -174,26 +175,4 @@ namespace HRManagementSystem.Controllers
         }
 
     }
-}
-
-public class HolidayCreateDto // used to read the incoming JSON from the front
-{
-    public string Name { get; set; }
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
-    public bool IsPublicHoliday { get; set; } = true;
-    public bool IsCompanyHoliday { get; set; } = false;
-}
-public class MoveHolidayDto
-{
-    public Guid Id { get; set; }
-    public string NewStartDate { get; set; }
-    public string NewEndDate { get; set; }
-}
-
-public class ResizeHolidayDto
-{
-    public Guid Id { get; set; }
-    public string NewStartDate { get; set; }
-    public string NewEndDate { get; set; }
 }

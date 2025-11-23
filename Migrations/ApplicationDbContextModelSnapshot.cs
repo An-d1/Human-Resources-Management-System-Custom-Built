@@ -164,6 +164,9 @@ namespace HRManagementSystem.Migrations
                     b.Property<DateTime>("EffectiveTo")
                         .HasColumnType("datetime2");
 
+                    b.Property<decimal>("HourlyRate")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
