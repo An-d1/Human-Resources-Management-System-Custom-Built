@@ -40,6 +40,10 @@ namespace HRManagementSystem
             builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IHolidayCalendarRepository, HolidayRepository>();
+
+            // Nager to get national holidays
+            builder.Services.AddHttpClient<NationalHolidayService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
