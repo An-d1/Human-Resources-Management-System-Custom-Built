@@ -7,5 +7,6 @@
 
         Task<Department> GetByIdAsync(Guid id);
         Task AddDepartmentWithAdminsCompanyIdAsync(Department department); // The companies Id will be passed on the controller
+        Task<bool> DeleteAsync(Guid id);
     }
 }

@@ -9,6 +9,6 @@ public interface IHolidayCalendarRepository
     Task DeleteAsync(HolidayCalendar holiday);
     Task UpdateAsync(HolidayCalendar holiday);
     Task<bool> ExistsAsync(Guid companyId, DateTime date);
-
-    void Save();
+    Task<bool> IsHolidayAsync(Guid companyId, DateTime date);
+    bool IsSunday(DateTime date);
 }

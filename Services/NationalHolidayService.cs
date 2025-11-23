@@ -1,4 +1,4 @@
-﻿using System.Net.Http;
+﻿using HRManagementSystem.DTO;
 using System.Text.Json;
 
 public class NationalHolidayService
@@ -26,11 +26,3 @@ public class NationalHolidayService
     }
 }
 
-public class NagerHolidayDto
-{
-    public string Date { get; set; }
-    public string LocalName { get; set; }
-    public string Name { get; set; }
-    public string CountryCode { get; set; }
-    public bool Global { get; set; }
-}

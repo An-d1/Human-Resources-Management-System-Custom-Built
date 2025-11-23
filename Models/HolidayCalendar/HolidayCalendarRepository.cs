@@ -44,8 +44,25 @@ public class HolidayRepository : IHolidayCalendarRepository
                 h.StartDate.Date == date.Date
             );
     }
-    public void Save()
+
+    // helper methods for payroll calculation
+    public async Task<bool> IsHolidayAsync(Guid companyId, DateTime date)
     {
-        _context.SaveChanges();
+        var day = date.Date;
+
+        return await _context.HolidayCalendars
+            .AnyAsync(h =>
+                h.CompanyId == companyId &&
+                day >= h.StartDate.Date &&
+                day <= h.EndDate.Date
+            );
     }
+    public bool IsSunday(DateTime date)
+    {
+        return date.DayOfWeek == DayOfWeek.Sunday;
+    }
+
+    // end here
+
+
 }

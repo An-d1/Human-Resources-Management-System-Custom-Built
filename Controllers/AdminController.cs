@@ -3,6 +3,7 @@ using HRManagementSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HRManagementSystem.Controllers
 {
@@ -12,15 +13,17 @@ namespace HRManagementSystem.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IUserRepository _userRepository;
         private readonly IDepartmentRepository _departmentRepository;
+        private readonly IEmployeeDepartmentRepository _employeeDepartmentRepository;
 
 
         private readonly IEmployeeRepository _employeeRepository;
-        public AdminController(UserManager<User> userManager, IUserRepository userRepository, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository)
+        public AdminController(UserManager<User> userManager, IUserRepository userRepository, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeDepartmentRepository employeeDepartmentRepository)
         {
             _userManager = userManager;
             _userRepository = userRepository;
             _employeeRepository = employeeRepository;
             _departmentRepository = departmentRepository;
+            _employeeDepartmentRepository = employeeDepartmentRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -220,7 +223,58 @@ namespace HRManagementSystem.Controllers
 
             return View(departmentViewModel);
         }
-    }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteDepartment(Guid id)
+        {
+            var result = await _departmentRepository.DeleteAsync(id);
+
+            if (!result)
+                return NotFound();
+
+            return RedirectToAction("DepartmentsList");
+        }
+
+        // Code to assign employees to department
+
+        [HttpGet]
+        public async Task<IActionResult> AssignEmployeeToDepartment(Guid userId)
+        {
+            var currentUser = await _userManager.GetUserAsync(User); // Get the current user
+
+            var employee = await _userManager.FindByIdAsync(userId.ToString());
+            var departments = await _departmentRepository.GetAllDepartmentsOfTheCompanyAsync(currentUser.CompanyId);
+
+            var vm = new AssignDepartmentViewModel
+            {
+                UserId = userId,
+                EmployeeFullName = $"{employee.FirstName} {employee.LastName}",
+                Departments = departments.Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name
+                }).ToList()
+            };
+
+            return View(vm);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> AssignEmployeeToDepartment(AssignDepartmentViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            await _employeeDepartmentRepository.AssignDepartmentAsync(model.UserId, model.SelectedDepartmentId);
+
+            return RedirectToAction("EmployeeDetails", new { id = model.UserId });
+        }
+
+
+
+    }
 }
+
+
 
