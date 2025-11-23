@@ -19,6 +19,21 @@
 
 <body>
 
+    @{
+        bool isAdmin = User.IsInRole("Admin");
+        bool isMegaAdmin = User.IsInRole("MegaAdmin");
+    }
+
+    @if (isAdmin == true && SignInManager.IsSignedIn(User))
+    {
+        <!-- Sidebar Navigation for admin partial view -->
+        @await Html.PartialAsync("_AdminSidebar")
+    } else if (isAdmin == false && SignInManager.IsSignedIn(User) && isMegaAdmin != true)
+    {
+        <!-- Sidebar Navigation partial view for employee -->
+        @await Html.PartialAsync("_EmployeeSidebar")
+    }
+
     <!-- MAIN CONTENT WRAPPER -->
     <div class="main-content">
         @RenderBody()

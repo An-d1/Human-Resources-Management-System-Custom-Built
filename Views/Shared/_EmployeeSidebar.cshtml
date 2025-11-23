@@ -1,4 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Mvc
+@(ViewContext.RouteData.Values["action"]!.ToString() == "<ActionName>" ? "active" : "")
+
 
 <div class="smartstaff-sidebar" id="sidebar">
     <div class="sidebar-top">
@@ -15,6 +17,12 @@
     <ul class="sidebar-menu">
 
         <!-- My Schedule -->
+        <a asp-controller="Home" asp-action="Index"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Index" ? "active" : "")">
+            <i class="bi bi-grid-fill"></i>
+            <span>Employee Dashboard</span>
+        </a>
+
         <a asp-controller="Employee" asp-action="Schedule"
            class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Schedule" ? "active" : "")">
             <i class="bi bi-calendar-week"></i>
@@ -26,6 +34,12 @@
            class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "CheckInOut" ? "active" : "")">
             <i class="bi bi-clock-history"></i>
             <span>Check In / Out</span>
+        </a>
+
+        <a asp-controller="HolidayCalendar" asp-action="CalendarIndex"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "CalendarIndex" ? "active" : "")">
+            <i class="bi bi-calendar-event"></i>
+            <span>Calendar</span>
         </a>
 
         <!-- Payroll -->

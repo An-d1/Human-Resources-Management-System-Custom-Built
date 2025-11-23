@@ -1,0 +1,36 @@
+﻿/* Remove underline and blue color from day numbers */
+.fc-daygrid-day-number,
+.fc-col-header-cell-cushion {
+    text-decoration: none !important;
+    color: #1f2937 !important; /* A nice dark gray */
+    font-weight: 500;
+}
+
+/* Remove link hover underline */
+.fc-daygrid-day-number:hover {
+    text-decoration: none !important;
+}
+
+/* Optional: make day numbers more modern */
+.fc-daygrid-day-number {
+    padding: 4px 6px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+    /* Light hover effect */
+    .fc-daygrid-day-number:hover {
+        background: #f3f4f6; /* soft gray */
+    }
+
+/* Tint weekends very gently */
+.fc-day-sat, .fc-day-sun {
+    background-color: #eeeeee;
+}
+
+/* Softer rounded events */
+.fc-event {
+    border-radius: 8px !important;
+    padding: 2px 6px !important;
+    font-size: 0.85rem !important;
+}

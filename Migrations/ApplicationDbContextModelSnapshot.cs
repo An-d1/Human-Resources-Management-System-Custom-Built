@@ -120,6 +120,38 @@ namespace HRManagementSystem.Migrations
                     b.ToTable("EmployeeDepartments");
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Models.HolidayCalendar", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompanyHoliday")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsPublicHoliday")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("HolidayCalendars");
+                });
+
             modelBuilder.Entity("HRManagementSystem.Models.PayRate", b =>
                 {
                     b.Property<Guid>("Id")
@@ -416,6 +448,17 @@ namespace HRManagementSystem.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Models.HolidayCalendar", b =>
+                {
+                    b.HasOne("HRManagementSystem.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Models.PayRate", b =>
