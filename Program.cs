@@ -1,5 +1,6 @@
 using HRManagementSystem.Data;
 using HRManagementSystem.Models;
+using HRManagementSystem.Repositories;
 using HRManagementSystem.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -44,6 +45,8 @@ namespace HRManagementSystem
             builder.Services.AddScoped<ITimeEntryRepository, TimeEntryRepository>();
             builder.Services.AddScoped<IPayRateRepository, PayRateRepository>();    
             builder.Services.AddScoped<IEmployeeDepartmentRepository, EmployeeDepartmentRepository>();
+            builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
+
 
             // Nager to get national holidays
             builder.Services.AddHttpClient<NationalHolidayService>();

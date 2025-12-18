@@ -94,6 +94,8 @@ namespace HRManagementSystem.Controllers
 
             await _employeeRepository.UpdateEmployeeAsync(currentEmployee);
 
+            TempData["SuccessMessage"] = "Employees contract has been terminated.";
+
             return RedirectToAction("Employees");
         }
 
@@ -218,7 +220,10 @@ namespace HRManagementSystem.Controllers
 
                 await _departmentRepository.AddDepartmentWithAdminsCompanyIdAsync(department);
 
-                return RedirectToAction("Index");
+                TempData["SuccessMessage"] =
+               "Department was successfuly created.";
+
+                return RedirectToAction("DepartmentsList");
             }
 
             return View(departmentViewModel);
@@ -231,6 +236,9 @@ namespace HRManagementSystem.Controllers
 
             if (!result)
                 return NotFound();
+
+            TempData["SuccessMessage"] =
+                "Department was successfuly deleted.";
 
             return RedirectToAction("DepartmentsList");
         }
@@ -268,7 +276,10 @@ namespace HRManagementSystem.Controllers
 
             await _employeeDepartmentRepository.AssignDepartmentAsync(model.UserId, model.SelectedDepartmentId);
 
-            return RedirectToAction("EmployeeDetails", new { id = model.UserId });
+            TempData["SuccessMessage"] =
+                "Employee was asigned to the chosen department.";
+
+            return RedirectToAction("Employees", new { id = model.UserId });
         }
 
 

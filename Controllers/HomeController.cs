@@ -1,8 +1,11 @@
+using HRManagementSystem.Enums;
 using HRManagementSystem.Models;
+using HRManagementSystem.Repositories;
 using HRManagementSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace HRManagementSystem.Controllers
@@ -15,18 +18,36 @@ namespace HRManagementSystem.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private readonly ITimeEntryRepository _timeEntryRepository;
+        private readonly ILeaveRequestRepository _leaveRequestRepository;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager, ITimeEntryRepository timeEntryRepository)
+        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager, ITimeEntryRepository timeEntryRepository, ILeaveRequestRepository leaveRequestRepository)
         {
             _logger = logger;
             _userManager = userManager;
             _timeEntryRepository = timeEntryRepository;
+            _leaveRequestRepository = leaveRequestRepository;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+            if (userId == null)
+                return RedirectToAction("Login", "Account");
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return NotFound();
+
+            var employee = new EmployeeViewModel
+            {
+                UserId = user.Id.ToString(),
+                FirstName = user.FirstName,
+                Email = user.Email
+            };
+
+            return View(employee);
         }
+
 
         public IActionResult Privacy()
         {
@@ -82,6 +103,61 @@ namespace HRManagementSystem.Controllers
 
             return RedirectToAction("CheckInOut");
         }
+
+        public IActionResult LeaveRequest()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RequestLeave(LeaveRequestViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized();
+
+            if (model.StartDate > model.EndDate)
+            {
+                ModelState.AddModelError(nameof(model.EndDate),
+                    "End date must be after start date.");
+                return View(model);
+            }
+
+            var hasOverlap = await _leaveRequestRepository
+                .HasOverlappingLeaveAsync(user.Id, model.StartDate, model.EndDate);
+
+            if (hasOverlap)
+            {
+                ModelState.AddModelError(string.Empty,
+                    "You already have a leave request during this period.");
+                return View(model);
+            }
+
+            var leaveRequest = new LeaveRequest
+            {
+                Id = Guid.NewGuid(),
+                UserId = user.Id,
+                CompanyId = user.CompanyId,
+                StartDate = model.StartDate,
+                EndDate = model.EndDate,
+                LeaveType = model.LeaveType,
+                Status = LeaveStatus.Pending,
+                Reason = model.Reason,
+                RequestedAt = DateTime.UtcNow
+            };
+
+            await _leaveRequestRepository.CreateAsync(leaveRequest);
+
+            TempData["SuccessMessage"] =
+                "Your leave request has been submitted for approval.";
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
 
     }

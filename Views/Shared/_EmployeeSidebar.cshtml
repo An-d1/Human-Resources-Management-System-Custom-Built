@@ -32,13 +32,13 @@
 
         <a asp-controller="HolidayCalendar" asp-action="CalendarIndex"
            class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "CalendarIndex" ? "active" : "")">
-            <i class="bi bi-calendar-event"></i>
+            <i class="bi bi-calendar-week"></i>
             <span>Calendar</span>
         </a>
 
-        <a asp-controller="Employee" asp-action="Schedule"
-           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Schedule" ? "active" : "")">
-            <i class="bi bi-calendar-week"></i>
+        <a asp-controller="Home" asp-action="LeaveRequest"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "LeaveRequest" ? "active" : "")">
+            <i class="bi bi-calendar-event"></i>
             <span>Request Leave</span>
         </a>
 

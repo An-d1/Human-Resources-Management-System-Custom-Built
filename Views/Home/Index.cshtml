@@ -1,4 +1,4 @@
-﻿
+﻿@model HRManagementSystem.ViewModels.EmployeeViewModel
 
 <link rel="stylesheet" href="~/css/AdminDashboard.css" asp-append-version="true" />
 
@@ -21,7 +21,7 @@
                     <i class="bi bi-list"></i>
                 </button>
                 <div class="header-welcome">
-                    <h1 class="header-title">Welcome Back, [name forn model]!</h1>
+                    <h1 class="header-title">Welcome Back, @Model.FirstName </h1>
                     <p class="header-subtitle">Here’s your work overview today</p>
                 </div>
             </div>
@@ -38,8 +38,8 @@
                     <button class="user-profile-dropdown" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                         <div class="user-avatar">EM</div>
                         <div class="user-info">
-                            <span class="user-name">Employee</span>
-                            <span class="user-email">employee@email.com</span>
+                            <span class="user-name">@Model.FirstName</span>
+                            <span class="user-email">@Model.Email</span>
                         </div>
                         <i class="bi bi-chevron-down"></i>
                     </button>
@@ -55,6 +55,7 @@
 
         <!-- Dashboard Content -->
         <main class="dashboard-content">
+            @await Html.PartialAsync("_FlashMessages")
 
             <!-- Stats Cards -->
             <div class="stats-grid">
@@ -154,7 +155,7 @@
                     <div class="card-body-custom">
                         <div class="quick-actions">
 
-                            <a asp-controller="Employee" asp-action="CheckInOut" class="action-btn action-btn-primary">
+                            <a asp-controller="Home" asp-action="CheckInOut" class="action-btn action-btn-primary">
                                 <div class="action-icon">
                                     <i class="bi bi-clock"></i>
                                 </div>

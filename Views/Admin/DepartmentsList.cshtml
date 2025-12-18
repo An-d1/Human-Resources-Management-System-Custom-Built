@@ -47,6 +47,7 @@
         </header>
 
         <main class="dashboard-content">
+            @await Html.PartialAsync("_FlashMessages")
 
             <div class="action-bar">
                 <div class="action-bar-left">
@@ -101,7 +102,6 @@
                                     <input type="checkbox" id="selectAll" class="table-checkbox">
                                 </th>
                                 <th>Department Details</th>
-                                <th>Department ID</th>
                                 <th class="text-end">Actions</th>
                             </tr>
                         </thead>
@@ -119,13 +119,13 @@
                                             </div>
                                             <div class="employee-details">
                                                 <span class="employee-name">@dept.DepartmentName</span>
-                                                <span class="employee-meta">Active</span>
+                                                <span class="
+
+">Active</span>
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <span class="employee-id">@dept.DepartmentId</span>
-                                    </td>
+
                                     <td class="text-end">
                                         <div class="action-buttons justify-content-end">
                                             <a asp-action="Edit" asp-route-id="@dept.DepartmentId" class="action-icon-btn action-edit" title="Edit Department Name">

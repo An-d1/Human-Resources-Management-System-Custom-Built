@@ -1,0 +1,117 @@
+﻿@model HRManagementSystem.ViewModels.LeaveRequestViewModel
+
+@{
+    ViewData["Title"] = "Request Leave";
+}
+
+<link rel="stylesheet" href="~/css/AdminDashboard.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/Admin.css" asp-append-version="true" />
+
+<div class="dashboard-wrapper">
+
+    <!-- Main Content Area -->
+    <div class="dashboard-main">
+
+        <!-- Top Navigation Bar -->
+        <header class="dashboard-header">
+
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="sidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="header-welcome">
+                    <h1 class="header-title">Request Leave</h1>
+                    <p class="header-subtitle">
+                        Submit a leave request for admin approval
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+
+                <!-- Leave Request Card -->
+                <div class="content-card m-5">
+
+                    <div class="card-header-custom">
+                        <h3 class="card-title-custom">
+                            <i class="bi bi-calendar-event me-2"></i>
+                            Leave Details
+                        </h3>
+                    </div>
+
+                    <div class="card-body-custom">
+
+                        <form asp-controller="Home" asp-action="RequestLeave" method="post" class="row g-4">
+
+                            <!-- Leave Type -->
+                            <div class="col-md-6">
+                                <label asp-for="LeaveType" class="form-label">Leave Type</label>
+                                <select asp-for="LeaveType" class="form-select">
+                                    <option value="">Select leave type</option>
+                                    <option value="Annual">Annual Leave</option>
+                                    <option value="Sick">Sick Leave</option>
+                                    <option value="Unpaid">Unpaid Leave</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <span asp-validation-for="LeaveType" class="text-danger"></span>
+                            </div>
+
+                            <!-- Start Date -->
+                            <div class="col-md-3">
+                                <label asp-for="StartDate" class="form-label">Start Date</label>
+                                <input asp-for="StartDate" type="date" class="form-control" />
+                                <span asp-validation-for="StartDate" class="text-danger"></span>
+                            </div>
+
+                            <!-- End Date -->
+                            <div class="col-md-3">
+                                <label asp-for="EndDate" class="form-label">End Date</label>
+                                <input asp-for="EndDate" type="date" class="form-control" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+
+                            <!-- Reason -->
+                            <div class="col-12">
+                                <label asp-for="Reason" class="form-label">
+                                    Reason <span class="text-muted">(optional)</span>
+                                </label>
+                                <textarea asp-for="Reason"
+                                          class="form-control"
+                                          rows="4"
+                                          placeholder="Add any additional context for your request"></textarea>
+                            </div>
+
+                            <!-- Info Box -->
+                            <div class="col-12">
+                                <div class="alert alert-info mb-0">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    Approved leaves will be permanently visible on both the admin
+                                    and your calendar.
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="col-12 d-flex justify-content-end gap-3">
+
+                                <button type="submit"
+                                        class="action-btn action-btn-primary border-0">
+                                    <div class="action-icon">
+                                        <i class="bi bi-send"></i>
+                                    </div>
+                                    <div class="action-content">
+                                        <span class="action-title">Submit Request</span>
+                                        <span class="action-description">Send for approval</span>
+                                    </div>
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+</div>

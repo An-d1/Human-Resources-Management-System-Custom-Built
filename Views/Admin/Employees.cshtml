@@ -51,6 +51,7 @@
 
         <!-- Dashboard Content -->
         <main class="dashboard-content">
+            @await Html.PartialAsync("_FlashMessages")
 
             <!-- Action Bar -->
             <div class="action-bar">
@@ -146,7 +147,6 @@
                                             </div>
                                             <div class="employee-details">
                                                 <span class="employee-name">@employee.FirstName @employee.LastName</span>
-                                                <span class="employee-meta">ID: @employee.UserId</span>
                                             </div>
                                         </div>
                                     </td>

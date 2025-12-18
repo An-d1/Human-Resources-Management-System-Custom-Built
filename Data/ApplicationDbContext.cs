@@ -16,6 +16,7 @@ namespace HRManagementSystem.Data
         public DbSet<PayRate> PayRates { get; set; }
         public DbSet<TimeEntry> TimeEntries { get; set; }
         public DbSet<HolidayCalendar> HolidayCalendars { get; set; }
+        public DbSet<LeaveRequest> LeaveRequests { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
