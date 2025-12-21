@@ -1,4 +1,6 @@
-﻿using HRManagementSystem.Models;
+﻿using HRManagementSystem.Enums;
+using HRManagementSystem.Models;
+using HRManagementSystem.Repositories;
 using HRManagementSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,15 +17,16 @@ namespace HRManagementSystem.Controllers
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IEmployeeDepartmentRepository _employeeDepartmentRepository;
 
-
+        private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly IEmployeeRepository _employeeRepository;
-        public AdminController(UserManager<User> userManager, IUserRepository userRepository, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeDepartmentRepository employeeDepartmentRepository)
+        public AdminController(UserManager<User> userManager, IUserRepository userRepository, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeDepartmentRepository employeeDepartmentRepository, ILeaveRequestRepository leaveRequestRepository)
         {
             _userManager = userManager;
             _userRepository = userRepository;
             _employeeRepository = employeeRepository;
             _departmentRepository = departmentRepository;
             _employeeDepartmentRepository = employeeDepartmentRepository;
+            _leaveRequestRepository = leaveRequestRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -281,6 +284,77 @@ namespace HRManagementSystem.Controllers
 
             return RedirectToAction("Employees", new { id = model.UserId });
         }
+
+        // Code for the requested leaves goes down here!
+
+        public async Task<IActionResult> RequestedLeaves()
+        {
+            // Get the current logged-in Admin user to retrieve their CompanyId
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Challenge();
+
+            // Fetch both Approved and Pending requests filtered by CompanyId
+            // Include(l => l.User) ensures we have name data
+            var requests = await _leaveRequestRepository
+                .GetApprovedAndPendingByCompanyAsync(user.CompanyId);
+
+            // map to the ViewModel
+            var viewModel = requests.Select(l => new LeaveRequestViewModel
+            {
+                RequestId = l.Id,
+                EmployeeFirstName = l.User?.FirstName ?? "Unknown",
+                EmployeeLastName = l.User?.LastName ?? "User",
+                LeaveType = l.LeaveType,
+                LeaveStatus = l.Status,
+                StartDate = l.StartDate,
+                EndDate = l.EndDate,
+                Reason = l.Reason
+            }).ToList();
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ApproveLeave(Guid requestId)
+        {
+            var admin = await _userManager.GetUserAsync(User);
+            var request = await _leaveRequestRepository.GetByIdAsync(requestId);
+
+            // Security, ensures request exists and belongs to the same company
+            if (request == null || request.CompanyId != admin.CompanyId)
+            {
+                return NotFound();
+            }
+
+            request.Status = LeaveStatus.Approved;
+            await _leaveRequestRepository.UpdateAsync(request);
+
+            TempData["SuccessMessage"] = "Leave request has been approved.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RejectLeave(Guid requestId)
+        {
+            var admin = await _userManager.GetUserAsync(User);
+            var request = await _leaveRequestRepository.GetByIdAsync(requestId);
+
+            // Security, ensures request exists and belongs to the same company
+
+            if (request == null || request.CompanyId != admin.CompanyId)
+            {
+                return NotFound();
+            }
+
+            request.Status = LeaveStatus.Rejected;
+            await _leaveRequestRepository.UpdateAsync(request);
+
+            TempData["ErrorMessage"] = "Leave request has been rejected.";
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
 

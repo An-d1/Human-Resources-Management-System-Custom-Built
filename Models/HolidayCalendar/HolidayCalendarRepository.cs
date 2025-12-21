@@ -62,7 +62,4 @@ public class HolidayRepository : IHolidayCalendarRepository
         return date.DayOfWeek == DayOfWeek.Sunday;
     }
 
-    // end here
-
-
 }

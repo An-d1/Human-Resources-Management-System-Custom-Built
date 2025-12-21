@@ -1,4 +1,5 @@
 ﻿using HRManagementSystem.Data;
+using HRManagementSystem.Enums;
 using HRManagementSystem.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,19 +14,40 @@ namespace HRManagementSystem.Repositories
             _context = context;
         }
 
+        public async Task<List<LeaveRequest>> GetOutgoingRequestsAsync(Guid userId)
+        {
+            return await _context.LeaveRequests
+                .Where(l =>
+                    l.UserId == userId &&
+                    l.EndDate >= DateTime.Today)
+                .OrderBy(l => l.StartDate)
+                .ToListAsync();
+        }
+
+
         public async Task CreateAsync(LeaveRequest leaveRequest)
         {
             _context.LeaveRequests.Add(leaveRequest);
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(LeaveRequest leaveReq)
+        {
+            _context.LeaveRequests.Remove(leaveReq);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<LeaveRequest>> GetByUserAsync(Guid userId)
         {
             return await _context.LeaveRequests
-                .Where(l => l.UserId == userId)
-                .OrderByDescending(l => l.RequestedAt)
+                .Include(l => l.User)
+                .Where(l => l.UserId == userId &&
+                            (l.Status == LeaveStatus.Pending ||
+                             l.Status == LeaveStatus.Approved))
+                .OrderBy(l => l.StartDate)
                 .ToListAsync();
         }
+
 
         public async Task<IEnumerable<LeaveRequest>> GetPendingByCompanyAsync(Guid companyId)
         {
@@ -37,6 +59,18 @@ namespace HRManagementSystem.Repositories
                 .OrderBy(l => l.StartDate)
                 .ToListAsync();
         }
+        public async Task<IEnumerable<LeaveRequest>> GetApprovedAndPendingByCompanyAsync(Guid companyId)
+        {
+            return await _context.LeaveRequests
+                .Include(l => l.User)
+                .Where(l =>
+                    l.CompanyId == companyId &&
+                    (l.Status == LeaveStatus.Approved ||
+                     l.Status == LeaveStatus.Pending))
+                .OrderBy(l => l.StartDate)
+                .ToListAsync();
+        }
+
 
         public async Task<LeaveRequest?> GetByIdAsync(Guid id)
         {
@@ -53,8 +87,8 @@ namespace HRManagementSystem.Repositories
 
         public async Task<bool> HasOverlappingLeaveAsync(
             Guid userId,
-            DateTime startDate,
-            DateTime endDate)
+            DateTime? startDate,
+            DateTime? endDate)
         {
             return await _context.LeaveRequests.AnyAsync(l =>
                 l.UserId == userId &&

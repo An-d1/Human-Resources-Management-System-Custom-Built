@@ -28,6 +28,36 @@
         </header>
 
         <div class="dashboard-content p-4">
+            <div class="dashboard-content p-4">
+    <div class="calendar-legend mb-3 d-flex flex-wrap gap-3 p-3 bg-white rounded shadow-sm">
+        <div class="legend-item d-flex align-items-center">
+            <span class="legend-box" style="background-color: #3B82F6;"></span>
+            <span class="legend-text">Company Holiday</span>
+        </div>
+        <div class="legend-item d-flex align-items-center">
+            <span class="legend-box" style="background-color: #e66b63;"></span>
+            <span class="legend-text">Public Holiday</span>
+        </div>
+
+        @if (isAdmin)
+        {
+            <div class="vr mx-2"></div> <div class="legend-item d-flex align-items-center">
+                <span class="legend-box" style="background-color: #ffc107;"></span>
+                <span class="legend-text">Leave: Pending</span>
+            </div>
+            <div class="legend-item d-flex align-items-center">
+                <span class="legend-box" style="background-color: #198754;"></span>
+                <span class="legend-text">Leave: Approved</span>
+            </div>
+            <div class="legend-item d-flex align-items-center">
+                <span class="legend-box" style="background-color: #dc3545;"></span>
+                <span class="legend-text">Leave: Rejected</span>
+            </div>
+        }
+    </div>
+
+    <div id="calendar"></div>
+</div>
             <div id="calendar"></div>
         </div>
 
@@ -179,12 +209,16 @@
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
+                displayEventTime: false, 
+                eventDisplay: 'block',    // Forces the event to look like a solid bar
                 height: 750,
 
                 selectable: isAdmin,              // Employees cannot select
                 editable: isAdmin,                // Employees cannot drag/resize
                 eventStartEditable: isAdmin,
                 eventDurationEditable: isAdmin,
+
+                eventResizableFromStart: true,
 
                 events: '/HolidayCalendar/GetHolidays',
 
@@ -220,7 +254,7 @@
                         return;
                     }
 
-                    fetch('/HolidayCalendar/MoveHoliday', {
+                    fetch('/HolidayCalendar/MoveEvent', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -241,7 +275,7 @@
                         return;
                     }
 
-                    fetch('/HolidayCalendar/ResizeHoliday', {
+                    fetch('/HolidayCalendar/ResizeEvent', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
@@ -294,19 +328,25 @@
 
 
 
-                // DELETE HOLIDAY CONFIRM BUTTON
+                    // DELETE EVENT CONFIRM BUTTON
                 document.getElementById('confirmDeleteHolidayBtn').addEventListener('click', function () {
 
-                    fetch('/HolidayCalendar/DeleteHoliday', {
+                    // window.selectedHolidayId already contains the string ID (e.g., "leave-xyz" or "holiday-xyz")
+
+                    fetch('/HolidayCalendar/DeleteEvent', { // calling the action
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(window.selectedHolidayId)
                     })
-                    .then(() => {
-                        bootstrap.Modal.getInstance(document.getElementById('deleteHolidayModal')).hide();
-                        calendar.refetchEvents();
-                    });
-
+                    .then(response => {
+                        if (response.ok) {
+                            bootstrap.Modal.getInstance(document.getElementById('deleteHolidayModal')).hide();
+                            calendar.refetchEvents(); // Refresh the calendar UI
+                        } else {
+                            alert("Delete failed. You might not have permission or the item was not found.");
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
                 });
 
                 // IMPORT NATIONAL HOLIDAYS (ADMIN ONLY)

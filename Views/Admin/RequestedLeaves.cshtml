@@ -1,0 +1,214 @@
+﻿@using HRManagementSystem.ViewModels
+@using HRManagementSystem.Enums
+@model IEnumerable<LeaveRequestViewModel>
+
+@{
+    ViewData["Title"] = "Leave Requests";
+    var pending = Model.Where(l => l.LeaveStatus == LeaveStatus.Pending).ToList();
+    var processed = Model.Where(l => l.LeaveStatus != LeaveStatus.Pending).ToList();
+}
+
+<link rel="stylesheet" href="~/css/AdminDashboard.css" asp-append-version="true" />
+
+<div class="dashboard-wrapper">
+
+    <div class="dashboard-main">
+
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <button class="mobile-menu-toggle" id="sidebarToggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="header-welcome">
+                    <h1 class="header-title">Leave Requests</h1>
+                    <p class="header-subtitle">Review and manage employee leave requests</p>
+                </div>
+            </div>
+        </header>
+
+        <main class="dashboard-content">
+            @await Html.PartialAsync("_FlashMessages")
+
+            <!-- Stats -->
+            <div class="employee-stats-grid">
+                <div class="employee-stat-card">
+                    <div class="stat-icon-small stat-icon-warning">
+                        <i class="bi bi-hourglass-split"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number">@pending.Count</span>
+                        <span class="stat-text">Pending Requests</span>
+                    </div>
+                </div>
+
+                <div class="employee-stat-card">
+                    <div class="stat-icon-small stat-icon-success">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number">@processed.Count</span>
+                        <span class="stat-text">Processed</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PENDING REQUESTS -->
+            <div class="content-card employees-table-card">
+                <div class="card-header-custom">
+                    <h3 class="card-title-custom">Pending Leave Requests</h3>
+                    <span class="employee-count-badge">@pending.Count pending</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle employees-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Leave Type</th>
+                                <th>Period</th>
+                                <th>Reason</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var leave in pending)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="employee-info">
+                                            <div class="employee-avatar">
+                                                @leave.EmployeeFirstName.Substring(0, 1)@leave.EmployeeLastName.Substring(0, 1)
+                                            </div>
+                                            <div class="employee-details">
+                                                <span class="employee-name">
+                                                    @leave.EmployeeFirstName @leave.EmployeeLastName
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge rounded-pill bg-light text-dark border">
+                                            @leave.LeaveType
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @leave.StartDate?.ToString("dd MMM yyyy")
+                                        →
+                                        @leave.EndDate?.ToString("dd MMM yyyy")
+                                    </td>
+
+                                    <td>
+                                        <span class="text-muted">@leave.Reason</span>
+                                    </td>
+
+                                    <td>
+                                        <span class="status-badge status-pending">
+                                            <i class="bi bi-hourglass-split"></i> Pending
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <div class="action-buttons">
+                                            <form asp-action="ApproveLeave" method="post" class="d-inline">
+                                                <input type="hidden" name="requestId" value="@leave.RequestId" />
+                                                <button class="action-icon-btn action-approve" title="Approve">
+                                                    <i class="bi bi-check-lg"></i>
+                                                </button>
+                                            </form>
+
+                                            <form asp-action="RejectLeave" method="post" class="d-inline">
+                                                <input type="hidden" name="requestId" value="@leave.RequestId" />
+                                                <button class="action-icon-btn action-reject" title="Reject">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (!pending.Any())
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-calendar-check"></i>
+                            <h3>No Pending Requests</h3>
+                            <p>All leave requests have been processed.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- PROCESSED REQUESTS -->
+            <div class="content-card employees-table-card mt-4">
+                <div class="card-header-custom">
+                    <h3 class="card-title-custom">Processed Requests</h3>
+                    <span class="employee-count-badge">@processed.Count total</span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle employees-table">
+                        <thead>
+                            <tr>
+                                <th>Employee</th>
+                                <th>Leave Type</th>
+                                <th>Period</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var leave in processed)
+                            {
+                                <tr>
+                                    <td>
+                                        @leave.EmployeeFirstName @leave.EmployeeLastName
+                                    </td>
+
+                                    <td>@leave.LeaveType</td>
+
+                                    <td>
+                                        @leave.StartDate?.ToString("dd MMM yyyy")
+                                        →
+                                        @leave.EndDate?.ToString("dd MMM yyyy")
+                                    </td>
+
+                                    <td>
+                                        @if (leave.LeaveStatus == LeaveStatus.Approved)
+                                        {
+                                            <span class="status-badge status-active">
+                                                <i class="bi bi-check-circle-fill"></i> Approved
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="status-badge status-inactive">
+                                                <i class="bi bi-x-circle-fill"></i> Rejected
+                                            </span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    @if (!processed.Any())
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-folder"></i>
+                            <h3>No Processed Requests</h3>
+                            <p>Once requests are approved or rejected, they’ll appear here.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>

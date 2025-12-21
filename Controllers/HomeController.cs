@@ -10,8 +10,8 @@ using System.Diagnostics;
 
 namespace HRManagementSystem.Controllers
 {
-    
-    [Authorize]
+
+    [Authorize(Roles = "Employee")]
     public class HomeController : Controller
     {
         private readonly UserManager<User> _userManager;
@@ -104,17 +104,41 @@ namespace HRManagementSystem.Controllers
             return RedirectToAction("CheckInOut");
         }
 
-        public IActionResult LeaveRequest()
+        //public async Task<LeaveRequestViewModel> loadOutgoingRequests()
+        //{
+        //    var user = await _userManager.GetUserAsync(User);
+
+        //    var model = new LeaveRequestViewModel
+        //    {
+        //        OutgoingRequests = await _leaveRequestRepository
+        //            .GetOutgoingRequestsAsync(user.Id)
+        //    };
+
+        //    return model; 
+        //}
+
+        [HttpGet]
+        public async Task<IActionResult> LeaveRequest() // View render
         {
-            return View();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return Unauthorized();
+
+            var model = new LeaveRequestViewModel
+            {
+                OutgoingRequests = await _leaveRequestRepository
+                    .GetOutgoingRequestsAsync(user.Id)
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> RequestLeave(LeaveRequestViewModel model)
+        public async Task<IActionResult> LeaveRequest(LeaveRequestViewModel model)
         {
             if (!ModelState.IsValid)
-                return View(model);
+                return View("LeaveRequest", model);
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -124,7 +148,7 @@ namespace HRManagementSystem.Controllers
             {
                 ModelState.AddModelError(nameof(model.EndDate),
                     "End date must be after start date.");
-                return View(model);
+                return View("LeaveRequest", model);
             }
 
             var hasOverlap = await _leaveRequestRepository
@@ -134,7 +158,7 @@ namespace HRManagementSystem.Controllers
             {
                 ModelState.AddModelError(string.Empty,
                     "You already have a leave request during this period.");
-                return View(model);
+                return View("LeaveRequest", model);
             }
 
             var leaveRequest = new LeaveRequest
@@ -142,9 +166,9 @@ namespace HRManagementSystem.Controllers
                 Id = Guid.NewGuid(),
                 UserId = user.Id,
                 CompanyId = user.CompanyId,
-                StartDate = model.StartDate,
-                EndDate = model.EndDate,
-                LeaveType = model.LeaveType,
+                StartDate = model.StartDate!.Value,
+                EndDate = model.EndDate!.Value,
+                LeaveType = model.LeaveType!.Value,
                 Status = LeaveStatus.Pending,
                 Reason = model.Reason,
                 RequestedAt = DateTime.UtcNow

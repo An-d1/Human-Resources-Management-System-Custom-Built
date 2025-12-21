@@ -1,4 +1,5 @@
-﻿@model HRManagementSystem.ViewModels.LeaveRequestViewModel
+﻿@using HRManagementSystem.Enums
+@model HRManagementSystem.ViewModels.LeaveRequestViewModel
 
 @{
     ViewData["Title"] = "Request Leave";
@@ -43,7 +44,7 @@
 
                     <div class="card-body-custom">
 
-                        <form asp-controller="Home" asp-action="RequestLeave" method="post" class="row g-4">
+                <form asp-controller="Home" asp-action="LeaveRequest" method="post" class="row g-4">
 
                             <!-- Leave Type -->
                             <div class="col-md-6">
@@ -109,9 +110,66 @@
                             </div>
 
                         </form>
+                            <hr />
+                            <h5 class="mt-4">Your outgoing leave requests: </h5>
+
+                @if (Model.OutgoingRequests.Any())
+                {
+                    <table class="table table-sm align-middle">
+                        <thead>
+                            <tr>
+                                <th>Period</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var leave in Model.OutgoingRequests)
+                            {
+                                <tr>
+                                    <td>
+                                        @leave.StartDate.ToShortDateString()
+                                        <i class="bi bi-arrow-right"></i>
+                                        @leave.EndDate.ToShortDateString()
+                                    </td>
+                                    <td>@leave.LeaveType</td>
+                                    <td>
+                                        <span class="badge @GetStatusClass(leave.Status)">
+                                            @leave.Status
+                                        </span>
+                                    </td>
+                                    <td class="text-muted">
+                                        @leave.Reason
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p class="text-muted">
+                        You have no upcoming leave requests.
+                    </p>
+                }
+
 
                     </div>
                 </div>
 
             </div>
 </div>
+
+<script> // to color code the requests by status
+    @functions {
+    string GetStatusClass(LeaveStatus status) => status switch
+    {
+        LeaveStatus.Pending  => "bg-warning text-dark",
+        LeaveStatus.Approved => "bg-success",
+        LeaveStatus.Rejected => "bg-danger",
+        _ => "bg-secondary"
+    };
+};
+
+</script>
