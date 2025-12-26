@@ -8,10 +8,11 @@ namespace HRManagementSystem.Controllers
     public class EmailController : Controller
     {
         private readonly UserManager<User> _userManager;
-
-        public EmailController(UserManager<User> userManager)
+        private readonly IEmployeeRepository _employeeRepository;
+        public EmailController(UserManager<User> userManager, IEmployeeRepository employeeRepository)
         {
             _userManager = userManager;
+            _employeeRepository = employeeRepository;
         }
         public IActionResult ConfirmationLinkWasSent()
         {
@@ -43,10 +44,12 @@ namespace HRManagementSystem.Controllers
             if (result.Succeeded)
             {
                 // If successful, show a confirmation success page.
+
+                await _employeeRepository.SetIsEmployedToTrueFromUserId(user.Id);
                 return View("EmailConfirmationSuccess");
             }
 
-            // If it failed for any reason (e.g., token expired), show an error page.
+            // If it failed for any reason (e.g, token expired)
             return View("Error");
         }
 

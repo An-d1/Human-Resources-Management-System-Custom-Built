@@ -8,5 +8,6 @@
         Task<Employee> CreateAsync(Employee employee);
         Task<List<Employee>> ReturnAllEmployeesOfTheCompanyAsync(Guid companyId);
         Task<List<string>> GetDepartmentNamesByUserIdAsync(Guid userId);
+        Task SetIsEmployedToTrueFromUserId(Guid userId);
     }
 }

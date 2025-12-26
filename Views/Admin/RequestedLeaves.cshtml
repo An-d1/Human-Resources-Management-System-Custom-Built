@@ -3,7 +3,8 @@
 @model IEnumerable<LeaveRequestViewModel>
 
 @{
-    ViewData["Title"] = "Leave Requests";
+    ViewData["HeaderTitle"] = "Leave Request";
+    ViewData["HeaderSubtitle"] = "Review and manage employee leave requests";
     var pending = Model.Where(l => l.LeaveStatus == LeaveStatus.Pending).ToList();
     var processed = Model.Where(l => l.LeaveStatus != LeaveStatus.Pending).ToList();
 }
@@ -13,19 +14,7 @@
 <div class="dashboard-wrapper">
 
     <div class="dashboard-main">
-
-        <!-- Header -->
-        <header class="dashboard-header">
-            <div class="header-left">
-                <button class="mobile-menu-toggle" id="sidebarToggle">
-                    <i class="bi bi-list"></i>
-                </button>
-                <div class="header-welcome">
-                    <h1 class="header-title">Leave Requests</h1>
-                    <p class="header-subtitle">Review and manage employee leave requests</p>
-                </div>
-            </div>
-        </header>
+        @await Html.PartialAsync("_AdminHeader")
 
         <main class="dashboard-content">
             @await Html.PartialAsync("_FlashMessages")

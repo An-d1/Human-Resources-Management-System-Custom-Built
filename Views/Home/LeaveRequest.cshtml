@@ -2,9 +2,9 @@
 @model HRManagementSystem.ViewModels.LeaveRequestViewModel
 
 @{
-    ViewData["Title"] = "Request Leave";
+    ViewData["HeaderTitle"] = "Make a leave request";
+    ViewData["HeaderSubtitle"] = "Create & view past requests.";
 }
-
 <link rel="stylesheet" href="~/css/AdminDashboard.css" asp-append-version="true" />
 <link rel="stylesheet" href="~/css/Admin.css" asp-append-version="true" />
 
@@ -13,38 +13,56 @@
     <!-- Main Content Area -->
     <div class="dashboard-main">
 
-        <!-- Top Navigation Bar -->
-        <header class="dashboard-header">
+        @await Html.PartialAsync("_EmployeeHeader")
 
-            <div class="header-left">
-                <button class="mobile-menu-toggle" id="sidebarToggle">
-                    <i class="bi bi-list"></i>
-                </button>
-
-                <div class="header-welcome">
-                    <h1 class="header-title">Request Leave</h1>
-                    <p class="header-subtitle">
-                        Submit a leave request for admin approval
-                    </p>
-                </div>
-            </div>
-        </header>
 
         <!-- Dashboard Content -->
 
                 <!-- Leave Request Card -->
                 <div class="content-card m-5">
 
-                    <div class="card-header-custom">
+            <div class="card-header-custom d-flex justify-content-between align-items-center">
                         <h3 class="card-title-custom">
                             <i class="bi bi-calendar-event me-2"></i>
                             Leave Details
                         </h3>
+                <div class="d-flex gap-3">
+                    <!-- Year selector -->
+                    <form asp-action="LeaveRequest" method="get" class="d-flex align-items-center gap-2">
+                        <label asp-for="SelectedYear" class="form-label mb-0 fw-semibold">
+                            Year
+                        </label>
+
+                        <input asp-for="SelectedYear"
+                               type="number"
+                               min="2000"
+                               max="2100"
+                               class="form-control form-control-sm"
+                               style="width: 100px;" />
+
+                        <button type="submit" class="btn btn-sm btn-outline-primary">
+                            View
+                        </button>
+                    </form>
+                    <span class="badge bg-primary-subtle text-primary fs-6">
+                        <i class="bi bi-calendar-check me-1"></i>
+                        Used: <strong>@Model.UsedAnnualLeaves</strong>
+                    </span>
+
+                    <span class="badge bg-success-subtle text-success fs-6">
+                        <i class="bi bi-calendar-plus me-1"></i>
+                        Max: <strong>@Model.MaxAnnualLeaves</strong>
+                    </span>
+
+                </div>
+
                     </div>
 
                     <div class="card-body-custom">
 
                 <form asp-controller="Home" asp-action="LeaveRequest" method="post" class="row g-4">
+
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                             <!-- Leave Type -->
                             <div class="col-md-6">
@@ -82,6 +100,8 @@
                                           class="form-control"
                                           rows="4"
                                           placeholder="Add any additional context for your request"></textarea>
+                            <span asp-validation-for="Reason" class="text-danger"></span>
+
                             </div>
 
                             <!-- Info Box -->
@@ -160,6 +180,10 @@
 
             </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 
 <script> // to color code the requests by status
     @functions {

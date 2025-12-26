@@ -96,5 +96,32 @@ namespace HRManagementSystem.Repositories
                 startDate <= l.EndDate &&
                 endDate >= l.StartDate);
         }
+        public async Task<int> GetTotalDaysUsedInYearAsync(Guid userId, int year)
+        {
+            // sums up all used leaves on a year where leavetype == annual 
+            return await _context.LeaveRequests
+                .Where(l =>
+                    l.UserId == userId &&
+                    l.LeaveType == LeaveType.Annual &&
+                    l.StartDate.Year == year &&
+                    (l.Status == LeaveStatus.Approved || l.Status == LeaveStatus.Pending))
+                .SumAsync(l => l.CalculatedDays);
+        }
+
+        public async Task<List<LeaveRequest>> GetApprovedRequestsOverlappingPeriodAsync(Guid userId, DateTime periodStart, DateTime periodEnd)
+        {
+            return await _context.LeaveRequests
+                .Include(l => l.User) 
+                .Where(l =>
+                    l.UserId == userId &&
+                    l.Status == Enums.LeaveStatus.Approved &&
+                    // the overlap logic:
+                    // Request starts before the period ends
+                    l.StartDate <= periodEnd &&
+                    // and request ends after the period starts
+                    l.EndDate >= periodStart
+                )
+                .ToListAsync();
+        }
     }
 }

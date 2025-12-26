@@ -19,83 +19,45 @@
                                 <i class="bi bi-briefcase-fill"></i>
                             </div>
                         </div>
-
-                        <!-- Header Section -->
                         <div class="login-header">
                             <h1 class="login-title">Welcome Back</h1>
                             <p class="login-subtitle">Sign in to access your HR portal, payslips, and time tracking.</p>
                         </div>
 
-                        <!-- Form Section -->
                         <form asp-action="LoginUser" method="post" novalidate class="login-form">
+                            <div asp-validation-summary="ModelOnly" class="alert alert-danger-professional"></div>
 
-                            <div asp-validation-summary="ModelOnly" class="alert alert-danger-professional" role="alert"></div>
-
-                            <!-- Email Field -->
                             <div class="form-group-professional">
-                                <label asp-for="Email" class="form-label-professional">Email Address</label>
+                                <label asp-for="Email" class="form-label-professional"></label>
                                 <div class="input-wrapper">
-                                    <span class="input-icon-left">
-                                        <i class="bi bi-envelope"></i>
-                                    </span>
-                                    <input asp-for="Email"
-                                           type="email"
-                                           class="form-control-professional"
-                                           placeholder="name@company.com"
-                                           autocomplete="email" />
+                                    <span class="input-icon-left"><i class="bi bi-envelope"></i></span>
+                                    <input asp-for="Email" class="form-control-professional" placeholder="name@company.com" />
                                 </div>
                                 <span asp-validation-for="Email" class="validation-message"></span>
                             </div>
 
-                            <!-- Password Field -->
                             <div class="form-group-professional">
-                                <label asp-for="Password" class="form-label-professional">Password</label>
+                                <label asp-for="Password" class="form-label-professional"></label>
                                 <div class="input-wrapper">
-                                    <span class="input-icon-left">
-                                        <i class="bi bi-lock"></i>
-                                    </span>
-                                    <input asp-for="Password"
-                                           type="password"
-                                           id="passwordInput"
-                                           class="form-control-professional"
-                                           placeholder="Enter your password"
-                                           autocomplete="current-password" />
-                                    <button type="button"
-                                            class="input-icon-right password-toggle-btn"
-                                            id="togglePassword"
-                                            tabindex="-1"
-                                            aria-label="Show/Hide password">
+                                    <span class="input-icon-left"><i class="bi bi-lock"></i></span>
+                                    <input asp-for="Password" type="password" id="passwordInput" class="form-control-professional" placeholder="Enter password" />
+                                    <button type="button" id="togglePasswordBtn" class="input-icon-right password-toggle-btn" tabindex="-1">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
                                 <span asp-validation-for="Password" class="validation-message"></span>
                             </div>
 
-                            <!-- Remember Me & Forgot Password -->
                             <div class="login-options">
                                 <div class="custom-checkbox">
-                                    <input id="RememberMe"
-                                           name="RememberMe"
-                                           type="checkbox"
-                                           class="checkbox-professional" />
-                                    <label for="RememberMe" class="checkbox-label">Keep me signed in</label>
+                                    <input asp-for="RememberMe" class="checkbox-professional" />
+                                    <label asp-for="RememberMe" class="checkbox-label">Keep me signed in</label>
                                 </div>
-
-                                <a asp-controller="ForgotResetPassword"
-                                   asp-action="ForgotPassword"
-                                   class="link-professional">
-                                    Forgot password?
-                                </a>
+                                <a asp-controller="ForgotResetPassword" asp-action="ForgotPassword" class="link-professional">Forgot Password?</a>
                             </div>
 
-                            <!-- Submit Button -->
-                            <button type="submit" class="btn-login-professional">
-                                <i class="bi bi-box-arrow-in-right me-2"></i>
-                                Sign In
-                            </button>
-
+                            <button type="submit" class="btn-login-professional">Sign In</button>
                         </form>
-
                         <!-- Divider -->
                         <div class="login-divider">
                             <span>or</span>
@@ -111,38 +73,35 @@
                                     Register your company
                                 </a>
                             </p>
-                            <div class="security-notice">
-                                <i class="bi bi-shield-check"></i>
-                                <span>Your credentials are secure and encrypted</span>
-                            </div>
+                           
                         </div>
-
                     </div>
                 </div>
-
-                <!-- Additional Info -->
-                <div class="login-extra-info">
-                    <p>Need help? Contact your HR administrator or visit our <a href="#" class="link-professional">support center</a>.</p>
-                </div>
-
             </div>
         </div>
     </div>
 </div>
 
-@section Scripts
-{
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script src="~/js/LogIn.js" asp-append-version="true"></script>
-}
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const toggleBtn = document.getElementById('togglePasswordBtn');
+            const passwordInput = document.getElementById('passwordInput');
 
-<script>
-    document.getElementById('togglePassword').addEventListener('click', function () {
-        const passwordInput = document.getElementById('passwordInput');
-        const icon = this.querySelector('i');
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        icon.classList.toggle('bi-eye');
-        icon.classList.toggle('bi-eye-slash');
-    });
-</script>
+            if (toggleBtn && passwordInput) {
+                toggleBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    // Toggle type
+                    const isPassword = passwordInput.getAttribute('type') === 'password';
+                    passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+
+                    // Toggle icon
+                    const icon = this.querySelector('i');
+                    icon.classList.toggle('bi-eye');
+                    icon.classList.toggle('bi-eye-slash');
+                });
+            }
+        });
+    </script>
+}

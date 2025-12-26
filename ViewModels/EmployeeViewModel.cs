@@ -1,4 +1,6 @@
-﻿namespace HRManagementSystem.ViewModels
+﻿using HRManagementSystem.Models;
+
+namespace HRManagementSystem.ViewModels
 {
     public class EmployeeViewModel
     {
@@ -13,5 +15,6 @@
         public DateOnly HireDate { get; set; }
         public DateOnly? TerminationDate { get; set; }
         public bool IsEmployed { get; set; } = true; // always true unless contract terminated which sets it to false
+        public string EmployeeLevel { get; set; }
     }
 }

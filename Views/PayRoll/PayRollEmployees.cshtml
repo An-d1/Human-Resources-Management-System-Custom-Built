@@ -2,9 +2,20 @@
 @model IEnumerable<EmployeeViewModel>
 
 @{
-    ViewData["Title"] = "Payroll Employees";
+    ViewData["HeaderTitle"] = "Payroll Management";
+    ViewData["HeaderSubtitle"] = "Generate and view payrolls.";
 }
 
+@if (ViewBag.AutoDownloadUrl != null)
+{
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                window.location.href = '@Html.Raw(ViewBag.AutoDownloadUrl)';
+            }, 1000);
+        };
+    </script>
+}
 <link rel="stylesheet" href="~/css/AdminDashboard.css" />
 <link rel="stylesheet" href="~/css/Admin.css" />
 
@@ -13,23 +24,12 @@
     @await Html.PartialAsync("_AdminSidebar")
 
     <div class="dashboard-main">
-
-        <!-- Top Navigation -->
-        <header class="dashboard-header">
-            <div class="header-left">
-                <button class="mobile-menu-toggle" id="sidebarToggle">
-                    <i class="bi bi-list"></i>
-                </button>
-
-                <div class="header-welcome">
-                    <h1 class="header-title">Payroll Management</h1>
-                    <p class="header-subtitle">Calculate payroll for your employees</p>
-                </div>
-            </div>
-        </header>
+        @await Html.PartialAsync("_AdminHeader")
 
         <!-- Main Content -->
         <div class="dashboard-content p-4">
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
             <div class="row g-4">
                 @if (ViewBag.ShowPayrollModal == true)
@@ -62,9 +62,11 @@
 
                     </div>
                 }
-
+                
                 @foreach (var emp in Model)
                 {
+                    if (emp.IsEmployed == true) {
+
                     <div class="col-lg-4 col-md-6">
                         <div class="card shadow-sm">
 
@@ -78,11 +80,11 @@
 
                                     <div>
                                         <h5 class="fw-semibold m-0">@emp.FirstName @emp.LastName</h5>
-                                        <small class="text-muted">ID: @emp.UserId</small>
                                     </div>
                                 </div>
 
                                 <p class="mb-1"><strong>Role:</strong> @emp.Role</p>
+                                <p class="mb-1"><strong>Level:</strong> @emp.EmployeeLevel</p>
 
                                 <p class="mb-3">
                                     <strong>Departments:</strong><br />
@@ -106,7 +108,12 @@
                             </div>
 
                         </div>
-                    </div>
+                        </div>
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
 
             </div>

@@ -11,7 +11,7 @@ namespace HRManagementSystem.Models
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-
+        public int CalculatedDays { get; set; }
         public LeaveType LeaveType { get; set; }
 
         public LeaveStatus Status { get; set; } // Pending / Approved / Rejected

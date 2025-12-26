@@ -1,4 +1,6 @@
-﻿namespace HRManagementSystem.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HRManagementSystem.Models;
 
     public class Employee
     {
@@ -8,5 +10,9 @@
         public DateOnly HireDate { get; set; }
         public DateOnly? TerminationDate { get; set; }
         public bool IsEmployed { get; set; } = true; // always true unless contract terminated which sets it to false
-    }
+        public Guid? EmployeeLevelId { get; set; } // Fk
+
+        [ForeignKey("EmployeeLevelId")]
+        public virtual EmployeeLevel? EmployeeLevel { get; set; } // Navigation Property
+}
 

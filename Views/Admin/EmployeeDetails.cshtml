@@ -2,52 +2,17 @@
 @model EmployeeViewModel
 
 @{
-    ViewData["Title"] = "Employee Details";
+    ViewData["HeaderTitle"] = "Employee Details";
+    ViewData["HeaderSubtitle"] = "Manage specific details";
 }
 
 <div class="dashboard-wrapper">
 
-    <!-- Main Content Area -->
+    <!-- Main Content A rea -->
     <div class="dashboard-main">
 
-        <!-- Top Navigation Bar -->
-        <header class="dashboard-header">
-            <div class="header-left">
-                <button class="mobile-menu-toggle" id="sidebarToggle">
-                    <i class="bi bi-list"></i>
-                </button>
-                <div class="header-welcome">
-                    <h1 class="header-title">Employee Profile</h1>
-                    <p class="header-subtitle">Full record for this employee</p>
-                </div>
-            </div>
+        @await Html.PartialAsync("_AdminHeader")
 
-            <div class="header-right">
-                <div class="header-icon-btn">
-                    <i class="bi bi-bell"></i>
-                    <span class="notification-badge">3</span>
-                </div>
-
-                <div class="dropdown">
-                    <button class="user-profile-dropdown" id="userDropdown" data-bs-toggle="dropdown">
-                        <div class="user-avatar">
-                            @Model.FirstName.Substring(0, 1)@Model.LastName.Substring(0, 1)
-                        </div>
-                        <div class="user-info">
-                            <span class="user-name">Admin User</span>
-                            <span class="user-email">admin@smartstaff.com</span>
-                        </div>
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle me-2"></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" asp-controller="LogIn" asp-action="Logout"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
 
         <!-- Dashboard Content -->
         <main class="dashboard-content">
@@ -75,7 +40,10 @@
                             <span class="role-badge role-@Model.Role.ToLower().Replace(" ", "-")">
                                 @Model.Role
                             </span>
-                            @if (Model.IsEmployed)
+                            <span class="role-badge role-@Model.Role.ToLower().Replace(" ", "-")">
+                                @Model.EmployeeLevel
+                            </span>
+                            @if (Model.IsEmployed == true) 
                             {
                                 <span class="status-badge status-active ms-2">
                                     <i class="bi bi-check-circle-fill"></i> Active
@@ -176,6 +144,15 @@
                                 <div>
                                     <span class="role-badge role-@Model.Role.ToLower().Replace(" ", "-")">
                                         @Model.Role
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="text-muted small">Employee Level</div>
+                                <div>
+                                    <span class="role-badge role-@Model.Role.ToLower().Replace(" ", "-")">
+                                        @Model.EmployeeLevel
                                     </span>
                                 </div>
                             </div>

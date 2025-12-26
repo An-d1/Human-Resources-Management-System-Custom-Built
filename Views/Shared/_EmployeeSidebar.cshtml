@@ -50,8 +50,8 @@
         </a>
 
         <!-- Profile -->
-        <a asp-controller="Employee" asp-action="Profile"
-           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "Profile" ? "active" : "")">
+        <a asp-controller="ForgotResetPassword" asp-action="ChangePassword"
+           class="sidebar-link @(ViewContext.RouteData.Values["action"]!.ToString() == "ChangePassword" ? "active" : "")">
             <i class="bi bi-person-circle"></i>
             <span>Profile</span>
         </a>

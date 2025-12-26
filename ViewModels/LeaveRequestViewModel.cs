@@ -21,5 +21,8 @@ namespace HRManagementSystem.ViewModels
         public string? Reason { get; set; }
         public List<LeaveRequest> OutgoingRequests { get; set; }
                 = new();
+        public int? SelectedYear { get; set; } = DateTime.Now.Year; //So the user can check the used holidays for different years
+        public int UsedAnnualLeaves { get; set; }
+        public int MaxAnnualLeaves { get; set; }
     }
 }

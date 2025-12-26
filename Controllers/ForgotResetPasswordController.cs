@@ -1,6 +1,7 @@
 ﻿using HRManagementSystem.Models;
 using HRManagementSystem.Services;
 using HRManagementSystem.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +10,13 @@ namespace HRManagementSystem.Controllers
     public class ForgotResetPasswordController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> _signInManager;
         private readonly EmailServiceSender _emailServiceSender;
 
-        public ForgotResetPasswordController(UserManager<User> userManager, EmailServiceSender emailServiceSender)
+        public ForgotResetPasswordController(UserManager<User> userManager, SignInManager<User> signInManager ,EmailServiceSender emailServiceSender)
         {
             _userManager = userManager;
+            _signInManager = signInManager;
             _emailServiceSender = emailServiceSender;
         }
         public IActionResult ForgotPassword()
@@ -184,35 +187,81 @@ namespace HRManagementSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> ResetPasswordUser(ResetPasswordViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("ResetPasswordSetNewOne", viewModel);
+            }
 
-            // Check if the userId and token are valid.
             if (viewModel.UserId == null || viewModel.Token == null)
             {
-                // If not, show an error page.
                 return View("Error");
             }
 
-            // Find the user in the database using the userId.
             var user = await _userManager.FindByIdAsync(viewModel.UserId);
             if (user == null)
             {
                 return View("Error");
             }
 
-            //Reset the user's password using the token.
             var result = await _userManager.ResetPasswordAsync(user, viewModel.Token, viewModel.NewPassword);
 
-            //Handle the result of the confirmation.
             if (result.Succeeded)
             {
-                // If successful, show a confirmation success page.
                 return RedirectToAction("PasswordResetSuccessPage");
             }
 
-            // If it failed for any reason (e.g., token expired), show an error page.
-            return View("Error");
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View("ResetPasswordSetNewOne", viewModel);
         }
 
+        [Authorize] 
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            // Checks old passw and sets a new one
+            var result = await _userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+
+            if (result.Succeeded)
+            {
+                // Sign in again to refresh the security stamp
+                await _signInManager.RefreshSignInAsync(user);
+                if (User.IsInRole("Admin"))
+                {
+                    TempData["SuccessMessage"] = "Password was reset successfully.";
+                    return RedirectToAction("Index", "Admin");
+                }else
+                {
+                    TempData["SuccessMessage"] = "Password was reset successfully.";
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(model);
+        }
         public IActionResult PasswordResetSuccessPage()
         {
             return View();

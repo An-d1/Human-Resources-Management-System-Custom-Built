@@ -2,7 +2,8 @@
 @model IEnumerable<EmployeeViewModel>
 
 @{
-    ViewData["Title"] = "Employees Management";
+    ViewData["HeaderTitle"] = "Employees Management";
+    ViewData["HeaderSubtitle"] = "Manage and view all your employees information";
 }
 
 <link rel="stylesheet" href="~/css/AdminDashboard.css" asp-append-version="true" />
@@ -12,43 +13,7 @@
     <!-- Main Content Area -->
     <div class="dashboard-main">
 
-        <!-- Top Navigation Bar -->
-        <header class="dashboard-header">
-            <div class="header-left">
-                <button class="mobile-menu-toggle" id="sidebarToggle">
-                    <i class="bi bi-list"></i>
-                </button>
-                <div class="header-welcome">
-                    <h1 class="header-title">Employee Management</h1>
-                    <p class="header-subtitle">Manage and view all employee information</p>
-                </div>
-            </div>
-
-            <div class="header-right">
-                <div class="header-icon-btn">
-                    <i class="bi bi-bell"></i>
-                    <span class="notification-badge">3</span>
-                </div>
-
-                <div class="dropdown">
-                    <button class="user-profile-dropdown" id="userDropdown" data-bs-toggle="dropdown">
-                        <div class="user-avatar">AU</div>
-                        <div class="user-info">
-                            <span class="user-name">Admin User</span>
-                            <span class="user-email">admin@smartstaff.com</span>
-                        </div>
-                        <i class="bi bi-chevron-down"></i>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle me-2"></i> Profile</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item text-danger" asp-controller="LogIn" asp-action="Logout"><i class="bi bi-box-arrow-right me-2"></i> Sign Out</a></li>
-                    </ul>
-                </div>
-            </div>
-        </header>
-
+        @await Html.PartialAsync("_AdminHeader")
         <!-- Dashboard Content -->
         <main class="dashboard-content">
             @await Html.PartialAsync("_FlashMessages")
@@ -82,6 +47,10 @@
                         <i class="bi bi-download"></i>
                         <span>Export</span>
                     </button>
+                    <a asp-controller="EmployeeLevel" asp-action="CreateEmployeeLevelView" class="btn-add-employee">
+                        <i class="bi bi-person-rolodex"></i>
+                        <span>Add Employee Levels</span>
+                    </a>
                     <a asp-controller="Register" asp-action="Index" class="btn-add-employee">
                         <i class="bi bi-person-plus"></i>
                         <span>Add Employee</span>
@@ -127,6 +96,7 @@
                                 <th>Employee Name</th>
                                 <th>Email</th>
                                 <th>Role</th>
+                                <th>Level</th>
                                 <th>Department</th>  
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -158,6 +128,12 @@
                                     <td>
                                         <span class="role-badge role-@employee.Role.ToLower().Replace(" ", "-")">
                                             @employee.Role
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        <span class="role-badge role-@employee.Role.ToLower().Replace(" ", "-")">
+                                            @employee.EmployeeLevel
                                         </span>
                                     </td>
 

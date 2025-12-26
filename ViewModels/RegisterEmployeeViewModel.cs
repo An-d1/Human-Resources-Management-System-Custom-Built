@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace HRManagementSystem.ViewModels
 {
@@ -25,5 +26,11 @@ namespace HRManagementSystem.ViewModels
         [Required]
         [Display(Name = "User Role")]
         public string Role { get; set; }
+
+        [Required]
+        [Display(Name = "Employee Level")]
+        public Guid EmployeeLevel { get; set; }
+
+        public IEnumerable<SelectListItem>? AvailableLevels { get; set; }
     }
 }

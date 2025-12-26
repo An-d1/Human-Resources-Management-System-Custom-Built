@@ -15,6 +15,7 @@ namespace HRManagementSystem.Models
         public async Task<Employee> FindEmployeeByIdAsync(string employeeId)
         {
             return await _context.Employees
+                .Include(e => e.EmployeeLevel)
                 .FirstOrDefaultAsync(e => e.UserId.ToString() == employeeId);
         }
         public async Task UpdateEmployeeAsync(Employee employee)
@@ -39,6 +40,7 @@ namespace HRManagementSystem.Models
         public async Task<List<Employee>> ReturnAllEmployeesOfTheCompanyAsync(Guid companyId)
         {
             return await _context.Employees
+            .Include(e => e.EmployeeLevel)
             .Where(e => e.User.CompanyId == companyId)
             .ToListAsync();
         }
@@ -50,6 +52,20 @@ namespace HRManagementSystem.Models
            .Include(ed => ed.Department) 
            .Select(ed => ed.Department.Name)
            .ToListAsync();
+        }
+
+        public async Task SetIsEmployedToTrueFromUserId(Guid userId)
+        {
+            var employee = await _context.Employees
+                .FirstOrDefaultAsync(e => e.UserId == userId);
+
+            if (employee != null)
+            {
+                //Update the property
+                employee.IsEmployed = true;
+
+                await _context.SaveChangesAsync();
+            }
         }
 
     }

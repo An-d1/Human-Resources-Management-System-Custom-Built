@@ -123,6 +123,22 @@
                                 <span asp-validation-for="Role" class="validation-message"></span>
                             </div>
 
+                            <!-- Level Field -->
+                            <div class="form-group-professional">
+                                <label asp-for="EmployeeLevel" class="form-label-professional">Employee Level</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-person-lines-fill"></i>
+                                    </span>
+                                    <select asp-for="EmployeeLevel"
+                                            asp-items="Model.AvailableLevels"
+                                            class="form-control-professional select-professional">
+                                        <option value="">-- Select Level --</option>
+                                    </select>
+                                </div>
+                                <span asp-validation-for="EmployeeLevel" class="validation-message"></span>
+                            </div>
+
                             <!-- Info Notice -->
                             <div class="info-notice mb-4">
                                 <i class="bi bi-info-circle"></i>

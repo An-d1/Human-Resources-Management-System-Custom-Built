@@ -23,5 +23,7 @@ namespace HRManagementSystem.Models
             Guid userId,
             DateTime? startDate,
             DateTime? endDate);
+        Task<int> GetTotalDaysUsedInYearAsync(Guid userId, int year);
+        Task<List<LeaveRequest>> GetApprovedRequestsOverlappingPeriodAsync(Guid userId, DateTime periodStart, DateTime periodEnd);
     }
 }

@@ -1,6 +1,7 @@
 using HRManagementSystem.Enums;
 using HRManagementSystem.Models;
 using HRManagementSystem.Repositories;
+using HRManagementSystem.Services;
 using HRManagementSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -20,12 +21,29 @@ namespace HRManagementSystem.Controllers
         private readonly ITimeEntryRepository _timeEntryRepository;
         private readonly ILeaveRequestRepository _leaveRequestRepository;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager, ITimeEntryRepository timeEntryRepository, ILeaveRequestRepository leaveRequestRepository)
+        private readonly ILeaveRuleRepository _leaveRuleRepository;
+        private readonly IEmployeeLevelRepository _employeeLevelRepository;
+
+        private readonly IEmployeeRepository _employeeRepository;
+
+        private readonly CalculateLeaveDays _leaveCalculator;
+
+        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager,
+            ITimeEntryRepository timeEntryRepository, 
+            ILeaveRequestRepository leaveRequestRepository, 
+            ILeaveRuleRepository leaveRuleRepository, 
+            IEmployeeLevelRepository employeeLevelRepository, 
+            IEmployeeRepository employeeRepository,
+            CalculateLeaveDays leaveCalculator)
         {
             _logger = logger;
             _userManager = userManager;
             _timeEntryRepository = timeEntryRepository;
             _leaveRequestRepository = leaveRequestRepository;
+            _leaveRuleRepository = leaveRuleRepository;
+            _employeeLevelRepository = employeeLevelRepository;
+            _employeeRepository = employeeRepository;
+            _leaveCalculator = leaveCalculator;
         }
 
         public async Task<IActionResult> Index()
@@ -104,30 +122,65 @@ namespace HRManagementSystem.Controllers
             return RedirectToAction("CheckInOut");
         }
 
-        //public async Task<LeaveRequestViewModel> loadOutgoingRequests()
-        //{
-        //    var user = await _userManager.GetUserAsync(User);
+        //Method to populate the max laves and annual leaves used for the employee view
+        async Task PopulateLeaveStatsAsync(LeaveRequestViewModel model, User user)
+        {
+            var employee = await _employeeRepository
+                .FindEmployeeByIdAsync(user.Id.ToString());
 
-        //    var model = new LeaveRequestViewModel
-        //    {
-        //        OutgoingRequests = await _leaveRequestRepository
-        //            .GetOutgoingRequestsAsync(user.Id)
-        //    };
+            int year = model.SelectedYear ?? DateTime.Now.Year;
 
-        //    return model; 
-        //}
+            if (employee?.EmployeeLevelId != null)
+            {
+                var rule = await _leaveRuleRepository
+                    .GetRuleByLevelIdAsync(employee.EmployeeLevelId.Value);
+
+                if (rule != null)
+                {
+                    model.MaxAnnualLeaves = rule.MaxAnnualLeaves;
+                    model.UsedAnnualLeaves = await _leaveRequestRepository
+                        .GetTotalDaysUsedInYearAsync(user.Id, year);
+                }
+            }
+
+            model.OutgoingRequests =
+                await _leaveRequestRepository.GetOutgoingRequestsAsync(user.Id);
+        }
 
         [HttpGet]
-        public async Task<IActionResult> LeaveRequest() // View render
+        public async Task<IActionResult> LeaveRequest(int? selectedYear) //get from query string
         {
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
                 return Unauthorized();
 
+            var employee = await _employeeRepository.FindEmployeeByIdAsync(user.Id.ToString());
+
+            int usedDays = 0;
+            int maxDays = 0;
+
+            int year = selectedYear ?? DateTime.Now.Year;
+
+            if (employee?.EmployeeLevelId != null)
+            {
+                var rule = await _leaveRuleRepository
+                    .GetRuleByLevelIdAsync(employee.EmployeeLevelId.Value);
+
+                if (rule != null)
+                {
+                    maxDays = rule.MaxAnnualLeaves;
+                    usedDays = await _leaveRequestRepository
+                        .GetTotalDaysUsedInYearAsync(user.Id, year);
+                }
+            }
+
             var model = new LeaveRequestViewModel
             {
                 OutgoingRequests = await _leaveRequestRepository
-                    .GetOutgoingRequestsAsync(user.Id)
+                    .GetOutgoingRequestsAsync(user.Id),
+                SelectedYear = year,
+                UsedAnnualLeaves = usedDays,
+                MaxAnnualLeaves = maxDays
             };
 
             return View(model);
@@ -137,17 +190,34 @@ namespace HRManagementSystem.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LeaveRequest(LeaveRequestViewModel model)
         {
-            if (!ModelState.IsValid)
-                return View("LeaveRequest", model);
-
+           
             var user = await _userManager.GetUserAsync(User);
+
             if (user == null)
-                return Unauthorized();
+            {
+                return Challenge();
+            }
+            var employee = await _employeeRepository.FindEmployeeByIdAsync(user.Id.ToString());
+
+            if (model.StartDate < DateTime.Now) // to be commented out in case of testing
+            {
+                ModelState.AddModelError(nameof(model.StartDate),
+                    "Start date can't be on the past.");
+                await PopulateLeaveStatsAsync(model, user);
+                return View("LeaveRequest", model);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                await PopulateLeaveStatsAsync(model, user);
+                return View("LeaveRequest", model);
+            }
 
             if (model.StartDate > model.EndDate)
             {
                 ModelState.AddModelError(nameof(model.EndDate),
                     "End date must be after start date.");
+                await PopulateLeaveStatsAsync(model, user);
                 return View("LeaveRequest", model);
             }
 
@@ -156,33 +226,73 @@ namespace HRManagementSystem.Controllers
 
             if (hasOverlap)
             {
-                ModelState.AddModelError(string.Empty,
+                ModelState.AddModelError(nameof(model.Reason),
                     "You already have a leave request during this period.");
+                await PopulateLeaveStatsAsync(model, user);
                 return View("LeaveRequest", model);
             }
 
-            var leaveRequest = new LeaveRequest
+            // 1 Get the Rule for the employee level
+            if (employee?.EmployeeLevelId == null)
+            {
+                ModelState.AddModelError("", "Your employee level is not configured.");
+                await PopulateLeaveStatsAsync(model, user);
+                return View("LeaveRequest", model);
+            }
+
+            var rule = await _leaveRuleRepository.GetRuleByLevelIdAsync(employee.EmployeeLevelId.Value);
+
+            if (rule == null)
+            {
+                ModelState.AddModelError("", "No leave policy found for your role.");
+                await PopulateLeaveStatsAsync(model, user);
+                return View("LeaveRequest", model);
+            }
+
+            int requestedDays = _leaveCalculator.CalculateDaysInYear(
+                model.StartDate!.Value,
+                model.EndDate!.Value,
+                model.StartDate.Value.Year,
+                rule.ExcludedDays
+            ); // this is used to calculate only the days that fall within that year of the request
+
+            int totalTripDays = _leaveCalculator.CalculateActualLeaveDays(
+            model.StartDate.Value,
+            model.EndDate.Value,
+            rule.ExcludedDays
+            ); //this is used to save the actual amount of days used per year
+
+            // 2 Verify balance (Summing the CalculatedDays column)
+            int yearUsage = await _leaveRequestRepository.GetTotalDaysUsedInYearAsync(user.Id, DateTime.Now.Year);
+
+            if (yearUsage + requestedDays > rule.MaxAnnualLeaves)
+            {
+                ModelState.AddModelError("", $"Limit exceeded. Remaining balance: {rule.MaxAnnualLeaves - yearUsage} days.");
+                await PopulateLeaveStatsAsync(model, user);
+                return View("LeaveRequest", model);
+            }
+
+            // 3 Create the request
+            var request = new LeaveRequest
             {
                 Id = Guid.NewGuid(),
                 UserId = user.Id,
                 CompanyId = user.CompanyId,
-                StartDate = model.StartDate!.Value,
-                EndDate = model.EndDate!.Value,
+                StartDate = model.StartDate.Value,
+                EndDate = model.EndDate.Value,
                 LeaveType = model.LeaveType!.Value,
                 Status = LeaveStatus.Pending,
+                CalculatedDays = totalTripDays, // Precalculated for performance
                 Reason = model.Reason,
                 RequestedAt = DateTime.UtcNow
             };
 
-            await _leaveRequestRepository.CreateAsync(leaveRequest);
+            await _leaveRequestRepository.CreateAsync(request);
 
             TempData["SuccessMessage"] =
                 "Your leave request has been submitted for approval.";
 
             return RedirectToAction("Index", "Home");
         }
-
-
-
     }
 }

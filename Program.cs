@@ -46,8 +46,10 @@ namespace HRManagementSystem
             builder.Services.AddScoped<IPayRateRepository, PayRateRepository>();    
             builder.Services.AddScoped<IEmployeeDepartmentRepository, EmployeeDepartmentRepository>();
             builder.Services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
+            builder.Services.AddScoped<ILeaveRuleRepository, LeaveRuleRepository>();
+            builder.Services.AddScoped<IEmployeeLevelRepository, EmployeeLevelRepository>();
 
-
+            builder.Services.AddScoped<CalculateLeaveDays>();
             // Nager to get national holidays
             builder.Services.AddHttpClient<NationalHolidayService>();
 

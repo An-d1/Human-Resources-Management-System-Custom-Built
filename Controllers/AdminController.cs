@@ -19,7 +19,13 @@ namespace HRManagementSystem.Controllers
 
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly IEmployeeRepository _employeeRepository;
-        public AdminController(UserManager<User> userManager, IUserRepository userRepository, IEmployeeRepository employeeRepository, IDepartmentRepository departmentRepository, IEmployeeDepartmentRepository employeeDepartmentRepository, ILeaveRequestRepository leaveRequestRepository)
+
+        public AdminController(UserManager<User> userManager,
+            IUserRepository userRepository,
+            IEmployeeRepository employeeRepository,
+            IDepartmentRepository departmentRepository,
+            IEmployeeDepartmentRepository employeeDepartmentRepository,
+            ILeaveRequestRepository leaveRequestRepository)
         {
             _userManager = userManager;
             _userRepository = userRepository;
@@ -27,6 +33,7 @@ namespace HRManagementSystem.Controllers
             _departmentRepository = departmentRepository;
             _employeeDepartmentRepository = employeeDepartmentRepository;
             _leaveRequestRepository = leaveRequestRepository;
+
         }
         public async Task<IActionResult> Index()
         {
@@ -75,6 +82,7 @@ namespace HRManagementSystem.Controllers
                     HireDate = employee.HireDate,
                     TerminationDate = employee.TerminationDate,
                     IsEmployed = employee.IsEmployed,
+                    EmployeeLevel = employee.EmployeeLevel?.Name ?? "N/A"
                 };
 
                 modelList.Add(model);
@@ -124,7 +132,8 @@ namespace HRManagementSystem.Controllers
                 HireDate = employee.HireDate,
                 TerminationDate = employee.TerminationDate,
                 IsEmployed = employee.IsEmployed,
-                Departments = await _employeeRepository.GetDepartmentNamesByUserIdAsync(user.Id)
+                Departments = await _employeeRepository.GetDepartmentNamesByUserIdAsync(user.Id),
+                EmployeeLevel = employee.EmployeeLevel?.Name ?? "N/A"
             };
 
             return View(model);
@@ -219,7 +228,8 @@ namespace HRManagementSystem.Controllers
                     department.Id = new Guid();
                     department.Name = departmentViewModel.DepartmentName;
                     department.CompanyId = adminsCompanyId;
-                };
+                }
+                ;
 
                 await _departmentRepository.AddDepartmentWithAdminsCompanyIdAsync(department);
 
@@ -331,14 +341,15 @@ namespace HRManagementSystem.Controllers
             await _leaveRequestRepository.UpdateAsync(request);
 
             TempData["SuccessMessage"] = "Leave request has been approved.";
-            return RedirectToAction(nameof(Index));
-        }
+            return RedirectToAction(nameof(RequestedLeaves));
+        }   
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RejectLeave(Guid requestId)
         {
             var admin = await _userManager.GetUserAsync(User);
+
             var request = await _leaveRequestRepository.GetByIdAsync(requestId);
 
             // Security, ensures request exists and belongs to the same company
@@ -352,10 +363,8 @@ namespace HRManagementSystem.Controllers
             await _leaveRequestRepository.UpdateAsync(request);
 
             TempData["ErrorMessage"] = "Leave request has been rejected.";
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(RequestedLeaves));
         }
-
-
 
 
     }

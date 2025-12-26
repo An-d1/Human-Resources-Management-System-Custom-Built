@@ -1,0 +1,138 @@
+﻿@model HRManagementSystem.ViewModels.CreateEmployeeLevelViewModel;
+
+@{
+    ViewData["Title"] = "Create Employee Level";
+}
+
+<link rel="stylesheet" href="~/css/RegisterEmployee.css" asp-append-version="true" />
+
+<div class="login-wrapper">
+    <div class="login-container">
+        <div class="row justify-content-center align-items-center min-vh-100">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+
+                <div class="login-card">
+                    <div class="login-card-body">
+
+                        <!-- Icon -->
+                        <div class="login-icon-wrapper">
+                            <div class="login-icon register-employee-icon">
+                                <i class="bi bi-person-rolodex"></i>
+                            </div>
+                        </div>
+
+                        <!-- Header -->
+                        <div class="login-header">
+                            <h1 class="login-title">Employee Level</h1>
+                            <p class="login-subtitle">
+                                Define employee levels and annual leave rules.
+                            </p>
+                        </div>
+
+                        <!-- Form -->
+                        <form asp-asp-controller="EmployeeLevel" asp-action="CreateEmployeeLevelView" method="post" class="login-form" novalidate>
+
+                            <div asp-validation-summary="ModelOnly"
+                                 class="alert alert-danger-professional"
+                                 role="alert"></div>
+
+                            <!-- Level Name -->
+                            <div class="form-group-professional">
+                                <label asp-for="Name" class="form-label-professional">Level Name</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-tag-fill"></i>
+                                    </span>
+                                    <input asp-for="Name"
+                                           class="form-control-professional"
+                                           placeholder="Junior, Senior, Intern..." />
+                                </div>
+                                <span asp-validation-for="Name" class="validation-message"></span>
+                            </div>
+
+                            <!-- Max Annual Leave -->
+                            <div class="form-group-professional">
+                                <label asp-for="MaxAnnualLeave" class="form-label-professional">
+                                    Max Annual Leave (days)
+                                </label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon-left">
+                                        <i class="bi bi-calendar-check-fill"></i>
+                                    </span>
+                                    <input asp-for="MaxAnnualLeave"
+                                           type="number"
+                                           min="0"
+                                           class="form-control-professional"
+                                           placeholder="e.g. 20" />
+                                </div>
+                                <span asp-validation-for="MaxAnnualLeave" class="validation-message"></span>
+                            </div>
+
+                            <!-- Excluded Days -->
+                            <div class="form-group-professional">
+                                <label class="form-label-professional">
+                                    Excluded Weekdays
+                                </label>
+
+                                <div class="alert alert-info d-flex align-items-center mb-3">
+                                    <i class="bi bi-info-circle-fill me-2"></i>
+                                    <span>
+                                        Selected days will <strong>not</strong> count when calculating annual leave.
+                                    </span>
+                                </div>
+
+                                <div class="row">
+                                    @foreach (var day in Model.WeekDays)
+                                    {
+                                        <div class="col-6 mb-2">
+                                            <div class="form-check">
+                                                <input class="form-check-input"
+                                                       type="checkbox"
+                                                       name="ExcludedDays"
+                                                       value="@day.Value"
+                                                       id="day_@day.Value" />
+
+                                                <label class="form-check-label" for="day_@day.Value">
+                                                    @day.Text
+                                                </label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+
+                            <!-- Notice -->
+                            <div class="info-notice mb-4">
+                                <i class="bi bi-shield-check"></i>
+                                <p>
+                                    Changes here will affect all employees assigned to this level.
+                                </p>
+                            </div>
+
+                            <!-- Submit -->
+                            <button type="submit" class="btn-login-professional">
+                                <i class="bi bi-save-fill me-2"></i>
+                                Save Level
+                            </button>
+
+                            <!-- Back -->
+                            <a asp-controller="Admin"
+                               asp-action="Index"
+                               class="btn-secondary-professional">
+                                <i class="bi bi-arrow-left me-2"></i>
+                                Back to Dashboard
+                            </a>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

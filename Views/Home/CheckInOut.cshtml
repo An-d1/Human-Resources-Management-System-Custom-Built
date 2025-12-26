@@ -1,7 +1,8 @@
 ﻿@model HRManagementSystem.ViewModels.CheckInViewModel;
 
 @{
-    ViewData["Title"] = "Check In / Check Out";
+    ViewData["HeaderTitle"] = "Check In / Check Out";
+    ViewData["HeaderSubtitle"] = "Track your time.";
 }
 
 <link rel="stylesheet" href="~/css/AdminDashboard.css" />
@@ -11,7 +12,8 @@
 
     @await Html.PartialAsync("_EmployeeSidebar")  <!-- or _AdminSidebar depending on role -->
 
-    <div class="dashboard-main p-4">
+    <div class="dashboard-main">
+            @await Html.PartialAsync("_EmployeeHeader")  
 
         <!-- JS time-->
         <div class="d-flex justify-content-center mb-4">

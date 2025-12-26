@@ -2,8 +2,16 @@
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
 
 @{
-    ViewData["Title"] = "Holiday Calendar";
     bool isAdmin = ViewBag.IsAdmin == true;
+    @if (isAdmin)
+    {
+        ViewData["HeaderTitle"] = "Holiday Calendar";
+        ViewData["HeaderSubtitle"] = "Configure & manage holidays.";
+    } else
+    {
+        ViewData["HeaderTitle"] = "Holiday Calendar";
+        ViewData["HeaderSubtitle"] = "The best place to be...";
+    }
 }
 
 <link rel="stylesheet" href="~/css/AdminDashboard.css" />
@@ -14,19 +22,13 @@
 
     <div class="dashboard-main">
 
-        <header class="dashboard-header">
-            <div class="header-left">
-                <button class="mobile-menu-toggle" id="sidebarToggle">
-                    <i class="bi bi-list"></i>
-                </button>
-
-                <div class="header-welcome">
-                    <h1 class="header-title">Holiday Calendar</h1>
-                    <p class="header-subtitle">Configure official holidays</p>
-                </div>
-            </div>
-        </header>
-
+        @if(isAdmin)
+        {
+            @await Html.PartialAsync("_AdminHeader")
+        } else
+        {
+            @await Html.PartialAsync("_EmployeeHeader")
+        }
         <div class="dashboard-content p-4">
             <div class="dashboard-content p-4">
     <div class="calendar-legend mb-3 d-flex flex-wrap gap-3 p-3 bg-white rounded shadow-sm">
@@ -62,7 +64,7 @@
         </div>
 
 
-        @* ADMIN ONLY: Add + Delete modals *@
+        @* admin only: Add + Delete modals *@
         @if (isAdmin)
         {
             <!-- Add Holiday Modal -->

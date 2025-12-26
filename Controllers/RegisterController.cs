@@ -5,7 +5,9 @@ using HRManagementSystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Rewrite;
+using System.ComponentModel.Design;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace HRManagementSystem.Controllers
@@ -21,11 +23,14 @@ namespace HRManagementSystem.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly EmailServiceSender _emailSender;
 
+        private readonly IEmployeeLevelRepository _employeeLevelRepository;
+
         private readonly TemporaryPasswordGenerator _temporaryPasswordGenerator;
         public RegisterController(UserManager<User> userManager,
             ApplicationDbContext context, IUserRepository userRepository, ICompanyRepository companyRepository,
             IEmployeeRepository employeeRepository,
-            EmailServiceSender emailSender, TemporaryPasswordGenerator temporaryPasswordGenerator)
+            EmailServiceSender emailSender, TemporaryPasswordGenerator temporaryPasswordGenerator,
+            IEmployeeLevelRepository employeeLevelRepository)
 
         {
             _userManager = userManager;
@@ -35,13 +40,28 @@ namespace HRManagementSystem.Controllers
             _employeeRepository = employeeRepository;
             _emailSender = emailSender;
             _temporaryPasswordGenerator = temporaryPasswordGenerator;
+            _employeeLevelRepository = employeeLevelRepository;
         }
 
         // New employee registration
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var currentUser = await _userManager.GetUserAsync(User); // Get the current user
+            var companyId = await _userRepository.GetCompanyIdByUserIdAsync(currentUser.Id); // Get his company Id so all employees related to the user can be found
+
+            var levels = await _employeeLevelRepository.GetLevelsByCompanyAsync(companyId);
+
+            var model = new RegisterEmployeeViewModel
+            {
+                AvailableLevels = levels.Select(l => new SelectListItem
+                {
+                    Value = l.Id.ToString(),
+                    Text = l.Name 
+                })
+            };
+
+            return View(model);
         }
 
         [HttpPost]
@@ -72,7 +92,8 @@ namespace HRManagementSystem.Controllers
                     {
                         UserId = user.Id,
                         HireDate = DateOnly.FromDateTime(DateTime.UtcNow),
-                        IsEmployed = true,
+                        IsEmployed = false, // set true when employee confirms his account
+                        EmployeeLevelId = model.EmployeeLevel,
                     };
 
                     var employee = await _employeeRepository.CreateAsync(employeeEntityFromNewUser);

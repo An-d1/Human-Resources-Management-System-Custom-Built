@@ -86,6 +86,9 @@ namespace HRManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("EmployeeLevelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateOnly>("HireDate")
                         .HasColumnType("date");
 
@@ -99,6 +102,8 @@ namespace HRManagementSystem.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EmployeeLevelId");
 
                     b.HasIndex("UserId");
 
@@ -118,6 +123,26 @@ namespace HRManagementSystem.Migrations
                     b.HasIndex("DepartmentId");
 
                     b.ToTable("EmployeeDepartments");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Models.EmployeeLevel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CompanyId");
+
+                    b.ToTable("EmployeesLevel");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Models.HolidayCalendar", b =>
@@ -158,6 +183,9 @@ namespace HRManagementSystem.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("CalculatedDays")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
@@ -195,6 +223,32 @@ namespace HRManagementSystem.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("LeaveRequests");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Models.LeaveRule", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CompanyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EmployeeLevelId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ExcludedDays")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MaxAnnualLeaves")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeLevelId");
+
+                    b.ToTable("LeaveRules");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Models.PayRate", b =>
@@ -270,6 +324,9 @@ namespace HRManagementSystem.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<Guid?>("EmployeeLevelId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -314,6 +371,8 @@ namespace HRManagementSystem.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("EmployeeLevelId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -470,11 +529,17 @@ namespace HRManagementSystem.Migrations
 
             modelBuilder.Entity("HRManagementSystem.Models.Employee", b =>
                 {
+                    b.HasOne("HRManagementSystem.Models.EmployeeLevel", "EmployeeLevel")
+                        .WithMany()
+                        .HasForeignKey("EmployeeLevelId");
+
                     b.HasOne("HRManagementSystem.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("EmployeeLevel");
 
                     b.Navigation("User");
                 });
@@ -496,6 +561,17 @@ namespace HRManagementSystem.Migrations
                     b.Navigation("Department");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Models.EmployeeLevel", b =>
+                {
+                    b.HasOne("HRManagementSystem.Models.Company", "Company")
+                        .WithMany()
+                        .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Company");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Models.HolidayCalendar", b =>
@@ -528,6 +604,17 @@ namespace HRManagementSystem.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Models.LeaveRule", b =>
+                {
+                    b.HasOne("HRManagementSystem.Models.EmployeeLevel", "EmployeeLevel")
+                        .WithMany()
+                        .HasForeignKey("EmployeeLevelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EmployeeLevel");
+                });
+
             modelBuilder.Entity("HRManagementSystem.Models.PayRate", b =>
                 {
                     b.HasOne("HRManagementSystem.Models.User", "User")
@@ -557,6 +644,10 @@ namespace HRManagementSystem.Migrations
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("HRManagementSystem.Models.EmployeeLevel", null)
+                        .WithMany("Users")
+                        .HasForeignKey("EmployeeLevelId");
 
                     b.Navigation("Company");
                 });
@@ -622,6 +713,11 @@ namespace HRManagementSystem.Migrations
             modelBuilder.Entity("HRManagementSystem.Models.Department", b =>
                 {
                     b.Navigation("EmployeeDepartments");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Models.EmployeeLevel", b =>
+                {
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Models.User", b =>

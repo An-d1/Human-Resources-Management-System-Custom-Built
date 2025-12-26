@@ -1,0 +1,192 @@
+﻿@using HRManagementSystem.ViewModels
+@model IEnumerable<EmployeeLevelViewModel>
+
+@{
+    ViewData["HeaderTitle"] = "Employee Levels Management";
+    ViewData["HeaderSubtitle"] = "Manage employee levels and leave policies";
+}
+
+<link rel="stylesheet" href="~/css/AdminDashboard.css" asp-append-version="true" />
+
+<div class="dashboard-wrapper">
+
+    <div class="dashboard-main">
+
+        @await Html.PartialAsync("_AdminHeader")
+
+        <main class="dashboard-content">
+            @await Html.PartialAsync("_FlashMessages")
+
+            <!-- Action Bar -->
+            <div class="action-bar">
+                <div class="action-bar-left">
+                    <div class="search-box">
+                        <i class="bi bi-search"></i>
+                        <input type="text"
+                               id="searchInput"
+                               placeholder="Search employee levels..."
+                               class="search-input">
+                    </div>
+                </div>
+                <div class="action-bar-right">
+                    <button class="btn-export">
+                        <i class="bi bi-download"></i>
+                        <span>Export List</span>
+                    </button>
+                    <a asp-controller="EmployeeLevel" asp-action="CreateEmployeeLevelView"
+                       class="btn-add-employee">
+                        <i class="bi bi-plus-circle-fill"></i>
+                        <span>Add Employee Level</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="employee-stats-grid">
+                <div class="employee-stat-card">
+                    <div class="stat-icon-small stat-icon-primary">
+                        <i class="bi bi-diagram-3-fill"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number">@Model.Count()</span>
+                        <span class="stat-text">Total Levels</span>
+                    </div>
+                </div>
+                <div class="employee-stat-card">
+                    <div class="stat-icon-small stat-icon-info">
+                        <i class="bi bi-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number">Configured</span>
+                        <span class="stat-text">Leave Rules</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="content-card employees-table-card">
+                <div class="card-header-custom">
+                    <h3 class="card-title-custom">All Employee Levels</h3>
+                    <span class="employee-count-badge">
+                        @Model.Count() levels
+                    </span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="employees-table">
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">
+                                    <input type="checkbox" id="selectAll" class="table-checkbox">
+                                </th>
+                                <th>Level Details</th>
+                                <th>Max Annual Leave</th>
+                                <th>Excluded Days</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="levelTableBody">
+                            @foreach (var level in Model)
+                            {
+                                <tr class="employee-row">
+                                    <td>
+                                        <input type="checkbox" class="table-checkbox">
+                                    </td>
+
+                                    <td>
+                                        <div class="employee-info">
+                                            <div class="employee-avatar" style="background-color:#eef2ff;">
+                                                @level.Name.Substring(0, 1).ToUpper()
+                                            </div>
+                                            <div class="employee-details">
+                                                <span class="employee-name">@level.Name</span>
+                                                <span class="employee-position">Active</span>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <span class="badge bg-primary-subtle text-primary">
+                                            @level.MaxAnnualLeave days
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @if (level.ExcludedDays != null && level.ExcludedDays.Any())
+                                        {
+                                            <span class="badge bg-warning-subtle text-warning">
+                                                @string.Join(", ", level.ExcludedDays)
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-success-subtle text-success">
+                                                None
+                                            </span>
+                                        }
+                                    </td>
+
+                                    <td class="text-end">
+                                        <div class="action-buttons justify-content-end">
+                                            <a asp-action="EditEmployeeLevel"
+                                               asp-route-id="@level.Id"
+                                               class="action-icon-btn action-edit"
+                                               title="Edit Employee Level">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+
+                                            <form asp-action="DeleteEmployeeLevel"
+                                                  asp-route-id="@level.Id"
+                                                  method="post"
+                                                  class="d-inline"
+                                                  onsubmit="return confirm('Are you sure you want to delete this employee level?');">
+                                                <button type="submit"
+                                                        class="action-icon-btn text-danger"
+                                                        title="Delete">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                    <!-- Empty State -->
+                    @if (!Model.Any())
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-diagram-3"></i>
+                            <h3>No Employee Levels Found</h3>
+                            <p>Create employee levels to control leave policies.</p>
+                            <a asp-controller="EmployeeLevel" asp-action="CreateEmployeeLevelView"
+                               class="btn-add-employee">
+                                <i class="bi bi-plus-circle"></i>
+                                <span>Add Employee Level</span>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function () {
+            let searchValue = this.value.toLowerCase();
+            let rows = document.querySelectorAll('#levelTableBody tr');
+
+            rows.forEach(row => {
+                let name = row.querySelector('.employee-name').textContent.toLowerCase();
+                row.style.display = name.includes(searchValue) ? '' : 'none';
+            });
+        });
+    </script>
+}
