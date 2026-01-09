@@ -15,6 +15,10 @@ namespace HRManagementSystem.ViewModels
         public DateOnly HireDate { get; set; }
         public DateOnly? TerminationDate { get; set; }
         public bool IsEmployed { get; set; } = true; // always true unless contract terminated which sets it to false
-        public string EmployeeLevel { get; set; }
+        public string? EmployeeLevel { get; set; }
+        public decimal? CurrentPayRate { get; set; }
+        public DateOnly? PayRateEffectiveFrom {  get; set; }
+        public DateOnly? PayRateEffectiveTo { get; set; }
     }
+
 }

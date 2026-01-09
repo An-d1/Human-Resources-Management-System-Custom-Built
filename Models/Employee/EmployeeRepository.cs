@@ -15,7 +15,8 @@ namespace HRManagementSystem.Models
         public async Task<Employee> FindEmployeeByIdAsync(string employeeId)
         {
             return await _context.Employees
-                .Include(e => e.EmployeeLevel)
+                .Include(e => e.EmployeeLevel) // Lazy loading
+                .Include(e => e.PayRates)
                 .FirstOrDefaultAsync(e => e.UserId.ToString() == employeeId);
         }
         public async Task UpdateEmployeeAsync(Employee employee)
@@ -41,6 +42,7 @@ namespace HRManagementSystem.Models
         {
             return await _context.Employees
             .Include(e => e.EmployeeLevel)
+            .Include(e => e.PayRates)  
             .Where(e => e.User.CompanyId == companyId)
             .ToListAsync();
         }

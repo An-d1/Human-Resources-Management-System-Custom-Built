@@ -10,13 +10,28 @@ namespace HRManagementSystem.Models
         {
             _context = context;
         }
-        public async Task<PayRate?> GetPayRateForDateAsync(Guid userId, DateTime date)
+        public async Task<PayRate?> GetActivePayRateAsync(Guid employeeId)
+        {
+            return await _context.PayRates
+                .FirstOrDefaultAsync(p => p.EmployeeId == employeeId && p.EffectiveTo == null);
+        }
+        public async Task AddPayRateAsync(PayRate payRate)
+        {
+            _context.PayRates.Add(payRate);
+            await _context.SaveChangesAsync();
+        }
+        public async Task UpdatePayRateAsync(PayRate payRate)
+        {
+            _context.PayRates.Update(payRate);
+            await _context.SaveChangesAsync();
+        }
+        public async Task<PayRate?> GetPayRateForDateAsync(Guid employeeId, DateOnly date) 
         {
             return await _context.PayRates
                 .Where(r =>
-                    r.UserId == userId &&
-                    r.EffectiveFrom <= DateOnly.FromDateTime(date) &&
-                    r.EffectiveTo >= date
+                    r.EmployeeId == employeeId &&
+                    r.EffectiveFrom <= date &&
+                    (r.EffectiveTo == null || r.EffectiveTo >= date)
                 )
                 .OrderByDescending(r => r.EffectiveFrom)
                 .FirstOrDefaultAsync();

@@ -98,7 +98,7 @@ namespace HRManagementSystem.Controllers
             var from = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
             var to = from.AddMonths(1);
 
-            // Calculate the payroll using your existing logic
+            // Calculate the payroll using existing method
             decimal total = await CalculatePayrollAsync(userId, companyId, from, to);
 
             // Prepare modal
@@ -108,7 +108,7 @@ namespace HRManagementSystem.Controllers
             //For Pdf
             ViewBag.AutoDownloadUrl = Url.Action("DownloadPayslip", "PayRoll", new { userId = userId, from = from, to = to });
 
-            // RELOAD ALL EMPLOYEES for the same page
+            // reload all employees for the same page
             var employeesList = await _employeeRepository.ReturnAllEmployeesOfTheCompanyAsync(companyId);
             var modelList = new List<EmployeeViewModel>();
 
@@ -233,7 +233,7 @@ namespace HRManagementSystem.Controllers
 
             decimal totalPay = 0m;
 
-            // 2. WORKED HOURS
+            // 2. worked hours
             var entries = await _timeEntryRepository.GetEntriesWithinPeriodAsync(userId, from, to);
 
             foreach (var entry in entries)
@@ -245,7 +245,8 @@ namespace HRManagementSystem.Controllers
                     var hours = (decimal)(segmentEnd - segmentStart).TotalHours;
 
                     // rate for this day
-                    var rate = await _payRateRepository.GetPayRateForDateAsync(userId, segmentStart);
+
+                    var rate = await _payRateRepository.GetPayRateForDateAsync(employee.Id, DateOnly.FromDateTime(segmentStart));
                     if (rate == null)
                         //ModelState.AddModelError("", $"Missing pay rate for {segmentStart}")
                         throw new Exception($"Missing pay rate for {segmentStart}");
@@ -267,7 +268,7 @@ namespace HRManagementSystem.Controllers
 
             foreach (var request in leaveRequests)
             {
-                // filter: Only pay for Annual leave 
+                // filter: Only pays for Annual leave 
                 if (request.LeaveType != LeaveType.Annual)
                     continue;
 
@@ -284,7 +285,7 @@ namespace HRManagementSystem.Controllers
 
                 if (billableDays > 0)
                 {
-                    var rate = await _payRateRepository.GetPayRateForDateAsync(userId, overlapStart);
+                    var rate = await _payRateRepository.GetPayRateForDateAsync(userId, DateOnly.FromDateTime(overlapEnd));
                     if (rate != null)
                     {
                         decimal hoursPerDay = 8.0m; //standard hours, but needs to be made dynamic so it allows for part time employees aswell

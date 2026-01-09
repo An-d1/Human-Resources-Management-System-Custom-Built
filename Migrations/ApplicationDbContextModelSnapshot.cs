@@ -260,18 +260,18 @@ namespace HRManagementSystem.Migrations
                     b.Property<DateOnly>("EffectiveFrom")
                         .HasColumnType("date");
 
-                    b.Property<DateTime>("EffectiveTo")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly?>("EffectiveTo")
+                        .HasColumnType("date");
+
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("HourlyRate")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("EmployeeId");
 
                     b.ToTable("PayRates");
                 });
@@ -617,13 +617,13 @@ namespace HRManagementSystem.Migrations
 
             modelBuilder.Entity("HRManagementSystem.Models.PayRate", b =>
                 {
-                    b.HasOne("HRManagementSystem.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("HRManagementSystem.Models.Employee", "Employee")
+                        .WithMany("PayRates")
+                        .HasForeignKey("EmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Models.TimeEntry", b =>
@@ -713,6 +713,11 @@ namespace HRManagementSystem.Migrations
             modelBuilder.Entity("HRManagementSystem.Models.Department", b =>
                 {
                     b.Navigation("EmployeeDepartments");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Models.Employee", b =>
+                {
+                    b.Navigation("PayRates");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Models.EmployeeLevel", b =>

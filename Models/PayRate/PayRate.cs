@@ -3,11 +3,11 @@
     public class PayRate
     {
         public Guid Id { get; set; }
-        public Guid UserId { get; set; }
-        public User User { get; set; } = default!;
+        public Guid EmployeeId { get; set; }
+        public Employee Employee { get; set; } = default!;
         public decimal HourlyRate { get; set; }
         public DateOnly EffectiveFrom { get; set; }
-        public DateTime EffectiveTo { get; set; }
+        public DateOnly? EffectiveTo { get; set; }
     }
 
     

@@ -16,6 +16,7 @@ namespace HRManagementSystem.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IEmployeeDepartmentRepository _employeeDepartmentRepository;
+        private readonly IPayRateRepository _payRateRepository;
 
         private readonly ILeaveRequestRepository _leaveRequestRepository;
         private readonly IEmployeeRepository _employeeRepository;
@@ -25,7 +26,8 @@ namespace HRManagementSystem.Controllers
             IEmployeeRepository employeeRepository,
             IDepartmentRepository departmentRepository,
             IEmployeeDepartmentRepository employeeDepartmentRepository,
-            ILeaveRequestRepository leaveRequestRepository)
+            ILeaveRequestRepository leaveRequestRepository,
+            IPayRateRepository payRateRepository)
         {
             _userManager = userManager;
             _userRepository = userRepository;
@@ -33,7 +35,7 @@ namespace HRManagementSystem.Controllers
             _departmentRepository = departmentRepository;
             _employeeDepartmentRepository = employeeDepartmentRepository;
             _leaveRequestRepository = leaveRequestRepository;
-
+            _payRateRepository = payRateRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -61,6 +63,8 @@ namespace HRManagementSystem.Controllers
             var employeesList = await _employeeRepository.ReturnAllEmployeesOfTheCompanyAsync(companyId);
             var modelList = new List<EmployeeViewModel>();
 
+            var currentActivePayRate = await _payRateRepository.GetActivePayRateAsync(currentUser.Id);
+
             foreach (var employee in employeesList)
             {
                 var user = await _userManager.FindByIdAsync(employee.UserId.ToString());
@@ -82,7 +86,10 @@ namespace HRManagementSystem.Controllers
                     HireDate = employee.HireDate,
                     TerminationDate = employee.TerminationDate,
                     IsEmployed = employee.IsEmployed,
-                    EmployeeLevel = employee.EmployeeLevel?.Name ?? "N/A"
+                    EmployeeLevel = employee.EmployeeLevel?.Name ?? "N/A",
+                    CurrentPayRate = currentActivePayRate?.HourlyRate,
+                    PayRateEffectiveFrom = currentActivePayRate?.EffectiveFrom,
+                    PayRateEffectiveTo = currentActivePayRate?.EffectiveTo
                 };
 
                 modelList.Add(model);
@@ -115,12 +122,15 @@ namespace HRManagementSystem.Controllers
         {
             // Fetch the employee (with User data included)
             var user = await _userManager.FindByIdAsync(id);
+
             if (user == null)
             {
                 return NotFound("Associated user not found for this employee.");
             }
 
             var employee = await _employeeRepository.FindEmployeeByIdAsync(id); // This is the same instance but just the employee table
+            var currentActivePayRate = await _payRateRepository.GetActivePayRateAsync(employee.Id);
+
             // Build the ViewModel
             var model = new EmployeeViewModel
             {
@@ -133,7 +143,11 @@ namespace HRManagementSystem.Controllers
                 TerminationDate = employee.TerminationDate,
                 IsEmployed = employee.IsEmployed,
                 Departments = await _employeeRepository.GetDepartmentNamesByUserIdAsync(user.Id),
-                EmployeeLevel = employee.EmployeeLevel?.Name ?? "N/A"
+                EmployeeLevel = employee.EmployeeLevel?.Name ?? "N/A",
+                CurrentPayRate = currentActivePayRate?.HourlyRate,
+                PayRateEffectiveFrom = currentActivePayRate?.EffectiveFrom,
+                PayRateEffectiveTo = currentActivePayRate?.EffectiveTo
+
             };
 
             return View(model);
@@ -150,7 +164,7 @@ namespace HRManagementSystem.Controllers
 
             try
             {
-                // Check that this employee exists first
+                // Checks that this employee exists first
                 var employee = await _employeeRepository.FindEmployeeByIdAsync(userId);
                 if (employee == null)
                 {
@@ -342,7 +356,7 @@ namespace HRManagementSystem.Controllers
 
             TempData["SuccessMessage"] = "Leave request has been approved.";
             return RedirectToAction(nameof(RequestedLeaves));
-        }   
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -366,6 +380,69 @@ namespace HRManagementSystem.Controllers
             return RedirectToAction(nameof(RequestedLeaves));
         }
 
+        // Code for adding a new payRate goes here
+
+        [HttpGet]
+        public async Task<IActionResult> AddPayRate(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null) return NotFound();
+
+            var model = new AddPayRateViewModel
+            {
+                UserId = user.Id.ToString(),
+                FullName = $"{user.FirstName} {user.LastName}",
+                EffectiveDate = DateTime.Today
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddPayRate(AddPayRateViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var employee = await _employeeRepository.FindEmployeeByIdAsync(model.UserId);
+            if (employee == null) return NotFound();
+
+            // Get the current active rate using repo
+            var activePayRate = await _payRateRepository.GetActivePayRateAsync(employee.Id);
+
+            // Logic: If active rate exists, close it
+            if (activePayRate != null)
+            {
+                // Prevent new rate from starting before the old one
+                if (activePayRate.EffectiveFrom >= DateOnly.FromDateTime(model.EffectiveDate))
+                {
+                    ModelState.AddModelError("EffectiveDate", "New rate cannot start before the current active rate.");
+                    return View(model);
+                }
+
+                // Close the old rate (set End Date to yesterday)
+                activePayRate.EffectiveTo = DateOnly.FromDateTime(model.EffectiveDate.AddDays(-1));
+
+                // Save 
+                await _payRateRepository.UpdatePayRateAsync(activePayRate);
+            }
+
+            // Create the new PayRate instance
+            var newPayRate = new PayRate
+            {
+                EmployeeId = employee.Id,
+                HourlyRate = model.HourlyRate,
+                EffectiveFrom = DateOnly.FromDateTime(model.EffectiveDate),
+                EffectiveTo = null // Null means it is the new active one
+            };
+
+            // Add to DB
+            await _payRateRepository.AddPayRateAsync(newPayRate);
+
+            TempData["SuccessMessage"] = $"Pay rate updated for {model.FullName}";
+            return RedirectToAction("EmployeeDetails", new { id = model.UserId });
+        }
 
     }
 }

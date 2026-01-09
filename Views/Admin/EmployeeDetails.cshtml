@@ -203,6 +203,37 @@
                                 }
                             </div>
 
+                            <div class="col-md-6">
+                                <div class="text-muted small">Current Pay Rate</div>
+                                <div class="fw-semibold">
+                                    @(Model.CurrentPayRate?.ToString("C") ?? "N/A")
+                                </div>
+
+                                <div class="text-muted small">Effective From</div>
+                                <div class="fw-semibold">
+                                    @(Model.PayRateEffectiveFrom?.ToString("MMM dd, yyyy") ?? "-")
+                                </div>
+
+                                <div class="text-muted small">Effective To</div>
+
+                                @if (Model.PayRateEffectiveFrom.HasValue && Model.PayRateEffectiveTo.HasValue)
+                                {
+                                    <div class="fw-semibold">@Model.PayRateEffectiveTo.Value.ToString("MMM dd, yyyy")</div>
+                                }
+                                else if (Model.PayRateEffectiveFrom.HasValue && Model.PayRateEffectiveTo == null)
+                                {
+                                    <div class="fw-semibold text-success">Active</div>
+                                } else
+                                {
+                                    <div class="text-muted fst-italic">—</div>
+                                }
+
+                                <a asp-action="AddPayRate" asp-route-userId="@Model.UserId" class="btn btn-sm btn-outline-primary ms-2">
+                                    <i class="bi bi-plus-lg"></i> Update Rate
+                                </a>
+                            </div>
+                            
+
                             <div class="col-12">
                                 <div class="text-muted small">Departments</div>
                                 @if (Model.Departments != null && Model.Departments.Any())

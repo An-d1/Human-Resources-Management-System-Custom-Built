@@ -2,6 +2,10 @@
 {
     public interface IPayRateRepository
     {
-        Task<PayRate?> GetPayRateForDateAsync(Guid userId, DateTime date);
+        Task<PayRate?> GetActivePayRateAsync(Guid userId);
+        Task AddPayRateAsync(PayRate payRate);
+        Task UpdatePayRateAsync(PayRate payRate);
+        Task<PayRate?> GetPayRateForDateAsync(Guid userId, DateOnly date);
+
     }
 }

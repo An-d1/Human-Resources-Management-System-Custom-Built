@@ -174,7 +174,7 @@ namespace HRManagementSystem
                     FirstName = "System",
                     LastName = "Admin",
                     CompanyId = company.Id,
-                    PasswordHash = hasher.HashPassword(null!, "Admin123!"),
+                    PasswordHash = hasher.HashPassword(null!, "Admin1234!"),
                     SecurityStamp = Guid.NewGuid().ToString(),
                     ConcurrencyStamp = Guid.NewGuid().ToString(),
                     CreatedAt = DateTime.UtcNow,

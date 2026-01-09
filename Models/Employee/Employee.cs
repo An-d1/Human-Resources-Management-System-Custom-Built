@@ -14,5 +14,6 @@ namespace HRManagementSystem.Models;
 
         [ForeignKey("EmployeeLevelId")]
         public virtual EmployeeLevel? EmployeeLevel { get; set; } // Navigation Property
+        public virtual ICollection<PayRate> PayRates { get; set; } = new List<PayRate>();
 }
 
