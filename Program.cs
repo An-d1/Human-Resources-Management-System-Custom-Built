@@ -121,7 +121,7 @@ namespace HRManagementSystem
                 var company = new Company
                 {
                     Id = Guid.Parse("a1111111-1111-1111-1111-111111111111"),
-                    Name = "***Company***",
+                    Name = "Company Test",
                     CompanyEmail = "prg@gmail.com",
                     CompanyPhoneNumber = "0671111111"
                 };
